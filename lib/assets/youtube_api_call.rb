@@ -8,7 +8,6 @@ time = "today"
 num = 1
 
 results = HTTParty.get("http://gdata.youtube.com/feeds/api/standardfeeds/#{country}/most_popular?v=2&time=#{time}&max-results=#{num}").body
-
 results_json = Hash.from_xml(results)
 
 What do we want?
