@@ -3,12 +3,16 @@ require 'pry'
 require 'httparty'
 require 'active_support/core_ext/hash'
 
-results = HTTParty.get('http://gdata.youtube.com/feeds/api/standardfeeds/US/most_popular?v=2&time=today&max-results=5')
+country = "US"
+time = "today"
+num = 1
 
-results_json = Hash.from_xml(results).to_json
+results = HTTParty.get("http://gdata.youtube.com/feeds/api/standardfeeds/#{country}/most_popular?v=2&time=#{time}&max-results=#{num}").body
 
-f = File.open('json.txt', 'w') do |f| 
-  f.write(results_json) 
-end
+results_json = Hash.from_xml(results)
 
-binding.pry
+What do we want?
+  -title: results_json["feed"]["entry"]["title"]
+  -big-vid url: results_json["feed"]["entry"]["content"]["src"]
+  -normal-vid url: results_json["feed"]["entry"]["link"].first["href"]
+  -term/label: results_json["feed"]["entry"]["category"][1]["term"]
