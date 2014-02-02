@@ -7,14 +7,14 @@ class MaptestsController < ApplicationController
 
       @countries.each do |country|
 
-        country.name = country.name.downcase.capitalize
+        country_name = country.name.downcase.split(' ').each { |name| name.capitalize! }.join(' ')
 
-        country_data[country.name] = { name: country.name, map_id: country.map_id }
+        country_data[country_name] = { name: country_name, map_id: country.map_id }
 
-        country_data[country.name][:videos] = []
+        country_data[country_name][:videos] = []
 
         country.videos.each do |video|
-          country_data[country.name][:videos] << { title: video.title, url: video.normal_url }
+          country_data[country_name][:videos] << { title: video.title, url: video.normal_url }
         end
 
       end

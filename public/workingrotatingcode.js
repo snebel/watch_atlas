@@ -3,11 +3,16 @@ var country_json_data = $.parseJSON(gon.country_json)
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840]
 
 var width = 960,
-  height = 550;
+  height = 500,
+  rotate = [10, -10],
+  velocity = [.003, -.001],
+  time = Date.now();
 
-var projection = d3.geo.mercator()
-  .scale((width + 1) / 2 / Math.PI)
+var projection = d3.geo.orthographic()
+  .scale(240)
   .translate([width / 2, height / 2])
+  .precision(.1)
+  .clipAngle(90 + 1e-6)
 
 var path = d3.geo.path()
   .projection(projection);
@@ -37,6 +42,11 @@ svg.append('path')
   .datum(graticule)
   .attr('class', 'graticule')
   .attr('d', path);
+
+// svg.append("circle")
+//     .attr("cx", width / 2)
+//     .attr("cy", height / 2)
+//     .attr("r", radius);
 
 
 d3.json('/map.json', function (error, world) {
@@ -101,11 +111,11 @@ d3.json('/map.json', function (error, world) {
         var obj = country_json_data[key]
 
         if (d.id === obj.map_id) {
-          var contents = '<h3>' + obj.name + '</h3>';
+          var contents = '<h4>' + obj.name + '</h4>';
           contents += '<ul class="box-videos">'
 
           obj.videos.forEach(function (v) {
-            contents += '<li><img src="http://placekitten.com/30/30" style="float:left; margin:0 5px 5px 0;" /><a target="_blank" href="' + v.url + '">' + v.title + '</a></li>'
+            contents += '<li>' + v.title + '</li>'
           });
           contents += '</ul>'
 
@@ -133,8 +143,13 @@ d3.json('/map.json', function (error, world) {
   .style('z-index', '10')
   .style('visibility', 'hidden')
 
+var feature = svg.selectAll("path");
 
-
+d3.timer(function() {
+  var dt = Date.now() - time;
+  projection.rotate([rotate[0] + velocity[0] * dt, rotate[1] + velocity[1] * dt]);
+  feature.attr("d", path);
+});
 
 });
 

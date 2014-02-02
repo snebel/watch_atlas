@@ -1,10 +1,21 @@
 body {
-  background: #fcfcfa;
+  background: #f7f7f7;
   font-family: Helvetica;
 }
 
+a {
+  color: #e74c3c;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 .map-canvas {
-  width: 900px;
+  width: 960px;
+  margin: 0 auto;
+  margin-top: 40px;
 }
 
 
@@ -31,8 +42,13 @@ body {
 }
 
 ul.box-videos li {
-  margin: 5px 0;
-  font-size: 12px;
+  margin: 10px 0;
+  font-size: 14px;
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px;
+  min-height: 35px;
 }
 
 ul.box-videos {
@@ -56,6 +72,9 @@ ul.box-videos {
   fill: orange;
 }
 
+.country .active {
+  fill: orange;
+}
 
 .country {
   fill: #ccc;
@@ -69,7 +88,7 @@ ul.box-videos {
   display: none; 
 }
 
-h4 {
+h3 {
   margin: 5px 0;
 }
 
@@ -78,7 +97,7 @@ h4 {
   background: #fff; 
   padding: 10px;
   box-shadow: 0 0 5px #ccc;
-  width: 220px;
+  width: 300px;
   border-radius: 4px; 
   position: absolute;
   opacity:.95;
