@@ -25,10 +25,10 @@ var svg = d3.select('#map-canvas').append('svg')
 
 var g = svg.append('g');
 
-g.append("path")
-  .datum({type: "Sphere"})
-  .attr("class", "water")
-  .attr("d", path);
+// g.append("path")
+//   .datum({type: "Sphere"})
+//   .attr("class", "water")
+//   .attr("d", path);
 
 function zoomclick(d) {
 
@@ -83,17 +83,17 @@ function ready (error, world) {
 
   var countries = topojson.feature(world, world.objects.countries).features
 
-  g.insert('path')
-    .datum(topojson.feature(world, world.objects.land))
-    .attr('class', 'land')
-    .attr('d', path);
+  // g.insert('path')
+  //   .datum(topojson.feature(world, world.objects.land))
+  //   .attr('class', 'land')
+  //   .attr('d', path);
 
-  g.insert('path')
-    .datum(topojson.mesh(world, world.objects.countries, function (a, b) {
-      return a !== b;
-    }))
-    .attr('class', 'boundary')
-    .attr('d', path);
+  // g.insert('path')
+  //   .datum(topojson.mesh(world, world.objects.countries, function (a, b) {
+  //     return a !== b;
+  //   }))
+  //   .attr('class', 'boundary')
+  //   .attr('d', path);
 
   // populate countries, give them an id, add a window box tooltip
 
@@ -133,8 +133,8 @@ function ready (error, world) {
         console.log('dragging')
         var rotate = projection.rotate();
         projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
-        g.selectAll("path.country").attr("d", path);
-        g.selectAll(".focused").classed("focused", focused = false);
+        g.selectAll('path.country').attr('d', path);
+        g.selectAll('.focused').classed('focused', focused = false);
       }))
 
 
