@@ -1,0 +1,12 @@
+
+<% @countries.each do |country| %>
+  <% videos = country.videos %>
+<ul>
+<li>
+<%= country.name %>
+</li>
+</ul>
+  <% videos.each do |video| %>
+  <li><%= video.normal_url %></li>
+  <% end %>
+<% end %>
