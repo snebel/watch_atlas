@@ -1,6 +1,4 @@
-console.log(gon.country_json)
-
-var country_json_data = gon.country_json
+var country_json_data = $.parseJSON(gon.country_json)
 
 var width = 1000,
   height = 600;
@@ -42,24 +40,19 @@ svg.append('path')
   .attr('class', 'graticule')
   .attr('d', path);
 
-d3.tsv("/world-country-names.tsv", function (error, array) {
- var countryNames = {};
+// d3.tsv("/world-country-names.tsv", function (error, array) {
+//  var countryNames = {};
  
- array.forEach( function (el) {
-   data = el["id  name"].split(" ")
-   id = data.shift();
-   name = data.join(" ");
-   country_name = {};
-   countryNames[id] = country_name;
-   country_name['name'] = name;
-   country_name['flag'] = 'http://4.bp.blogspot.com/_Z6UyhHL6ubs/TEE-cCk82DI/AAAAAAAABDY/4RXYF__ShiE/s320/sweden_flag_small.gif';
-   // console.log(country_name);
-  });
-
-
- //populate flags
-
- //end populate flats
+//  array.forEach( function (el) {
+//    data = el["id  name"].split(" ")
+//    id = data.shift();
+//    name = data.join(" ");
+//    country_name = {};
+//    countryNames[id] = country_name;
+//    country_name['name'] = name;
+//    country_name['flag'] = 'http://placekitten.com/100/100';
+//    // console.log(country_name);
+//   });
 
 
 d3.json('/map.json', function (error, world) {
@@ -93,8 +86,36 @@ d3.json('/map.json', function (error, world) {
         .style('visibility', 'visible')
         .style('top', (event.pageY-10)+'px')
         .style('left',(event.pageX+10)+'px')
-        .html( '<h2>' + countryNames[d.id]['name'] + '</h2><img src="' + countryNames[d.id]['flag'] + '"/>'); 
+        .html( function () { return htmlGen(d) } ); 
     });
+
+    htmlGen = function (d) {
+      for (key in country_json_data) {
+        var obj = country_json_data[key]
+        console.log(obj.map_id)
+        if (d.id === obj.map_id) {
+          console.log('true');
+          var contents = '<h4>Top Videos in ' + obj.name + '</h4>';
+          contents += '<ul class="box-videos">'
+
+          obj.videos.forEach(function (v) {
+            contents += '<li>' + v.title + '</li>'
+          });
+          
+          contents += '</ul>'
+
+          return contents;
+        }
+      }
+    }
+
+    // .on('click', function (d) { 
+    //   return tooltip
+    //     .style('visibility', 'visible')
+    //     .style('top', (event.pageY-10)+'px')
+    //     .style('left',(event.pageX+10)+'px')
+    //     .html( '<h2>' + countryNames[d.id]['name'] + '</h2><img src="' + countryNames[d.id]['flag'] + '"/>'); 
+    // });
 
   // d3.selectAll('path#id_752, path#id_250, path#id_840').style('fill', '#e74c3c');
 
@@ -112,7 +133,7 @@ d3.json('/map.json', function (error, world) {
 });
 
 
-});
+// });
 
 
 d3.select(self.frameElement).style('height', height + 'px');
