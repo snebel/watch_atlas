@@ -1,0 +1,13 @@
+<h1><%= @country.name %>'s Top Videos</h1>
+
+<ol>
+  <% @country.videos.each do |video| %>
+    <li>
+      <img src="<%= video.thumbnail_url %>">
+      <iframe wdith='360' height='215' src="<%= video.youtube_embed %>"></iframe>
+      <%= video.term %>
+    </li>
+  <% end %>
+</ol>
+
+<p><a href="">See more</a></p>
