@@ -1,0 +1,74 @@
+body {
+  background: #fcfcfa;
+  font-family: Helvetica;
+}
+
+.map-canvas {
+  width: 900px;
+}
+
+
+.stroke {
+  fill: none;
+  /*stroke: #000;*/
+ /* stroke-width: 3px;*/
+}
+
+.fill {
+  fill: #fcfcfa;
+}
+
+.graticule {
+  display:none;
+  fill: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+
+.land {
+  fill: #f7f7f7;
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+.feature {
+  fill: #ccc;
+  cursor: pointer;
+}
+
+.feature.active {
+  fill: orange;
+}
+
+
+.country {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: .1px;
+  stroke-linejoin: round;
+  cursor: pointer;
+}
+
+.hidden { 
+  display: none; 
+}
+div.tooltip {
+  color: #222; 
+  background: #fff; 
+  padding: 4px;
+  box-shadow: 0 0 5px #ccc;
+  max-width: 200px;
+  border-radius: 4px; 
+  position: absolute;
+  opacity:.95;
+}
+
+rect {
+  fill: none;
+  pointer-events: all;
+}

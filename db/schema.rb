@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140201182023) do
+ActiveRecord::Schema.define(version: 20140202002513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140201182023) do
     t.string  "flag_url"
     t.integer "population"
     t.string  "code"
+    t.integer "map_id"
   end
 
   create_table "country_videos", force: true do |t|

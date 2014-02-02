@@ -1,0 +1,23 @@
+<div class="map-canvas"></div>
+
+
+
+<table>
+  <tr>
+    <th>Country</th>
+    <th>Map ID</th>
+    <th>Code</th>
+  </tr>
+
+<% @countries.each do |country| %>
+
+  <tr>
+    <td><%= country.name %></td>
+    <td><%= country.map_id %></td>
+    <td><%= country.code %></td>
+  </tr>
+
+<% end %>
+
+
+</table>
