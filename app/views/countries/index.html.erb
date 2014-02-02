@@ -1,0 +1,27 @@
+
+<% def youtube_embed(youtube_url) %>
+  <% if youtube_url[/youtu\.be\/([^\?]*)/] %>
+    <% youtube_id = $1 %>
+  <% else %>
+    <% youtube_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/] %>
+    <% youtube_id = $5 %>
+  <% end %>
+
+  <iframe width="360" height="215" src="http://www.youtube.com/embed/<%= youtube_id %>"></iframe>
+<% end %>
+
+<% @countries.each do |country| %>
+  <% videos = country.videos %>
+  <ul>
+  <li>
+  <%= country.name %>
+  </li>
+  </ul>
+  <ul>
+  <% videos.each do |video| %>
+    <li><%= youtube_embed(video.normal_url) %></li>
+  <% end %>
+  </ul>
+<% end %>
+
+
