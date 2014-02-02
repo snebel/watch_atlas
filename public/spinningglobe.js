@@ -17,18 +17,18 @@ var projection = d3.geo.orthographic()
 var path = d3.geo.path()
   .projection(projection);
 
-// var graticule = d3.geo.graticule();
-
 var svg = d3.select('#map-canvas').append('svg')
   .attr('width', width)
   .attr('height', height);
 
 var g = svg.append('g');
 
-// g.append("path")
-//   .datum({type: "Sphere"})
-//   .attr("class", "water")
-//   .attr("d", path);
+g.append("path")
+  .datum({type: "Sphere"})
+  .attr("class", "globewater")
+  .style('fill', '#E0F2F7')
+  .style('cursor', 'move')
+  .attr("d", path);
 
 function zoomclick(d) {
 
@@ -66,7 +66,6 @@ function reset() {
 }
 
 
-
 var tooltip = d3.select('body')
   .append('div')
   .attr('class', 'tooltip')
@@ -82,20 +81,6 @@ queue()
 function ready (error, world) {
 
   var countries = topojson.feature(world, world.objects.countries).features
-
-  // g.insert('path')
-  //   .datum(topojson.feature(world, world.objects.land))
-  //   .attr('class', 'land')
-  //   .attr('d', path);
-
-  // g.insert('path')
-  //   .datum(topojson.mesh(world, world.objects.countries, function (a, b) {
-  //     return a !== b;
-  //   }))
-  //   .attr('class', 'boundary')
-  //   .attr('d', path);
-
-  // populate countries, give them an id, add a window box tooltip
 
   g.selectAll('.country')
     .data(countries)
@@ -124,16 +109,17 @@ function ready (error, world) {
     .on('click', zoomclick )
 
 
-
-  g.selectAll('path.country')
+  g.selectAll('path.globewater')
   .call(d3.behavior.drag()
 
       .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
       .on("drag", function() {
         console.log('dragging')
+
         var rotate = projection.rotate();
         projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
-        g.selectAll('path.country').attr('d', path);
+        g.selectAll('path.country')
+        .attr('d', path);
         g.selectAll('.focused').classed('focused', focused = false);
       }))
 
@@ -172,7 +158,6 @@ function ready (error, world) {
 
 }
 
-// });
 
 d3.select(self.frameElement).style('height', height + 'px');
 
