@@ -11,13 +11,18 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
-.map-canvas {
+#map-canvas {
   width: 960px;
   margin: 0 auto;
   margin-top: 40px;
 }
 
+.close-me {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: red;
+}
 
 .stroke {
   fill: none;
@@ -28,6 +33,12 @@ a:hover {
 .fill {
   fill: #fcfcfa;
 }
+
+rect {
+  fill: none;
+  pointer-events: all;
+}
+
 
 .graticule {
   display:none;
