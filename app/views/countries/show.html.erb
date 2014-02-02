@@ -5,7 +5,19 @@
     <li>
       <img src="<%= video.thumbnail_url %>">
       <iframe wdith='360' height='215' src="<%= video.youtube_embed %>"></iframe>
-      <%= video.term %>
+      <p>Category: <%= video.term %></p>
+      <p>
+        <% names = video.country_names(@country.name) %>
+        <% if names.any? %>
+          Also popular in: 
+          <% names.each do |name| %>
+            <%= link_to name, country_path(Country.find_by_name(name)) %>
+          <% end %>
+        <% else %>
+          Not popular in other countries
+        <% end %>
+      </p>
+      
     </li>
   <% end %>
 </ol>
