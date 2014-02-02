@@ -1,5 +1,7 @@
 var country_json_data = $.parseJSON(gon.country_json)
 
+// console.log(country_json_data)
+
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840]
 
 var width = 960,
@@ -105,7 +107,7 @@ d3.json('/map.json', function (error, world) {
           contents += '<ul class="box-videos">'
 
           obj.videos.forEach(function (v) {
-            contents += '<li><img src="http://placekitten.com/30/30" style="float:left; margin:0 5px 5px 0;" /><a target="_blank" href="' + v.url + '">' + v.title + '</a></li>'
+            contents += '<li><img src="http://placekitten.com/40/40" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + v.url + '">' + v.title + '</a></li>'
           });
           contents += '</ul>'
 
@@ -116,14 +118,14 @@ d3.json('/map.json', function (error, world) {
 
 //populate active countries with different color
 
-      for (key in country_json_data) {
-        var obj = country_json_data[key]
-  
-          d3.select('path#id_' + obj.map_id)
-          .style('fill', '#2c3e50')
-          .attr('class', 'active-country')
-          .style('cursor', 'pointer')
-      }
+  for (key in country_json_data) {
+    var obj = country_json_data[key]
+    console.log(obj.map_id)
+    d3.select('path#id_' + obj.map_id)
+      .style('fill', '#2c3e50')
+      .attr('class', 'active-country')
+      .style('cursor', 'pointer')
+  }
 
 
   var tooltip = d3.select('body')
@@ -132,9 +134,6 @@ d3.json('/map.json', function (error, world) {
   .style('position', 'absolute')
   .style('z-index', '10')
   .style('visibility', 'hidden')
-
-
-
 
 });
 

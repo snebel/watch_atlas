@@ -23,7 +23,17 @@ class MaptestsController < ApplicationController
 
     gon.country_json = country_json
 
-    #binding.pry
+
+
+    #####put map ids into code
+
+    @code_hash = {}
+
+    @countries.each do |country| 
+    
+    @code_hash[country.code] = country.map_id
+
+    end
 
   end
 
