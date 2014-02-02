@@ -19,7 +19,6 @@ development:
   host: localhost
   encoding: unicode
   database: wdi_project_2_development
-  username: nhindman
   pool: 5
   password:
 
