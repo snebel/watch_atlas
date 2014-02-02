@@ -30,7 +30,7 @@ Country.all.each do |country|
   results_json["feed"]["entry"].each do |entry|
  
     if big_url_cnt = entry["content"]
-        big_url = big_url_cnt['src']
+      big_url = big_url_cnt['src']
 
       if Video.exists?(big_url: big_url)
         vid = Video.where(big_url: big_url).first
@@ -40,7 +40,8 @@ Country.all.each do |country|
           title: entry["title"],
           normal_url: entry["link"].first["href"],
           big_url: entry["content"]["src"],
-          term: entry["category"][1]["term"]
+          term: entry["category"][1]["term"],
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
         )
       end
     
