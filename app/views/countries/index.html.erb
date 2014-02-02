@@ -3,7 +3,7 @@
 <h1>Top Video Thumbnail for Each Country</h1>
 
 <% @countries.each do |country| %>
-  <h2><%= country.name %></h2>  
+  <h2><%= link_to country.name, country_path(country) %></h2>  
   <ul>
     <li><img src="<%= country.videos.first.thumbnail_url %>"></li>
     <li>      
