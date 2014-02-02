@@ -147,10 +147,9 @@ var feature = svg.selectAll("path");
 
 d3.timer(function() {
   var dt = Date.now() - time;
-  projection.rotate([rotate[0] + velocity[0] * dt, rotate[1] + velocity[1] * dt]);
-  feature.attr("d", path);
-});
-
+    projection.rotate([rotate[0] + velocity[0] * dt, rotate[1] + velocity[1] * dt]);
+    feature.attr("d", path);
+  });
 });
 
 
