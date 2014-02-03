@@ -1,6 +1,4 @@
-// the country data from the controller
 
-var country_json_data = $.parseJSON(gon.country_json);
 
 // all of the countries in the database
 
@@ -178,16 +176,16 @@ function ready (error, world) {
 
 //populate active countries with different color
 
-  for (key in country_json_data) {
-    var obj = country_json_data[key]
-    // console.log(obj.map_id)
-    d3.select('path#id_' + obj.map_id)
+  valid_map_ids.forEach(function (x) {
+    d3.select('path#id_' + x)
       .style('fill', '#16a085')
-      // .attr('class', 'active-country')
       .style('cursor', 'pointer')
-  }
+  });
 
+    
+  
 
+console.log(valid_map_ids)
 
   d3.select('#right-rotator')
   .on('click', function () {
