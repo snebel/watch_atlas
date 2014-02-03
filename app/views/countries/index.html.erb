@@ -5,10 +5,10 @@
 <% @countries.each do |country| %>
   <h2><%= link_to country.name, country_path(country) %></h2>  
   <ul>
-    <li><img src="<%= country.videos.first.thumbnail_url %>"></li>
-    <li>      
+    <li><img class="thumbnail" id="<%= country.id %>" src="<%= country.videos.first.thumbnail_url %>"></li>
+<!--     <li>      
       <iframe wdith='360' height='215' src="<%= country.videos.first.youtube_embed %>"></iframe>
-    </li>
+    </li> -->
   </ul>
 <% end %>
 
