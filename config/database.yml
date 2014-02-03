@@ -49,6 +49,7 @@ test:
   database: wdi_project_2_test
   pool: 5
 
+  
 production:
   adapter: postgresql
   host: localhost

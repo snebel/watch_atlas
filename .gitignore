@@ -14,3 +14,12 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+
+# Ignore Gemfile.lock
+./Gemfile.lock
+
+
+# Ignore database.yml
+./config/database.yml
+
