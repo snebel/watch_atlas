@@ -51,7 +51,7 @@ test:
   username: 
   pool: 5
   password:
-
+  
 production:
   adapter: postgresql
   host: localhost
