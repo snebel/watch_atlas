@@ -20,7 +20,6 @@ development:
   encoding: unicode
   database: wdi_project_2_development
   pool: 5
-  password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -48,15 +47,12 @@ test:
   host: localhost
   encoding: unicode
   database: wdi_project_2_test
-  username: 
   pool: 5
-  password:
+
   
 production:
   adapter: postgresql
   host: localhost
   encoding: unicode
   database: wdi_project_2_production
-  username: 
   pool: 5
-  password:

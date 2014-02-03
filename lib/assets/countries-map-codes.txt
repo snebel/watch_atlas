@@ -1,0 +1,61 @@
+Country Map ID  Code
+Algeria 12  DZ
+Yemen 887 YE
+Austria 40  AT
+Australia 36  AU
+Argentina 32  AR
+Bahrain 48  BH
+Belgium 56  BE
+Brazil  76  BR
+Canada  124 CA
+Chile 152 CL
+Colombia  170 CO
+Czech republic  203 CZ
+Denmark 208 DK
+Egypt 818 EG
+Finland 246 FI
+France  250 FR
+Germany 276 DE
+Ghana 288 GH
+Greece  300 GR
+Hong kong 344 HK
+Hungary 348 HU
+India 356 IN
+Indonesia 360 ID
+Ireland 372 IE
+Israel  376 IL
+Italy 380 IT
+Japan 392 JP
+Jordan  400 JO
+Kenya 404 KE
+South korea 410 KR
+Kuwait  414 KW
+Malaysia  458 MY
+Mexico  484 MX
+Morocco 504 MA
+Netherlands 528 NL
+Norway  578 NO
+Oman  512 OM
+Peru  604 PE
+Philippines 608 PH
+Poland  616 PL
+Portugal  620 PT
+Qatar 634 QA
+Romania 642 RO
+Russian 643 RU
+Saudi arabia  682 SA
+Senegal 686 SN
+Singapore 702 SG
+Slovakia  703 SK
+South africa  710 ZA
+Spain 724 ES
+Sweden  752 SE
+Switzerland 756 CH
+Taiwan  158 TW
+Tunisia 788 TN
+Turkey  792 TR
+Uganda  800 UG
+Ukraine 804 UA
+United arab emirates  784 AE
+United kingdom  826 GB
+United states 840 US
