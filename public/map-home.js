@@ -36,7 +36,11 @@ g.append("path")
   .style('cursor', 'move')
   .attr("d", path);
 
+
+
 function zoomclick(d) {
+
+// being zoom stuff
 
   if (active === d) return reset();
   g.selectAll('.active').classed('active', false);
@@ -49,7 +53,19 @@ function zoomclick(d) {
       + 'scale(' + .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height) + ')'
       + 'translate(' + -(b[1][0] + b[0][0]) / 2 + ',' + -(b[1][1] + b[0][1]) / 2 + ')');
 
-   if ( valid_map_ids.indexOf(d.id) != -1 ) {
+  //end zoom stuff
+
+    $.ajax({
+      method: 'get',
+      url: '/countries/'+d.id,
+      dataType: 'json'
+    })
+    .success(function(data){
+      
+    })
+
+
+    if ( valid_map_ids.indexOf(d.id) != -1 ) {
       return tooltip
         .style('visibility', 'visible')
         .style('display', 'block')
@@ -67,6 +83,11 @@ function zoomclick(d) {
       }
 
 }
+
+
+
+
+
 
 
 function reset() {
@@ -137,6 +158,7 @@ function ready (error, world) {
         var obj = country_json_data[key]
 
         if (d.id === obj.map_id) {
+          console.log(obj);
           var contents = '<h3>' + obj.name + '</h3>';
           contents += '<ul class="box-videos">'
 

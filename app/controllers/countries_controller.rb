@@ -21,4 +21,8 @@ class CountriesController < ApplicationController
   def destroy
   end
 
+  def get_country_data
+
+  end
+
 end
