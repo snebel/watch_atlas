@@ -1,5 +1,5 @@
 // the country data from the controller
-
+'use strict';
 var country_json_data = $.parseJSON(gon.country_json);
 
 // all of the countries in the database
@@ -65,15 +65,15 @@ function zoomclick(d) {
     });
 
     function makeTooltip(data) { //data => [country, vid1, vid2,...]
-      
-        return tooltip
-          .style('visibility', 'visible')
-          .style('display', 'block')
-          .style('top', (event.pageY) +'px')
-          .style('left',(event.pageX - 10) +'px')
-          .html( function () { return htmlGen(data) });
-    
+      console.log('tooltip')      
+      return tooltip
+        .style('visibility', 'visible')
+        .style('display', 'block')
+        .style('top', (event.pageY) +'px')
+        .style('left',(event.pageX - 10) +'px')
+        .html( function () { return htmlGen(data) });
     }
+  }
 
 
 
@@ -146,25 +146,23 @@ function ready (error, world) {
 
     htmlGen = function (data) {
       
-          var contents = '<h3>' + data.first.name + '</h3>';
-          contents += '<ul class="box-videos">'
+      var contents = '<h3>' + data.first.name + '</h3>';
+      contents += '<ul class="box-videos">'
+      
+      for (var i = 1; i < data.length; i++) {
+        contents += '<li><img src="' + v[i].thumbnail_url + '" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + v[i].url + '">"' + v[i].title + '</a></li>'
+      };
 
-          
-          for (var i = 1; i < data.length; i++) {
+      contents += '</ul>'
+      contents += '<div class="close-me">close</div>'
 
-            contents += '<li><img src="' + v[i].thumbnail_url + '" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + v[i].url + '">"' + v[i].title + '</a></li>'
-          };
+      $('body').on('click', '.close-me', function () {
+        $('.tooltip').hide();
+        reset();
+      });
 
-          contents += '</ul>'
-          contents += '<div class="close-me">close</div>'
-
-          $('body').on('click', '.close-me', function () {
-            $('.tooltip').hide();
-            reset();
-          });
-
-          return contents;
-     
+      return contents;
+      console.log('htmlgen');
     }
 
     htmlGenNoData = function (d) {
