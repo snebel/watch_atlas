@@ -1,4 +1,8 @@
+// the country data from the controller
+
 var country_json_data = $.parseJSON(gon.country_json)
+
+//all of the map ids for the countries in our database
 
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
@@ -22,6 +26,8 @@ var svg = d3.select('#map-canvas').append('svg')
   .attr('height', height);
 
 var g = svg.append('g');
+
+// the water
 
 g.append("path")
   .datum({type: "Sphere"})
@@ -49,7 +55,8 @@ function zoomclick(d) {
 
         .style('top', (event.pageY) +'px')
         .style('left',(event.pageX - 10) +'px')
-        .html( function () { return htmlGen(d) } );
+        .html( function () { return htmlGen(d) });
+        
       }else{
         return tooltip
         .style('visibility', 'visible')
@@ -59,6 +66,7 @@ function zoomclick(d) {
       }
 
 }
+
 
 function reset() {
   g.selectAll('.active').classed('active', active = false);
@@ -73,7 +81,6 @@ var tooltip = d3.select('body')
   .style('z-index', '9999')
   .style('visibility', 'hidden');
 
-
 queue()
     .defer(d3.json, '/map.json')
     .await(ready);
@@ -87,7 +94,6 @@ function ready (error, world) {
     .enter().insert('path')
     .attr('class', 'country')
     .attr('d', path)
-    // .on('click', zoomclick)
     .attr('id', function (d) {
       return 'id_' + d.id
     })
@@ -106,14 +112,14 @@ function ready (error, world) {
         .style('fill', '#95a5a6')
       }
     })
-    .on('click', zoomclick )
+    .on('click', zoomclick)
 
 
   g.selectAll('path.globewater')
   .call(d3.behavior.drag()
 
       .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
-      .on("drag", function() {
+      .on('drag', function() {
         console.log('dragging')
 
         var rotate = projection.rotate();
@@ -136,7 +142,6 @@ function ready (error, world) {
             contents += '<li><img src="http://placekitten.com/40/40" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + v.url + '">"' + v.title + '</a></li>'
           });
           contents += '</ul>'
-
           contents += '<div class="close-me">close</div>'
 
           return contents;
@@ -155,16 +160,8 @@ function ready (error, world) {
       .style('cursor', 'pointer')
   }
 
-
 }
 
 
 d3.select(self.frameElement).style('height', height + 'px');
-
-
-
-
-
-
-
 
