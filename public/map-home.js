@@ -64,16 +64,19 @@ function zoomclick(d) {
       makeTooltip(data);
     });
 
-    function makeTooltip(data) { //data => [country, vid1, vid2,...]    
+    var page_y = event.pageY;
+    var page_x = event.pageX;
+
+    function makeTooltip(data) { //data => [country, vid1, vid2,...]  
+
       return tooltip
         .style('visibility', 'visible')
         .style('display', 'block')
-        .style('top', (event.pageY) +'px')
-        .style('left',(event.pageX - 10) +'px')
+        .style('top', (page_y + 'px'))
+        .style('left', (page_x - 10  + 'px'))
         .html( function () { return htmlGen(data) });
     }
   }
-
 
 
 function reset() {
