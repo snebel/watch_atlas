@@ -40,7 +40,8 @@ function zoomclick(d) {
 
   if (active === d) return reset();
   g.selectAll('.active').classed('active', false);
-  d3.select(this).classed('active', active = d);
+  d3.select(this)
+    .classed('active', active = d);
 
   var b = path.bounds(d);
   g.transition().duration(750).attr('transform',
@@ -48,21 +49,21 @@ function zoomclick(d) {
       + 'scale(' + .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height) + ')'
       + 'translate(' + -(b[1][0] + b[0][0]) / 2 + ',' + -(b[1][1] + b[0][1]) / 2 + ')');
 
-
    if ( valid_map_ids.indexOf(d.id) != -1 ) {
       return tooltip
         .style('visibility', 'visible')
-
+        .style('display', 'block')
         .style('top', (event.pageY) +'px')
         .style('left',(event.pageX - 10) +'px')
         .html( function () { return htmlGen(d) });
-        
+
       }else{
         return tooltip
         .style('visibility', 'visible')
+        .style('display', 'block')
         .style('top', (event.pageY - 100) + 'px')
         .style('left',(event.pageX - 100) + 'px')
-        .html( 'Sorry, there is no data for this country' ); 
+        .html( function () { return htmlGenNoData(d) } ); 
       }
 
 }
@@ -112,7 +113,7 @@ function ready (error, world) {
         .style('fill', '#95a5a6')
       }
     })
-    .on('click', zoomclick)
+    .on('click', zoomclick )
 
 
   g.selectAll('path.globewater')
@@ -144,10 +145,28 @@ function ready (error, world) {
           contents += '</ul>'
           contents += '<div class="close-me">close</div>'
 
+          $('body').on('click', '.close-me', function () {
+            $('.tooltip').hide();
+            reset();
+          });
+
           return contents;
         }
       }
     }
+
+    htmlGenNoData = function (d) {
+      var contents = 'Sorry, there is no YouTube data <br>for this country';
+          contents += '<div class="close-me">zoom out</div>'
+
+        $('body').on('click', '.close-me', function () {
+          $('.tooltip').hide();
+          reset();
+        });
+
+        return contents;
+    }
+    
 
 //populate active countries with different color
 
@@ -164,4 +183,3 @@ function ready (error, world) {
 
 
 d3.select(self.frameElement).style('height', height + 'px');
-

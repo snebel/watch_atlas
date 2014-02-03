@@ -24,6 +24,10 @@ a:hover {
   color: red;
 }
 
+.close-me:hover {
+  cursor: pointer;
+}
+
 .stroke {
   fill: none;
   /*stroke: #000;*/
