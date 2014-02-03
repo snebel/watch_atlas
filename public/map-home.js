@@ -1,6 +1,6 @@
 // the country data from the controller
 
-var country_json_data = $.parseJSON(gon.country_json)
+var country_json_data = $.parseJSON(gon.country_json);
 
 // all of the countries in the database
 
@@ -57,32 +57,23 @@ function zoomclick(d) {
 
     $.ajax({
       method: 'get',
-      url: '/countries/'+d.id,
+      url: '/countries/maps/'+d.id,
       dataType: 'json'
     })
     .success(function(data){
+      makeTooltip(data);
+    });
+
+    function makeTooltip(data) { //data => [country, vid1, vid2,...]
       
-    })
-
-
-    if ( valid_map_ids.indexOf(d.id) != -1 ) {
-      return tooltip
-        .style('visibility', 'visible')
-        .style('display', 'block')
-        .style('top', (event.pageY) +'px')
-        .style('left',(event.pageX - 10) +'px')
-        .html( function () { return htmlGen(d) });
-
-      }else{
         return tooltip
-        .style('visibility', 'visible')
-        .style('display', 'block')
-        .style('top', (event.pageY - 100) + 'px')
-        .style('left',(event.pageX - 100) + 'px')
-        .html( function () { return htmlGenNoData(d) } ); 
-      }
-
-}
+          .style('visibility', 'visible')
+          .style('display', 'block')
+          .style('top', (event.pageY) +'px')
+          .style('left',(event.pageX - 10) +'px')
+          .html( function () { return htmlGen(data) });
+    
+    }
 
 
 
@@ -153,18 +144,17 @@ function ready (error, world) {
       }))
 
 
-    htmlGen = function (d) {
-      for (key in country_json_data) {
-        var obj = country_json_data[key]
-
-        if (d.id === obj.map_id) {
-          console.log(obj);
-          var contents = '<h3>' + obj.name + '</h3>';
+    htmlGen = function (data) {
+      
+          var contents = '<h3>' + data.first.name + '</h3>';
           contents += '<ul class="box-videos">'
 
-          obj.videos.forEach(function (v) {
-            contents += '<li><img src="http://placekitten.com/40/40" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + v.url + '">"' + v.title + '</a></li>'
-          });
+          
+          for (var i = 1; i < data.length; i++) {
+
+            contents += '<li><img src="' + v[i].thumbnail_url + '" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + v[i].url + '">"' + v[i].title + '</a></li>'
+          };
+
           contents += '</ul>'
           contents += '<div class="close-me">close</div>'
 
@@ -174,8 +164,7 @@ function ready (error, world) {
           });
 
           return contents;
-        }
-      }
+     
     }
 
     htmlGenNoData = function (d) {
