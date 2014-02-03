@@ -1,5 +1,5 @@
 // the country data from the controller
-'use strict';
+
 var country_json_data = $.parseJSON(gon.country_json);
 
 // all of the countries in the database
@@ -64,8 +64,7 @@ function zoomclick(d) {
       makeTooltip(data);
     });
 
-    function makeTooltip(data) { //data => [country, vid1, vid2,...]
-      console.log('tooltip')      
+    function makeTooltip(data) { //data => [country, vid1, vid2,...]    
       return tooltip
         .style('visibility', 'visible')
         .style('display', 'block')
@@ -74,10 +73,6 @@ function zoomclick(d) {
         .html( function () { return htmlGen(data) });
     }
   }
-
-
-
-
 
 
 
@@ -145,12 +140,12 @@ function ready (error, world) {
 
 
     htmlGen = function (data) {
-      
-      var contents = '<h3>' + data.first.name + '</h3>';
+
+      var contents = '<h3>' + data[0].name + '</h3>';
       contents += '<ul class="box-videos">'
       
       for (var i = 1; i < data.length; i++) {
-        contents += '<li><img src="' + v[i].thumbnail_url + '" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + v[i].url + '">"' + v[i].title + '</a></li>'
+        contents += '<li><img src="' + data[i].thumbnail_url + '" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + data[i].normal_url + '">"' + data[i].title + '</a></li>'
       };
 
       contents += '</ul>'
@@ -161,9 +156,9 @@ function ready (error, world) {
         reset();
       });
 
-      return contents;
-      console.log('htmlgen');
+      return contents;      
     }
+
 
     htmlGenNoData = function (d) {
       var contents = 'Sorry, there is no YouTube data <br>for this country';
