@@ -19,6 +19,7 @@ development:
   host: localhost
   encoding: unicode
   database: wdi_project_2_development
+  username: brendan
   pool: 5
   password:
 
@@ -48,7 +49,7 @@ test:
   host: localhost
   encoding: unicode
   database: wdi_project_2_test
-  username: nhindman
+  username: brendan
   pool: 5
   password:
 
@@ -57,6 +58,6 @@ production:
   host: localhost
   encoding: unicode
   database: wdi_project_2_production
-  username: nhindman
+  username: brendan
   pool: 5
   password:
