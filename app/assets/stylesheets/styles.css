@@ -1,0 +1,124 @@
+body {
+  background: #f7f7f7;
+  font-family: Helvetica;
+}
+
+a {
+  color: #e74c3c;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+#map-canvas {
+  width: 960px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.close-me {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: red;
+}
+
+.close-me:hover {
+  cursor: pointer;
+}
+
+.stroke {
+  fill: none;
+  /*stroke: #000;*/
+ /* stroke-width: 3px;*/
+}
+
+.fill {
+  fill: #fcfcfa;
+}
+
+rect {
+  fill: none;
+  pointer-events: all;
+}
+
+
+.graticule {
+  display:none;
+  fill: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+
+.land {
+  fill: #f7f7f7;
+}
+
+ul.box-videos li {
+  margin: 10px 0;
+  font-size: 14px;
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px;
+  min-height: 40px;
+}
+
+ul.box-videos {
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+.feature {
+  fill: #ccc;
+  cursor: pointer;
+}
+
+.feature.active {
+  fill: orange;
+}
+
+.country .active {
+  fill: orange;
+}
+
+.country {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: .1px;
+  stroke-linejoin: round;
+  cursor: pointer;
+}
+
+.hidden { 
+  display: none; 
+}
+
+h3 {
+  margin: 5px 0;
+}
+
+.tooltip {
+  color: #222; 
+  background: #fff; 
+  padding: 10px;
+  box-shadow: 0 0 5px #ccc;
+  width: 300px;
+  border-radius: 4px; 
+  position: absolute;
+  opacity:.95;
+}
+
+rect {
+  fill: none;
+  pointer-events: all;
+}

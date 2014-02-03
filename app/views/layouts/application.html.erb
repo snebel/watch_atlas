@@ -2,8 +2,13 @@
 <html>
 <head>
   <title>WdiProject2</title>
+  <%= include_gon %>
+
+
+
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -11,4 +16,12 @@
 <%= yield %>
 
 </body>
+
+  <script src='http://d3js.org/d3.v3.min.js'></script>
+  <script src='http://d3js.org/topojson.v1.min.js'></script>
+  <script src='/queue.js'></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src='/map-home.js'></script>
+  
+<!-- <script type="text/javascript" src="/map-home.js"></script> -->
 </html>
