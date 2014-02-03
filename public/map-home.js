@@ -62,15 +62,12 @@ function countryClick(d) {
     //end zoom stuff
   }
 
-  var page_y = event.pageY;
-  var page_x = event.pageX;
-
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...]  
     return tooltip
       .style('visibility', 'visible')
       .style('display', 'block')
-      .style('top', (page_y + 'px'))
-      .style('left', (page_x - 10 + 'px'))
+      .style('bottom', '30px')
+      .style('right', '30px')
       .html(function () {
         if (good) { return htmlSuccessGen(data); }
         else { return htmlFailGen(); }

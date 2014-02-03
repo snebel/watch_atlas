@@ -108,14 +108,14 @@ h3 {
 }
 
 .tooltip {
-  color: #222; 
-  background: #fff; 
+  color: #fff; 
+  background: #000; 
   padding: 10px;
   box-shadow: 0 0 5px #ccc;
-  width: 300px;
+  width: 550px;
   border-radius: 4px; 
   position: absolute;
-  opacity:.95;
+  opacity:.90;
 }
 
 rect {
