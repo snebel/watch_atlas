@@ -1,6 +1,6 @@
 
 var youtube_app = {
-
+  var self = this;
 
   bindEvents: function() {
     $(".thumbnail").on("click", function(){
@@ -10,7 +10,10 @@ var youtube_app = {
         dataType: 'json'
       })
       .success(function(data){
-        console.log(data);
+        $(data)each(function(i, obj){
+          // var vid = self.createTask(obj.normal_url);
+          // vid.render(); ...or something like this
+        })
       })
 
     });
