@@ -7,14 +7,14 @@ var country_json_data = $.parseJSON(gon.country_json)
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
 var width = 960,
-  height = 650,
+  height = 560,
   sens = 0.25,
   focused,
   active;
 
-var projection = d3.geo.mercator()
+var projection = d3.geo.orthographic()
   .translate([width / 2, height / 2])
-  .scale(300)
+  .scale(200)
   .precision(.1)
   .clipAngle(90)
 
@@ -122,9 +122,10 @@ function ready (error, world) {
       .origin(function() { var r = projection.rotate(); return {x: r[0] / sens, y: -r[1] / sens}; })
       .on('drag', function() {
         console.log('dragging')
-
+        var rotation_amount = 50;
+        console.log(d3.event);
         var rotate = projection.rotate();
-        projection.rotate([d3.event.x * sens, -d3.event.y * sens, rotate[2]]);
+        projection.rotate([ (rotate[0] + rotation_amount ), 0, 0 ]);
         g.selectAll('path.country')
         .attr('d', path);
         g.selectAll('.focused').classed('focused', focused = false);
@@ -179,7 +180,38 @@ function ready (error, world) {
       .style('cursor', 'pointer')
   }
 
+
+
+  d3.select('#right-rotator')
+  .on('click', function () {
+    var rotate = projection.rotate();
+      var rotation_amount = 40
+      var x_point = d3.event.x
+      var y_point = d3.event.y
+      console.log(rotate);
+        projection.rotate([ ( rotate[0] - rotation_amount ), 0, 0 ]);
+        g.selectAll('path.country')
+        .attr('d', path);
+        // g.selectAll('.focused').classed('focused', focused = false);
+  });
+
+
+    d3.select('#left-rotator')
+  .on('click', function () {
+    var rotate = projection.rotate();
+      var rotation_amount = 40
+      var x_point = d3.event.x
+      var y_point = d3.event.y
+      console.log(rotate);
+        projection.rotate([ ( rotate[0] + rotation_amount ), 0, 0 ]);
+        g.selectAll('path.country')
+        .attr('d', path);
+        // g.selectAll('.focused').classed('focused', focused = false);
+  });
+
 }
+
+
 
 
 d3.select(self.frameElement).style('height', height + 'px');
