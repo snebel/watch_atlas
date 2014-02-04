@@ -197,36 +197,36 @@ function ready(error, world) {
     return contents;
   }
 
-    //populate active countries with different color
+  //populate active countries with different color
 
-    valid_map_ids.forEach(function (x) {
-      d3.select('path#id_' + x)
-        .style('fill', '#16a085')
-        .style('cursor', 'pointer')
+  valid_map_ids.forEach(function (x) {
+    d3.select('path#id_' + x)
+      .style('fill', '#16a085')
+      .style('cursor', 'pointer')
+  });
+
+  d3.select('#right-rotator')
+    .on('click', function () {
+      var rotate = projection.rotate();
+      var rotation_amount = 40;
+      var x_point = d3.event.x;
+      var y_point = d3.event.y;
+      console.log(rotate);
+      projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
+      g.selectAll('path.country').attr('d', path);
     });
 
-    d3.select('#right-rotator')
-      .on('click', function () {
-        var rotate = projection.rotate();
-        var rotation_amount = 40;
-        var x_point = d3.event.x;
-        var y_point = d3.event.y;
-        console.log(rotate);
-        projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
-        g.selectAll('path.country').attr('d', path);
-      });
 
-
-    d3.select('#left-rotator')
-      .on('click', function () {
-        var rotate = projection.rotate();
-        var rotation_amount = 40;
-        var x_point = d3.event.x;
-        var y_point = d3.event.y;
-        console.log(rotate);
-        projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
-        g.selectAll('path.country').attr('d', path);
-      });
+  d3.select('#left-rotator')
+    .on('click', function () {
+      var rotate = projection.rotate();
+      var rotation_amount = 40;
+      var x_point = d3.event.x;
+      var y_point = d3.event.y;
+      console.log(rotate);
+      projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
+      g.selectAll('path.country').attr('d', path);
+    });
 
 }
 
