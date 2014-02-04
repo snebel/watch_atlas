@@ -16,7 +16,7 @@ class CountriesController < ApplicationController
       format.html
 
       format.json do
-        render json: ([@country] + @country.videos).to_json
+        render json: ([@country] + @country.videos + [@info]).to_json
       end
     end
   end

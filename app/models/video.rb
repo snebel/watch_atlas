@@ -17,5 +17,21 @@ class Video < ActiveRecord::Base
     names = self.countries.map { |country| country.name } - [name]
   end
 
-
+  def share_info
+    url = self.normal_url
+    json_stats = HTTParty.get("http://api.sharedcount.com/?url=#{url}&apikey=45d3a0a518483b0d651a584b54083f2b5a743045")
+    # parsed_stats = JSON.parse(json_stats)
+    fb_hash = json_stats["Facebook"]
+    twitter = json_stats["Twitter"]
+    google = json_stats["GooglePlusOne"]
+    pinterest = json_stats["Pinterest"]
+    return {
+      commentcount: fb_hash["comment_count"], 
+      likecount: fb_hash["like_count"], 
+      sharecount: fb_hash["share_count"],
+      tweets: twitter,
+      plus_ones: google,
+      pins: pinterest,
+    }
+  end
 end
