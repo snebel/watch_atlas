@@ -82,7 +82,7 @@ rect {
   fill: #f7f7f7;
 }
 
-ul.box-videos li {
+/*ul.box-videos li {
   margin: 10px 0;
   font-size: 14px;
   background: #f7f7f7;
@@ -90,7 +90,7 @@ ul.box-videos li {
   border-radius: 4px;
   padding: 6px;
   height: 60px;
-}
+}*/
 
 h1 a {
   color: #fff;

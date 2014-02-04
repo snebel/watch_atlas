@@ -173,11 +173,11 @@ function ready(error, world) {
 
     contents.append(div);
     contents.append($top_videos_div);
-    contents.append($news_div);
-    contents.append($music_div);
-    contents.append($tech_div);
-    contents.append($entertainment_div);
-    contents.append($animals_div);
+    // contents.append($news_div);
+    // contents.append($music_div);
+    // contents.append($tech_div);
+    // contents.append($entertainment_div);
+    // contents.append($animals_div);
 
     for (var i=1; i < data.length; i++) {
 
@@ -222,6 +222,8 @@ function ready(error, world) {
 
 
     }
+
+  $top_videos_div.prepend('<h2>Top Videos</h2>');
 
   $('body').on('click', '.close-me', function () {
       $('.tooltip').animate({'opacity':'0'}, 400)
