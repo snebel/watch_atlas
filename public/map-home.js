@@ -221,11 +221,11 @@ function ready(error, world) {
 
       if (data[i].top === true) {
 
-        $flexslider_ul_top_videos.append('<li><a class="thumbnail"><img src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>')
+        $flexslider_ul_top_videos.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       } else if (data[i].term === "News") {
 
-        $flexslider_ul_news.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
+        $flexslider_ul_news.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>');
 
       }else if (data[i].term === "Music"){
 
@@ -325,7 +325,44 @@ function ready(error, world) {
 
 function addListener() {
   $('.thumbnail').on("click", function() {
-    console.log("hello")
+    var self = this;
+
+    embed_url = $(this).children('img').attr("data-id");
+
+
+
+    $embed_window = $('<div>');
+    $embed_window.attr('class', 'embed_window');
+    $embed_window.css('position', 'absolute');
+    $embed_window.css('top', '30px');
+    $embed_window.css('right', '30px');
+
+    $embed_window.css('z-index', '99999');
+    $embed_window.css('display', 'block')
+    $embed_window.css('background', 'green')
+
+    $video_iframe = $('<iframe>');
+    $video_iframe.attr('src', embed_url);
+    $video_iframe.css('width', '560');
+    $video_iframe.css('height', '360');
+
+
+    $embed_window.append($video_iframe)
+
+    $('body').append($embed_window)
+
+    // embed_window = d3.select('body')
+    //     .append('div')
+    //     .attr('class', 'embed_window')
+    //     .style('position', 'absolute')
+    //     .style('z-index', '9999')
+    //     .style('opacity', '0')
+    //   // .style('visibility', 'visible')
+    //     .style('top', '30px')
+    //     .style('right', '30px')
+    //     .html()
+    //   .transition().duration(400).style('opacity', '1')
+      // .style('display', 'block')
   })
 }
 
