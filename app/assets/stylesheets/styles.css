@@ -1,5 +1,5 @@
 body {
-  background: url('/stardust.png');
+  /*background: url('/stardust.png');*/
   font-family: Helvetica;
 }
 
@@ -8,18 +8,44 @@ a {
   text-decoration: none;
 }
 
+svg {
+  margin: 50px 0 0 245px;
+}
+
+/*#star-background {
+  width: 700px;
+  height:600px;
+  position: absolute;
+  z-index: 999999;
+  pointer-events: none;
+  background: url('/stardust.png');
+}*/
+
 a:hover {
   text-decoration: underline;
 }
+
 #map-canvas {
-  width: 900;
-  display: inline;
+  width: 600px;
+  position:absolute;
+  /*display: inline;*/
+  z-index: 99;
+}
+
+#television {
+  width: 980px;
+  height:653px;
+  margin: 0 auto;
+  position: absolute;
+  background: url('/oldschooltv.png');
+  z-index: 999999;
+  pointer-events: none;
 }
 
 #main-container {
   width: 960px;
   margin: 0 auto;
-  margin-top: 65px;
+  margin-top: 30px;
 }
 
 #left-rotator {
@@ -45,8 +71,8 @@ a:hover {
 
 .close-me {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 100px;
+  right: 200px;
   color: red;
 }
 
@@ -155,12 +181,12 @@ iframe {
 .tooltip, .embed_window {
   color: #fff; 
   background: #000; 
-  padding: 10px;
-  border: 3px solid #fff;
-  width: 850px;
-  height: 500px;
+  padding: 10px 10px 10px 30px;
+/*  border: 3px solid #fff;*/
+  width: 620px;
+  height: 475px;
   overflow: auto;
-  border-radius: 4px; 
+/*  border-radius: 4px; */
   position: absolute;
 }
 
