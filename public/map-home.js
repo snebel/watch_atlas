@@ -29,7 +29,7 @@ g.append("path")
         type: "Sphere"
     })
     .attr("class", "globewater")
-    .style('fill', '#E0F2F7')
+    .style('fill', '#BEE9F5')
     .style('cursor', 'move')
     .attr("d", path);
 
@@ -67,7 +67,7 @@ function countryClick(d) {
     return tooltip
       .style('visibility', 'visible')
       .style('display', 'block')
-      .style('bottom', '30px')
+      .style('top', '30px')
       .style('right', '30px')
       .html(function () {
         if (good) { return htmlSuccessGen(data); }
@@ -160,7 +160,9 @@ function ready(error, world) {
     for (var i=1; i < data.length; i++) {
       var li = $('<li>');
 
-      var frame = $('<iframe>').attr('src', data[i].thumbnail_url);
+      // var frame = $('<iframe>').attr('src', data[i].thumbnail_url);
+      // using image until we figure out iframe thing
+      var frame = $('<img>').attr('src', data[i].thumbnail_url);
 
       frame.css('float', 'left').css('margin', '0 8px 5px 0');
       li.append(frame);
