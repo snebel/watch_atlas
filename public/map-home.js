@@ -225,23 +225,23 @@ function ready(error, world) {
 
       } else if (data[i].term === "News") {
 
-        $flexslider_ul_news.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>');
+        $flexslider_ul_news.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       }else if (data[i].term === "Music"){
 
-        $flexslider_ul_music.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
+        $flexslider_ul_music.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       }else if (data[i].term === "Tech"){
 
-        $flexslider_ul_tech.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
+        $flexslider_ul_tech.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       }else if (data[i].term === "Entertainment"){
 
-        $flexslider_ul_entertainment.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
+        $flexslider_ul_entertainment.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       }else if (data[i].term === "Animals"){
 
-        $flexslider_ul_animals.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
+        $flexslider_ul_animals.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
       }
 
       // var li = $('<li>');
@@ -343,9 +343,9 @@ function addListener() {
 
     $video_iframe = $('<iframe>');
     $video_iframe.attr('src', embed_url);
-    $video_iframe.css('width', '560');
-    $video_iframe.css('height', '360');
-
+    $video_iframe.attr('class', 'click_page_embed_url');
+    $video_iframe.css('width', '869');
+    $video_iframe.css('height', '481');
 
     $embed_window.append($video_iframe)
 
