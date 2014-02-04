@@ -53,6 +53,7 @@ function countryClick(d) {
           itemWidth: 230,
           itemMargin: 15
           });
+        addListener();
         })
     .fail(function(data){
       makeTooltip(data, false);  
@@ -151,6 +152,7 @@ function ready(error, world) {
 
   htmlSuccessGen = function (data) {
     // $('.tooltip').empty();
+    console.log(data)
     var contents = $('.tooltip');
     var header = $('<h1>');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
@@ -219,7 +221,7 @@ function ready(error, world) {
 
       if (data[i].top === true) {
 
-        $flexslider_ul_top_videos.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
+        $flexslider_ul_top_videos.append('<li><a class="thumbnail"><img src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>')
 
       } else if (data[i].term === "News") {
 
@@ -251,7 +253,8 @@ function ready(error, world) {
       // vid_list.append(li);
 
 
-    }
+    }  
+
 
   $top_videos_div.prepend('<h2>Top Videos</h2>');
   $news_div.prepend('<h2>News</h2>');
@@ -320,5 +323,11 @@ function ready(error, world) {
 
 }
 
+function addListener() {
+  $('.thumbnail').on("click", function() {
+    console.log("hello")
+  })
+}
 
 d3.select(self.frameElement).style('height', height + 'px');
+
