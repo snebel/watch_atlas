@@ -24,12 +24,14 @@ class Video < ActiveRecord::Base
     fb_hash = json_stats["Facebook"]
     twitter = json_stats["Twitter"]
     google = json_stats["GooglePlusOne"]
+    pinterest = json_stats["Pinterest"]
     return {
       commentcount: fb_hash["comment_count"], 
       likecount: fb_hash["like_count"], 
       sharecount: fb_hash["share_count"],
       tweets: twitter,
       plus_ones: google,
+      pins: pinterest,
     }
   end
 end
