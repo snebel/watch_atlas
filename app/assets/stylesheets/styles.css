@@ -12,9 +12,35 @@ a:hover {
   text-decoration: underline;
 }
 #map-canvas {
+  width: 900;
+  display: inline;
+}
+
+#main-container {
   width: 960px;
   margin: 0 auto;
-  margin-top: 40px;
+  margin-top: 50px;
+}
+
+#left-rotator {
+  float: left;
+  width: 30px;
+  margin-top: 270px;
+}
+
+#right-rotator {
+  float: right;
+  width: 30px;
+  margin-top: 270px;
+}
+
+#right-rotator img, #left-rotator img {
+  width: 25px;
+}
+
+#right-rotator:hover, #left-rotator:hover {
+  cursor: pointer;
+  opacity: .8;
 }
 
 .close-me {
@@ -108,14 +134,14 @@ h3 {
 }
 
 .tooltip {
-  color: #222; 
-  background: #fff; 
+  color: #fff; 
+  background: #000; 
   padding: 10px;
   box-shadow: 0 0 5px #ccc;
-  width: 300px;
+  width: 550px;
   border-radius: 4px; 
   position: absolute;
-  opacity:.95;
+  opacity:.90;
 }
 
 rect {
