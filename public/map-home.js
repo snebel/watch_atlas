@@ -44,6 +44,7 @@ function countryClick(d) {
     dataType: 'json'
   })
     .success(function (data) {
+      console.log(data)
       zoomIn();
       makeTooltip(data, true);
     })
@@ -145,10 +146,12 @@ function ready(error, world) {
   htmlSuccessGen = function (data) {
     $('.tooltip').empty();
     var contents = $('.tooltip');
-    var header = $('<h3>');
+    var header = $('<h1>');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
+    var flag = $('<img>').attr('src', data[0].flag_url).css('width', '100');
     header.append(title);
     contents.append(header);
+    contents.append(flag);
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
 

@@ -1,5 +1,5 @@
 body {
-  background: #f7f7f7;
+  background: url('/stardust.png');
   font-family: Helvetica;
 }
 
@@ -19,7 +19,7 @@ a:hover {
 #main-container {
   width: 960px;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 65px;
 }
 
 #left-rotator {
@@ -92,6 +92,10 @@ ul.box-videos li {
   height: 60px;
 }
 
+h1 a {
+  color: #fff;
+}
+
 ul.box-videos {
   list-style-type: none;
   padding-left: 5px;
@@ -137,7 +141,7 @@ h3 {
   color: #fff; 
   background: #000; 
   padding: 10px;
-  box-shadow: 0 0 5px #ccc;
+  border: 3px solid #fff;
   width: 550px;
   border-radius: 4px; 
   position: absolute;
