@@ -161,8 +161,11 @@ function ready(error, world) {
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
     var div = $('<div>').addClass('close-me').text('close');
-    var $flexslider = $('<div>').addClass('flexslider');
-    var $flexslider_ul = $('<ul>').addClass('slides');
+    var $flexslider_top_videos = $('<div>').addClass('flexslider');
+    var $flexslider_ul_top_videos = $('<ul>').addClass('slides');
+
+    var $flexslider_news = $('<div>').addClass('flexslider');
+    var $flexslider_ul_news = $('<ul>').addClass('slides');
 
     var $top_videos_div = $('<div>').attr('id', 'top-videos')
     var $news_div = $('<div>').attr('id', 'news-videos')
@@ -173,7 +176,7 @@ function ready(error, world) {
 
     contents.append(div);
     contents.append($top_videos_div);
-    // contents.append($news_div);
+    contents.append($news_div);
     // contents.append($music_div);
     // contents.append($tech_div);
     // contents.append($entertainment_div);
@@ -183,17 +186,19 @@ function ready(error, world) {
 
       // console.log(data[i].term)
 
-      $top_videos_div.append($flexslider);
+      $top_videos_div.append($flexslider_top_videos);
+      $news_div.append($flexslider_news);
 
-      $flexslider.append($flexslider_ul);
+      $flexslider_top_videos.append($flexslider_ul_top_videos);
+      $flexslider_news.append($flexslider_ul_news);
 
       if (data[i].top === true) {
 
-        $flexslider_ul.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
+        $flexslider_ul_top_videos.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
 
       } else if (data[i].term === "News") {
 
-        // $news_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_news.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
 
       }else if (data[i].term === "Music"){
 
@@ -224,6 +229,7 @@ function ready(error, world) {
     }
 
   $top_videos_div.prepend('<h2>Top Videos</h2>');
+  $news_div.prepend('<h2>News</h2>');
 
   $('body').on('click', '.close-me', function () {
       $('.tooltip').animate({'opacity':'0'}, 400)
