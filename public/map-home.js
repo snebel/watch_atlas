@@ -133,7 +133,7 @@ function ready(error, world) {
       })
       .on('drag', function () {
         console.log('dragging')
-        var rotation_amount = 100;
+        var rotation_amount = 500;
         console.log(d3.event);
         var rotate = projection.rotate();
         projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
@@ -175,18 +175,29 @@ function ready(error, world) {
 
       // console.log(data[i].term)
 
-      if (data[i].term === "News") {
+      if (data[i].top === true) {
+
+        $top_videos_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+
+      } else if (data[i].term === "News") {
 
         $news_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
 
       }else if (data[i].term === "Music"){
-      console.log('music: ' + data[i].term)
+
+        $music_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+
       }else if (data[i].term === "Tech"){
-      console.log('tech: ' + data[i].term)
+
+        $tech_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+
       }else if (data[i].term === "Entertainment"){
-      console.log('entertainment: ' + data[i].term)
+
+        $entertainment_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+
       }else if (data[i].term === "Animals"){
-        console.log('animals: ' + data[i].term)
+
+        $animals_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
       }
 
       // var li = $('<li>');

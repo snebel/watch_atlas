@@ -119,7 +119,7 @@ Country.all.each do |country|
   end
 
   # categories = ["News", "Music", "Entertainment", "Tech", "Animals"]
-  news_url = "https://gdata.youtube.com/feeds/api/standardfeeds/US/most_popular_News?v=2&time=today&max-results=10"
+  news_url = "https://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular_News?v=2&time=today&max-results=10"
   music_url = "https://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular_Music?v=2&time=today&max-results=#{num}"
   entertainment_url = "https://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular_Entertainment?v=2&time=today&max-results=#{num}"
   tech_url = "https://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular_Tech?v=2&time=today&max-results=#{num}"

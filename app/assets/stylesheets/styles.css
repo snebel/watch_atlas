@@ -153,6 +153,10 @@ iframe {
   position: absolute;
 }
 
+#news-videos img {
+  float: left;
+}
+
 rect {
   fill: none;
   pointer-events: all;
