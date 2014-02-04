@@ -1,7 +1,7 @@
 // all of the countries in the database
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
-var width = 960,
+var width = 880,
     height = 560,
     sens = 0.25,
     focused,
@@ -9,7 +9,7 @@ var width = 960,
 
 var projection = d3.geo.orthographic()
     .translate([width / 2, height / 2])
-    .scale(200)
+    .scale(280)
     .precision(.1)
     .clipAngle(90)
 
@@ -77,21 +77,21 @@ function countryClick(d) {
 
 
 function reset() {
-    g.selectAll('.active').classed('active', active = false);
-    g.transition().duration(750).attr('transform', '');
+  g.selectAll('.active').classed('active', active = false);
+  g.transition().duration(750).attr('transform', '');
 }
 
 
 var tooltip = d3.select('body')
-    .append('div')
-    .attr('class', 'tooltip')
-    .style('position', 'absolute')
-    .style('z-index', '9999')
-    .style('visibility', 'hidden');
+  .append('div')
+  .attr('class', 'tooltip')
+  .style('position', 'absolute')
+  .style('z-index', '9999')
+  .style('visibility', 'hidden');
 
 queue()
-    .defer(d3.json, '/map.json')
-    .await(ready);
+  .defer(d3.json, '/map.json')
+  .await(ready);
 
 function ready(error, world) {
 
@@ -143,22 +143,45 @@ function ready(error, world) {
 
 
   htmlSuccessGen = function (data) {
-    var contents = '<h3> <a href=/countries/' + data[0].id + '>' + data[0].name + '</a></h3>';
-    contents += '<ul class="box-videos">'
+    $('.tooltip').empty();
+    var contents = $('.tooltip');
+    var header = $('<h3>');
+    var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
+    header.append(title);
+    contents.append(header);
+    var vid_list = $('<ul>').addClass('box-videos');
+    contents.append(vid_list);
 
-    for (var i = 1; i < data.length; i++) {
-      contents += '<li><img src="' + data[i].thumbnail_url + '" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + data[i].normal_url + '">"' + data[i].title + '</a></li>'
-    };
+    for (var i=1; i < data.length; i++) {
+      var li = $('<li>');
+      var frame = $('<img>').attr('src', data[i].thumbnail_url);
+      frame.css('float', 'left').css('margin', '0 8px 5px 0');
+      li.append(frame);
+      var link = $('<a>').text(data[i].title).attr('href', data[i].normal_url)
+      li.append(link);
+      vid_list.append(li);
+    }
 
-    contents += '</ul>'
-    contents += '<div class="close-me">close</div>'
+    var div = $('<div>').addClass('close-me').text('close');
+    contents.append(div);
+
+    //var contents = '<h3> <a href=/countries/' + data[0].id + '>' + data[0].name + '</a></h3>';
+    //contents += '<ul class="box-videos">'
+
+    // for (var i = 1; i < data.length; i++) {
+    //   contents += '<li><img src="' + data[i].thumbnail_url + '" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + data[i].normal_url + '">"' + data[i].title + '</a></li>'
+    // };
+
+    //contents += '</ul>'
+    
+    //contents += '<div class="close-me">close</div>'
 
     $('body').on('click', '.close-me', function () {
       $('.tooltip').hide();
       reset();
     });
 
-    return contents;
+    return contents.html();
   }
 
 
