@@ -1,12 +1,28 @@
-<div>
-  <iframe src="<%=@video.embed_url%>" height="200px" width="300px"></iframe>
+<div id="video_iframe">
+  <iframe src="<%=@video.embed_url%>" height="400px" width="500px" style="display:block"></iframe>
 </div>
-<div style="background-color:white"> 
-<ul>
-  <% @countries.each do |country| %>
-    <% vids = country.videos.where(term: @term) %>
-    <% rank = vids.index(@video) %>
-    <li><%= "#{country.name}'s #{@term} videos: #{rank}" %></li>
-  <% end %>
-</ul>
+<div id="video_stats"> 
+  <div>
+    <h2>Where is this video popular?</h2>
+    <h3>Category: <%=@term%> </h3>
+    <h3>Rank:</h3>
+    <ul>
+      <% @countries.each do |country| %>
+        <% vids = country.videos.where(term: @term) %>
+        <% rank = vids.index(@video) %>
+        <li><%= "##{rank+1} in #{country.name}" %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div>
+    <h3>Share Stats</h3>
+    <ul>
+      <li><%= @shared[:commentcount] %> <strong>FB comments</strong></li>
+      <li><%= @shared[:likecount] %> <strong>FB likes</strong></li>
+      <li><%= @shared[:sharecount] %> <strong>FB shares</strong></li>
+      <li><%= @shared[:tweets] %> <strong>Tweets</strong></li>
+      <li><%= @shared[:plus_ones] %> <strong>Google +1's</strong></li>
+      <li><%= @shared[:pins] %> <strong>Pins</strong></li>
+    </ul>
+  </div>
 </div>

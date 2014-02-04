@@ -1,4 +1,5 @@
 // all of the countries in the database
+console.log('dev branch!!!!!');
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
 var width = 880,
@@ -165,7 +166,7 @@ function ready(error, world) {
 
   htmlSuccessGen = function (data) {
     // $('.tooltip').empty();
-    console.log(data)
+    console.log(data);
     var contents = $('.tooltip');
     var header = $('<h1>');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
@@ -213,26 +214,25 @@ function ready(error, world) {
     contents.append($entertainment_div);
     contents.append($animals_div);
 
+    // appending individual flexsliders and their uls
+    $top_videos_div.append($flexslider_top_videos);
+    $news_div.append($flexslider_news);
+    $music_div.append($flexslider_music);
+    $tech_div.append($flexslider_tech);
+    $entertainment_div.append($flexslider_entertainment);
+    $animals_div.append($flexslider_animals);
+
+    $flexslider_top_videos.append($flexslider_ul_top_videos);
+    $flexslider_news.append($flexslider_ul_news);
+    $flexslider_music.append($flexslider_ul_music);
+    $flexslider_tech.append($flexslider_ul_tech);
+    $flexslider_entertainment.append($flexslider_ul_entertainment);
+    $flexslider_animals.append($flexslider_ul_animals);
+
+
     for (var i=1; i < data.length; i++) {
 
-      // appending individual flexsliders and their uls
-
-      $top_videos_div.append($flexslider_top_videos);
-      $news_div.append($flexslider_news);
-      $music_div.append($flexslider_music);
-      $tech_div.append($flexslider_tech);
-      $entertainment_div.append($flexslider_entertainment);
-      $animals_div.append($flexslider_animals);
-
-      $flexslider_top_videos.append($flexslider_ul_top_videos);
-      $flexslider_news.append($flexslider_ul_news);
-      $flexslider_music.append($flexslider_ul_music);
-      $flexslider_tech.append($flexslider_ul_tech);
-      $flexslider_entertainment.append($flexslider_ul_entertainment);
-      $flexslider_animals.append($flexslider_ul_animals);
-
-
-      if (data[i].top === true) {
+      if (data[i].top) {
 
         $flexslider_ul_top_videos.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
