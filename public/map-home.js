@@ -33,7 +33,19 @@ g.append("path")
     .style('cursor', 'move')
     .attr("d", path);
 
+function countryHover(d) {
+  var self = this;
 
+  $.ajax({
+    method: 'get',
+    url: '/countries/maps/' + d.id,
+    dataType: 'json'
+  })
+    .success(function (data) {
+      console.log("hello")
+    })
+
+}
 
 function countryClick(d) {
   var self = this;
@@ -116,7 +128,8 @@ function ready(error, world) {
     .style('fill', '#95a5a6')
     .on('mouseover', function(d){
       d3.select('path#id_' + d.id)
-        .style('fill', '#d35400')
+        .style('fill', '#d35400');
+        countryHover;
     })
     .on('mouseout', function(d){
       if (valid_map_ids.indexOf(d.id) != -1) {
