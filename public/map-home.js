@@ -3,7 +3,7 @@ var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 8
 
 var width = 880,
     height = 560,
-    sens = 0.25,
+    sens = 0.9,
     focused,
     active;
 
@@ -133,7 +133,7 @@ function ready(error, world) {
       })
       .on('drag', function () {
         console.log('dragging')
-        var rotation_amount = 50;
+        var rotation_amount = 100;
         console.log(d3.event);
         var rotate = projection.rotate();
         projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
@@ -155,20 +155,49 @@ function ready(error, world) {
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
     var div = $('<div>').addClass('close-me').text('close');
+
+    var $top_videos_div = $('<div>').attr('id', 'top-videos')
+    var $news_div = $('<div>').attr('id', 'news-videos')
+    var $music_div = $('<div>').attr('id', 'music-videos')
+    var $tech_div = $('<div>').attr('id', 'tech-videos')
+    var $entertainment_div = $('<div>').attr('id', 'entertainment-videos')
+    var $animals_div = $('<div>').attr('id', 'animals-videos')
+
     contents.append(div);
+    contents.append($top_videos_div);
+    contents.append($news_div);
+    contents.append($music_div);
+    contents.append($tech_div);
+    contents.append($entertainment_div);
+    contents.append($animals_div);
 
     for (var i=1; i < data.length; i++) {
-      var li = $('<li>');
 
-      // var frame = $('<iframe>').attr('src', data[i].thumbnail_url);
-      // using image until we figure out iframe thing
-      var frame = $('<img>').attr('src', data[i].thumbnail_url);
+      // console.log(data[i].term)
 
-      frame.css('float', 'left').css('margin', '0 8px 5px 0');
-      li.append(frame);
-      var link = $('<a>').text(data[i].title).attr('href', data[i].normal_url)
-      li.append(link);
-      vid_list.append(li);
+      if (data[i].term === "News") {
+
+        $news_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+
+      }else if (data[i].term === "Music"){
+      console.log('music: ' + data[i].term)
+      }else if (data[i].term === "Tech"){
+      console.log('tech: ' + data[i].term)
+      }else if (data[i].term === "Entertainment"){
+      console.log('entertainment: ' + data[i].term)
+      }else if (data[i].term === "Animals"){
+        console.log('animals: ' + data[i].term)
+      }
+
+      // var li = $('<li>');
+      // var frame = $('<img>').attr('src', data[i].thumbnail_url);
+      // frame.css('float', 'left').css('margin', '0 8px 5px 0');
+      // li.append(frame);
+      // var link = $('<a>').text(data[i].title).attr('href', data[i].normal_url)
+      // li.append(link);
+      // vid_list.append(li);
+
+
     }
 
     $('body').on('click', '.close-me', function () {

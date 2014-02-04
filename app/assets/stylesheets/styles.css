@@ -137,12 +137,18 @@ h3 {
   margin: 5px 0;
 }
 
+iframe {
+  float: left;
+}
+
 .tooltip {
   color: #fff; 
   background: #000; 
   padding: 10px;
   border: 3px solid #fff;
-  width: 550px;
+  width: 850px;
+  height: 500px;
+  overflow: scroll;
   border-radius: 4px; 
   position: absolute;
   opacity:.90;

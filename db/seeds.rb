@@ -29,10 +29,10 @@ end
 #     normal_url = self.normal_url
 #     if normal_url[/youtu\.be\/([^\?]*)/]
 #       youtube_id = $1
-#     else 
-#       normal_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/] 
-#       youtube_id = $5 
-#     end 
+#     else
+#       normal_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
+#       youtube_id = $5
+#     end
 #     "http://www.youtube.com/embed/#{youtube_id}"
 #   end
 
@@ -106,7 +106,8 @@ Country.all.each do |country|
           normal_url: entry["link"].first["href"],
           big_url: entry["content"]["src"],
           term: entry["category"][1]["term"],
-          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"],
+          top: true
         )
         embeddable_url = vid.youtube_embed
         vid.embed_url = embeddable_url
@@ -140,7 +141,8 @@ Country.all.each do |country|
           normal_url: entry["link"].first["href"],
           big_url: entry["content"]["src"],
           term: entry["category"][1]["term"],
-          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"],
+          top: false
         )
         embeddable_url = vid.youtube_embed
         vid.embed_url = embeddable_url
@@ -167,7 +169,8 @@ Country.all.each do |country|
           normal_url: entry["link"].first["href"],
           big_url: entry["content"]["src"],
           term: entry["category"][1]["term"],
-          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"],
+          top: false
         )
         embeddable_url = vid.youtube_embed
         vid.embed_url = embeddable_url
@@ -194,7 +197,8 @@ Country.all.each do |country|
           normal_url: entry["link"].first["href"],
           big_url: entry["content"]["src"],
           term: entry["category"][1]["term"],
-          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"],
+          top: false
         )
         embeddable_url = vid.youtube_embed
         vid.embed_url = embeddable_url
@@ -221,7 +225,8 @@ Country.all.each do |country|
           normal_url: entry["link"].first["href"],
           big_url: entry["content"]["src"],
           term: entry["category"][1]["term"],
-          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"],
+          top: false
         )
         embeddable_url = vid.youtube_embed
         vid.embed_url = embeddable_url
@@ -248,7 +253,8 @@ Country.all.each do |country|
           normal_url: entry["link"].first["href"],
           big_url: entry["content"]["src"],
           term: entry["category"][1]["term"],
-          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"],
+          top: false
         )
         embeddable_url = vid.youtube_embed
         vid.embed_url = embeddable_url
@@ -259,4 +265,4 @@ Country.all.each do |country|
     end
   end
 
- end
+end
