@@ -13,7 +13,7 @@ class Video < ActiveRecord::Base
     "http://www.youtube.com/embed/#{youtube_id}"
   end
 
-  def country_names(name)
+  def country_names(name = nil)
     names = self.countries.map { |country| country.name } - [name]
   end
 

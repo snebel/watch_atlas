@@ -1,0 +1,12 @@
+<div>
+  <iframe src="<%=@video.embed_url%>" height="200px" width="300px"></iframe>
+</div>
+<div style="background-color:white"> 
+<ul>
+  <% @countries.each do |country| %>
+    <% vids = country.videos.where(term: @term) %>
+    <% rank = vids.index(@video) %>
+    <li><%= "#{country.name}'s #{@term} videos: #{rank}" %></li>
+  <% end %>
+</ul>
+</div>
