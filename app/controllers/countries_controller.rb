@@ -10,7 +10,7 @@ class CountriesController < ApplicationController
   def show
     @country = Country.find(params[:id])    
     @info = @country.get_overlapping_countries_info
-    binding.pry
+    #binding.pry
 
     respond_to do |format|
       format.html
