@@ -328,18 +328,18 @@ function addListener() {
     var self = this;
 
     embed_url = $(this).children('img').attr("data-id");
-
-
+    var $close_embed_video = $('<div>').addClass('close-embed-video').text('close');
 
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
     $embed_window.css('position', 'absolute');
     $embed_window.css('top', '30px');
     $embed_window.css('right', '30px');
+    $embed_window.append($close_embed_video)
 
     $embed_window.css('z-index', '99999');
     $embed_window.css('display', 'block')
-    $embed_window.css('background', 'green')
+    $embed_window.css('background', 'black')
 
     $video_iframe = $('<iframe>');
     $video_iframe.attr('src', embed_url);
@@ -350,6 +350,11 @@ function addListener() {
     $embed_window.append($video_iframe)
 
     $('body').append($embed_window)
+
+    $('body').on('click', '.close-embed-video', function () {
+      $embed_window.fadeOut() 
+        $embed_window.remove();
+    });
 
     // embed_window = d3.select('body')
     //     .append('div')
