@@ -9,4 +9,6 @@ WdiProject2::Application.routes.draw do
   get '/testing' => 'maptests#index'
   get '/countries/maps/:map_id' => 'countries#get_country_data'
 
+  get '/parallax' => 'parallax#index'
+
 end

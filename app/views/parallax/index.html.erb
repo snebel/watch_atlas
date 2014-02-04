@@ -1,0 +1,26 @@
+<html>
+
+<head>
+</head>
+
+<body>
+
+
+
+<ul class="parallax">
+  <% i = 0  %>
+  <% @countries.each do |country| %>
+    <div class="header">
+      <h1><%= country.name %>'s Top Videos</h1>
+    </div>
+
+    <li>
+    	<img src="http://flagpedia.net/data/flags/normal/<%= country.code.downcase %>.png"/>
+    </li>
+    
+  <% end %>
+</ul>
+
+</body>
+
+</html>
