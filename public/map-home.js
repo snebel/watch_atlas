@@ -44,10 +44,16 @@ function countryClick(d) {
     dataType: 'json'
   })
     .success(function (data) {
-      console.log(data)
+      // console.log(data)
       zoomIn();
       makeTooltip(data, true);
-    })
+        $('.flexslider').flexslider({
+          animation: "slide",
+          animationLoop: false,
+          itemWidth: 230,
+          itemMargin: 15
+          });
+        })
     .fail(function(data){
       makeTooltip(data, false);  
     });
@@ -77,7 +83,7 @@ function countryClick(d) {
         if (good) { return htmlSuccessGen(data); }
         else { return htmlFailGen(); }
       })
-      .transition().duration(400).style('opacity', '.9')
+      .transition().duration(400).style('opacity', '1')
       // .style('display', 'block')
       
   }
@@ -155,6 +161,8 @@ function ready(error, world) {
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
     var div = $('<div>').addClass('close-me').text('close');
+    var $flexslider = $('<div>').addClass('flexslider');
+    var $flexslider_ul = $('<ul>').addClass('slides');
 
     var $top_videos_div = $('<div>').attr('id', 'top-videos')
     var $news_div = $('<div>').attr('id', 'news-videos')
@@ -175,29 +183,33 @@ function ready(error, world) {
 
       // console.log(data[i].term)
 
+      $top_videos_div.append($flexslider);
+
+      $flexslider.append($flexslider_ul);
+
       if (data[i].top === true) {
 
-        $top_videos_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
 
       } else if (data[i].term === "News") {
 
-        $news_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        // $news_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
 
       }else if (data[i].term === "Music"){
 
-        $music_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        // $music_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
 
       }else if (data[i].term === "Tech"){
 
-        $tech_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        // $tech_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
 
       }else if (data[i].term === "Entertainment"){
 
-        $entertainment_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        // $entertainment_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
 
       }else if (data[i].term === "Animals"){
 
-        $animals_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        // $animals_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
       }
 
       // var li = $('<li>');
@@ -218,7 +230,6 @@ function ready(error, world) {
       })
       reset();
     });
-
 
     return contents.html();
   }
@@ -271,5 +282,6 @@ function ready(error, world) {
     });
 
 }
+
 
 d3.select(self.frameElement).style('height', height + 'px');
