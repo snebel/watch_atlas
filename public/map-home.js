@@ -157,15 +157,31 @@ function ready(error, world) {
     var flag = $('<img>').attr('src', data[0].flag_url).css('width', '100');
     header.append(title);
     contents.append(header);
-    contents.append(flag);
+    // contents.append(flag);
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
     var div = $('<div>').addClass('close-me').text('close');
+
+    //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
     var $flexslider_ul_top_videos = $('<ul>').addClass('slides');
 
     var $flexslider_news = $('<div>').addClass('flexslider');
     var $flexslider_ul_news = $('<ul>').addClass('slides');
+
+    var $flexslider_music = $('<div>').addClass('flexslider');
+    var $flexslider_ul_music = $('<ul>').addClass('slides');
+
+    var $flexslider_tech = $('<div>').addClass('flexslider');
+    var $flexslider_ul_tech = $('<ul>').addClass('slides');
+
+    var $flexslider_entertainment = $('<div>').addClass('flexslider');
+    var $flexslider_ul_entertainment = $('<ul>').addClass('slides');
+
+    var $flexslider_animals = $('<div>').addClass('flexslider');
+    var $flexslider_ul_animals = $('<ul>').addClass('slides');
+
+
 
     var $top_videos_div = $('<div>').attr('id', 'top-videos')
     var $news_div = $('<div>').attr('id', 'news-videos')
@@ -177,20 +193,29 @@ function ready(error, world) {
     contents.append(div);
     contents.append($top_videos_div);
     contents.append($news_div);
-    // contents.append($music_div);
-    // contents.append($tech_div);
-    // contents.append($entertainment_div);
-    // contents.append($animals_div);
+    contents.append($music_div);
+    contents.append($tech_div);
+    contents.append($entertainment_div);
+    contents.append($animals_div);
 
     for (var i=1; i < data.length; i++) {
 
-      // console.log(data[i].term)
+      // appending individual flexsliders and their uls
 
       $top_videos_div.append($flexslider_top_videos);
       $news_div.append($flexslider_news);
+      $music_div.append($flexslider_music);
+      $tech_div.append($flexslider_tech);
+      $entertainment_div.append($flexslider_entertainment);
+      $animals_div.append($flexslider_animals);
 
       $flexslider_top_videos.append($flexslider_ul_top_videos);
       $flexslider_news.append($flexslider_ul_news);
+      $flexslider_music.append($flexslider_ul_music);
+      $flexslider_tech.append($flexslider_ul_tech);
+      $flexslider_entertainment.append($flexslider_ul_entertainment);
+      $flexslider_animals.append($flexslider_ul_animals);
+
 
       if (data[i].top === true) {
 
@@ -202,19 +227,19 @@ function ready(error, world) {
 
       }else if (data[i].term === "Music"){
 
-        // $music_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_music.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
 
       }else if (data[i].term === "Tech"){
 
-        // $tech_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_tech.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
 
       }else if (data[i].term === "Entertainment"){
 
-        // $entertainment_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_entertainment.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
 
       }else if (data[i].term === "Animals"){
 
-        // $animals_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_animals.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
       }
 
       // var li = $('<li>');
@@ -230,6 +255,10 @@ function ready(error, world) {
 
   $top_videos_div.prepend('<h2>Top Videos</h2>');
   $news_div.prepend('<h2>News</h2>');
+  $music_div.prepend('<h2>Music</h2>');
+  $tech_div.prepend('<h2>Tech</h2>');
+  $entertainment_div.prepend('<h2>Entertainment</h2>');
+  $animals_div.prepend('<h2>Animals</h2>');
 
   $('body').on('click', '.close-me', function () {
       $('.tooltip').animate({'opacity':'0'}, 400)
