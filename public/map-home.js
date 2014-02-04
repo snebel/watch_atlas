@@ -343,9 +343,9 @@ function addListener() {
 
     $video_iframe = $('<iframe>');
     $video_iframe.attr('src', embed_url);
-    $video_iframe.css('width', '560');
-    $video_iframe.css('height', '360');
-
+    $video_iframe.attr('class', 'click_page_embed_url');
+    $video_iframe.css('width', '869');
+    $video_iframe.css('height', '481');
 
     $embed_window.append($video_iframe)
 

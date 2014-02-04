@@ -145,6 +145,12 @@ iframe {
   float: left;
 }
 
+iframe.click_page_embed_url {
+  position: absolute;
+  right: -1px;
+  top: 38px;
+}
+
 .close-embed-video {
   position: absolute;
   color: red;
