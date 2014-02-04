@@ -12,9 +12,35 @@ a:hover {
   text-decoration: underline;
 }
 #map-canvas {
+  width: 900;
+  display: inline;
+}
+
+#main-container {
   width: 960px;
   margin: 0 auto;
-  margin-top: 40px;
+  margin-top: 50px;
+}
+
+#left-rotator {
+  float: left;
+  width: 30px;
+  margin-top: 270px;
+}
+
+#right-rotator {
+  float: right;
+  width: 30px;
+  margin-top: 270px;
+}
+
+#right-rotator img, #left-rotator img {
+  width: 25px;
+}
+
+#right-rotator:hover, #left-rotator:hover {
+  cursor: pointer;
+  opacity: .8;
 }
 
 .close-me {
