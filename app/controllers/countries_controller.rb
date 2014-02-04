@@ -8,8 +8,10 @@ class CountriesController < ApplicationController
   end
 
   def show
-    @country = Country.find(params[:id])
-    
+    @country = Country.find(params[:id])    
+    @info = @country.get_overlapping_countries_info
+    binding.pry
+
     respond_to do |format|
       format.html
 
