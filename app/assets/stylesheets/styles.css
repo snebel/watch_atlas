@@ -141,7 +141,7 @@ iframe {
   float: left;
 }
 
-.tooltip {
+.tooltip, .embed_window {
   color: #fff; 
   background: #000; 
   padding: 10px;
