@@ -8,4 +8,6 @@ WdiProject2::Application.routes.draw do
 
   get '/testing' => 'maptests#index'
 
+  get '/parallax' => 'parallax#index'
+
 end
