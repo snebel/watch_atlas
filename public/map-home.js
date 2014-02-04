@@ -44,10 +44,16 @@ function countryClick(d) {
     dataType: 'json'
   })
     .success(function (data) {
-      console.log(data)
+      // console.log(data)
       zoomIn();
       makeTooltip(data, true);
-    })
+        $('.flexslider').flexslider({
+          animation: "slide",
+          animationLoop: false,
+          itemWidth: 230,
+          itemMargin: 15
+          });
+        })
     .fail(function(data){
       makeTooltip(data, false);  
     });
@@ -77,7 +83,7 @@ function countryClick(d) {
         if (good) { return htmlSuccessGen(data); }
         else { return htmlFailGen(); }
       })
-      .transition().duration(400).style('opacity', '.9')
+      .transition().duration(400).style('opacity', '1')
       // .style('display', 'block')
       
   }
@@ -155,6 +161,11 @@ function ready(error, world) {
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
     var div = $('<div>').addClass('close-me').text('close');
+    var $flexslider_top_videos = $('<div>').addClass('flexslider');
+    var $flexslider_ul_top_videos = $('<ul>').addClass('slides');
+
+    var $flexslider_news = $('<div>').addClass('flexslider');
+    var $flexslider_ul_news = $('<ul>').addClass('slides');
 
     var $top_videos_div = $('<div>').attr('id', 'top-videos')
     var $news_div = $('<div>').attr('id', 'news-videos')
@@ -166,38 +177,44 @@ function ready(error, world) {
     contents.append(div);
     contents.append($top_videos_div);
     contents.append($news_div);
-    contents.append($music_div);
-    contents.append($tech_div);
-    contents.append($entertainment_div);
-    contents.append($animals_div);
+    // contents.append($music_div);
+    // contents.append($tech_div);
+    // contents.append($entertainment_div);
+    // contents.append($animals_div);
 
     for (var i=1; i < data.length; i++) {
 
       // console.log(data[i].term)
 
+      $top_videos_div.append($flexslider_top_videos);
+      $news_div.append($flexslider_news);
+
+      $flexslider_top_videos.append($flexslider_ul_top_videos);
+      $flexslider_news.append($flexslider_ul_news);
+
       if (data[i].top === true) {
 
-        $top_videos_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_top_videos.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
 
       } else if (data[i].term === "News") {
 
-        $news_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_news.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
 
       }else if (data[i].term === "Music"){
 
-        $music_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        // $music_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
 
       }else if (data[i].term === "Tech"){
 
-        $tech_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        // $tech_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
 
       }else if (data[i].term === "Entertainment"){
 
-        $entertainment_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        // $entertainment_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
 
       }else if (data[i].term === "Animals"){
 
-        $animals_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        // $animals_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
       }
 
       // var li = $('<li>');
@@ -211,6 +228,9 @@ function ready(error, world) {
 
     }
 
+  $top_videos_div.prepend('<h2>Top Videos</h2>');
+  $news_div.prepend('<h2>News</h2>');
+
   $('body').on('click', '.close-me', function () {
       $('.tooltip').animate({'opacity':'0'}, 400)
       .queue(function () {
@@ -218,7 +238,6 @@ function ready(error, world) {
       })
       reset();
     });
-
 
     return contents.html();
   }
@@ -271,5 +290,6 @@ function ready(error, world) {
     });
 
 }
+
 
 d3.select(self.frameElement).style('height', height + 'px');
