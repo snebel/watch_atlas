@@ -45,8 +45,8 @@ a:hover {
 
 .close-me {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 2px;
+  right: 2px;
   color: red;
 }
 
@@ -148,10 +148,9 @@ iframe {
   border: 3px solid #fff;
   width: 850px;
   height: 500px;
-  overflow: scroll;
+  overflow: auto;
   border-radius: 4px; 
   position: absolute;
-  opacity:.90;
 }
 
 rect {

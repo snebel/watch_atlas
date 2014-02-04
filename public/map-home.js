@@ -64,15 +64,22 @@ function countryClick(d) {
   }
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...]  
-    return tooltip
-      .style('visibility', 'visible')
-      .style('display', 'block')
-      .style('top', '30px')
-      .style('right', '30px')
-      .html(function () {
+        tooltip = d3.select('body')
+        .append('div')
+        .attr('class', 'tooltip')
+        .style('position', 'absolute')
+        .style('z-index', '9999')
+        .style('opacity', '0')
+      // .style('visibility', 'visible')
+        .style('top', '30px')
+        .style('right', '30px')
+        .html(function () {
         if (good) { return htmlSuccessGen(data); }
         else { return htmlFailGen(); }
-      });
+      })
+      .transition().duration(400).style('opacity', '.9')
+      // .style('display', 'block')
+      
   }
 }
 
@@ -82,13 +89,6 @@ function reset() {
   g.transition().duration(750).attr('transform', '');
 }
 
-
-var tooltip = d3.select('body')
-  .append('div')
-  .attr('class', 'tooltip')
-  .style('position', 'absolute')
-  .style('z-index', '9999')
-  .style('visibility', 'hidden');
 
 queue()
   .defer(d3.json, '/map.json')
@@ -144,7 +144,7 @@ function ready(error, world) {
 
 
   htmlSuccessGen = function (data) {
-    $('.tooltip').empty();
+    // $('.tooltip').empty();
     var contents = $('.tooltip');
     var header = $('<h1>');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
@@ -200,10 +200,14 @@ function ready(error, world) {
 
     }
 
-    $('body').on('click', '.close-me', function () {
-      $('.tooltip').hide();
+  $('body').on('click', '.close-me', function () {
+      $('.tooltip').animate({'opacity':'0'}, 400)
+      .queue(function () {
+        $(this).remove();
+      })
       reset();
     });
+
 
     return contents.html();
   }
@@ -213,10 +217,13 @@ function ready(error, world) {
     var contents = 'Sorry, there is no YouTube data <br>for this country';
     contents += '<div class="close-me">close</div>'
 
-    $('body').on('click', '.close-me', function () {
-      $('.tooltip').hide();
-      reset();
-    });
+   $('body').on('click', '.close-me', function () {
+        $('.tooltip').animate({'opacity':'0'}, 400)
+        .queue(function () {
+          $(this).remove();
+        })
+        reset();
+      });
 
     return contents;
   }
