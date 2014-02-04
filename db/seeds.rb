@@ -25,7 +25,16 @@ end
 
 
 
-
+# def youtube_embed()
+#     normal_url = self.normal_url
+#     if normal_url[/youtu\.be\/([^\?]*)/]
+#       youtube_id = $1
+#     else 
+#       normal_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/] 
+#       youtube_id = $5 
+#     end 
+#     "http://www.youtube.com/embed/#{youtube_id}"
+#   end
 
 
 
@@ -41,10 +50,43 @@ end
 
 
 
+# Country.all.each do |country|
+#   # grab top videos for country here
+#   country_code = country.code
+#   num = 5
+#   url = "http://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular?v=2&time=today&max-results=#{num}"
+#   results = HTTParty.get(url).body
+#   results_json = Hash.from_xml(results)
+
+#   results_json["feed"]["entry"].each do |entry|
+
+#     if big_url_cnt = entry["content"]
+#       big_url = big_url_cnt['src']
+
+#       if Video.exists?(big_url: big_url)
+#         vid = Video.where(big_url: big_url).first
+#       else
+#         vid = Video.create(
+#           # get relevant video attributes from results_json
+#           title: entry["title"],
+#           normal_url: entry["link"].first["href"],
+#           big_url: entry["content"]["src"],
+#           term: entry["category"][1]["term"],
+#           thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+#         )
+#       end
+
+#       puts CountryVideo.create(country_id: country.id, video_id: vid.id)
+#     end
+#   end
+
+# end
+
+
 Country.all.each do |country|
   # grab top videos for country here
   country_code = country.code
-  num = 5
+  num = 10
   url = "http://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular?v=2&time=today&max-results=#{num}"
 
   results = HTTParty.get(url).body
@@ -58,7 +100,7 @@ Country.all.each do |country|
       if Video.exists?(big_url: big_url)
         vid = Video.where(big_url: big_url).first
       else
-        vid = Video.create(
+        vid = Video.new(
           # get relevant video attributes from results_json
           title: entry["title"],
           normal_url: entry["link"].first["href"],
@@ -66,10 +108,155 @@ Country.all.each do |country|
           term: entry["category"][1]["term"],
           thumbnail_url: entry["group"]["thumbnail"][0]["url"]
         )
+        embeddable_url = vid.youtube_embed
+        vid.embed_url = embeddable_url
+        vid.save
       end
 
       puts CountryVideo.create(country_id: country.id, video_id: vid.id)
     end
   end
 
-end
+  # categories = ["News", "Music", "Entertainment", "Tech", "Animals"]
+  news_url = "https://gdata.youtube.com/feeds/api/standardfeeds/US/most_popular_News?v=2&time=today&max-results=10"
+  music_url = "https://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular_Music?v=2&time=today&max-results=#{num}"
+  entertainment_url = "https://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular_Entertainment?v=2&time=today&max-results=#{num}"
+  tech_url = "https://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular_Tech?v=2&time=today&max-results=#{num}"
+  animals_url = "https://gdata.youtube.com/feeds/api/standardfeeds/#{country_code}/most_popular_Animals?v=2&time=today&max-results=#{num}"
+
+  news_results = HTTParty.get(news_url).body
+  news_results_json = Hash.from_xml(news_results)
+
+  news_results_json["feed"]["entry"].each do |entry|
+    if big_url_cnt = entry["content"]
+      big_url = big_url_cnt['src']
+
+      if Video.exists?(big_url: big_url)
+        vid = Video.where(big_url: big_url).first
+      else
+        vid = Video.new(
+          # get relevant video attributes from results_json
+          title: entry["title"],
+          normal_url: entry["link"].first["href"],
+          big_url: entry["content"]["src"],
+          term: entry["category"][1]["term"],
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+        )
+        embeddable_url = vid.youtube_embed
+        vid.embed_url = embeddable_url
+        vid.save
+      end
+
+      puts CountryVideo.create(country_id: country.id, video_id: vid.id)
+    end
+  end
+
+  music_results = HTTParty.get(music_url).body
+  music_results_json = Hash.from_xml(music_results)
+
+  music_results_json["feed"]["entry"].each do |entry|
+    if big_url_cnt = entry["content"]
+      big_url = big_url_cnt['src']
+
+      if Video.exists?(big_url: big_url)
+        vid = Video.where(big_url: big_url).first
+      else
+        vid = Video.new(
+          # get relevant video attributes from results_json
+          title: entry["title"],
+          normal_url: entry["link"].first["href"],
+          big_url: entry["content"]["src"],
+          term: entry["category"][1]["term"],
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+        )
+        embeddable_url = vid.youtube_embed
+        vid.embed_url = embeddable_url
+        vid.save
+      end
+
+      puts CountryVideo.create(country_id: country.id, video_id: vid.id)
+    end
+  end
+
+  entertainment_results = HTTParty.get(entertainment_url).body
+  entertainment_results_json = Hash.from_xml(entertainment_results)
+
+  entertainment_results_json["feed"]["entry"].each do |entry|
+    if big_url_cnt = entry["content"]
+      big_url = big_url_cnt['src']
+
+      if Video.exists?(big_url: big_url)
+        vid = Video.where(big_url: big_url).first
+      else
+        vid = Video.new(
+          # get relevant video attributes from results_json
+          title: entry["title"],
+          normal_url: entry["link"].first["href"],
+          big_url: entry["content"]["src"],
+          term: entry["category"][1]["term"],
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+        )
+        embeddable_url = vid.youtube_embed
+        vid.embed_url = embeddable_url
+        vid.save
+      end
+
+      puts CountryVideo.create(country_id: country.id, video_id: vid.id)
+    end
+  end
+
+  tech_results = HTTParty.get(tech_url).body
+  tech_results_json = Hash.from_xml(tech_results)
+
+  tech_results_json["feed"]["entry"].each do |entry|
+    if big_url_cnt = entry["content"]
+      big_url = big_url_cnt['src']
+
+      if Video.exists?(big_url: big_url)
+        vid = Video.where(big_url: big_url).first
+      else
+        vid = Video.new(
+          # get relevant video attributes from results_json
+          title: entry["title"],
+          normal_url: entry["link"].first["href"],
+          big_url: entry["content"]["src"],
+          term: entry["category"][1]["term"],
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+        )
+        embeddable_url = vid.youtube_embed
+        vid.embed_url = embeddable_url
+        vid.save
+      end
+
+      puts CountryVideo.create(country_id: country.id, video_id: vid.id)
+    end
+  end
+
+  animals_results = HTTParty.get(animals_url).body
+  animals_results_json = Hash.from_xml(animals_results)
+
+  animals_results_json["feed"]["entry"].each do |entry|
+    if big_url_cnt = entry["content"]
+      big_url = big_url_cnt['src']
+
+      if Video.exists?(big_url: big_url)
+        vid = Video.where(big_url: big_url).first
+      else
+        vid = Video.new(
+          # get relevant video attributes from results_json
+          title: entry["title"],
+          normal_url: entry["link"].first["href"],
+          big_url: entry["content"]["src"],
+          term: entry["category"][1]["term"],
+          thumbnail_url: entry["group"]["thumbnail"][0]["url"]
+        )
+        embeddable_url = vid.youtube_embed
+        vid.embed_url = embeddable_url
+        vid.save
+      end
+
+      puts CountryVideo.create(country_id: country.id, video_id: vid.id)
+    end
+  end
+
+ end
