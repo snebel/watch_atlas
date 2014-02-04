@@ -53,6 +53,7 @@ function countryClick(d) {
           itemWidth: 230,
           itemMargin: 15
           });
+        addListener();
         })
     .fail(function(data){
       makeTooltip(data, false);  
@@ -151,21 +152,38 @@ function ready(error, world) {
 
   htmlSuccessGen = function (data) {
     // $('.tooltip').empty();
+    console.log(data)
     var contents = $('.tooltip');
     var header = $('<h1>');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
     var flag = $('<img>').attr('src', data[0].flag_url).css('width', '100');
     header.append(title);
     contents.append(header);
-    contents.append(flag);
+    // contents.append(flag);
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
     var div = $('<div>').addClass('close-me').text('close');
+
+    //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
     var $flexslider_ul_top_videos = $('<ul>').addClass('slides');
 
     var $flexslider_news = $('<div>').addClass('flexslider');
     var $flexslider_ul_news = $('<ul>').addClass('slides');
+
+    var $flexslider_music = $('<div>').addClass('flexslider');
+    var $flexslider_ul_music = $('<ul>').addClass('slides');
+
+    var $flexslider_tech = $('<div>').addClass('flexslider');
+    var $flexslider_ul_tech = $('<ul>').addClass('slides');
+
+    var $flexslider_entertainment = $('<div>').addClass('flexslider');
+    var $flexslider_ul_entertainment = $('<ul>').addClass('slides');
+
+    var $flexslider_animals = $('<div>').addClass('flexslider');
+    var $flexslider_ul_animals = $('<ul>').addClass('slides');
+
+
 
     var $top_videos_div = $('<div>').attr('id', 'top-videos')
     var $news_div = $('<div>').attr('id', 'news-videos')
@@ -177,44 +195,53 @@ function ready(error, world) {
     contents.append(div);
     contents.append($top_videos_div);
     contents.append($news_div);
-    // contents.append($music_div);
-    // contents.append($tech_div);
-    // contents.append($entertainment_div);
-    // contents.append($animals_div);
+    contents.append($music_div);
+    contents.append($tech_div);
+    contents.append($entertainment_div);
+    contents.append($animals_div);
 
     for (var i=1; i < data.length; i++) {
 
-      // console.log(data[i].term)
+      // appending individual flexsliders and their uls
 
       $top_videos_div.append($flexslider_top_videos);
       $news_div.append($flexslider_news);
+      $music_div.append($flexslider_music);
+      $tech_div.append($flexslider_tech);
+      $entertainment_div.append($flexslider_entertainment);
+      $animals_div.append($flexslider_animals);
 
       $flexslider_top_videos.append($flexslider_ul_top_videos);
       $flexslider_news.append($flexslider_ul_news);
+      $flexslider_music.append($flexslider_ul_music);
+      $flexslider_tech.append($flexslider_ul_tech);
+      $flexslider_entertainment.append($flexslider_ul_entertainment);
+      $flexslider_animals.append($flexslider_ul_animals);
+
 
       if (data[i].top === true) {
 
-        $flexslider_ul_top_videos.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
+        $flexslider_ul_top_videos.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       } else if (data[i].term === "News") {
 
-        $flexslider_ul_news.append('<li><img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>')
+        $flexslider_ul_news.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       }else if (data[i].term === "Music"){
 
-        // $music_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_music.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       }else if (data[i].term === "Tech"){
 
-        // $tech_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_tech.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       }else if (data[i].term === "Entertainment"){
 
-        // $entertainment_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_entertainment.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
 
       }else if (data[i].term === "Animals"){
 
-        // $animals_div.append('<img src="' + data[i].thumbnail_url + '"/>' + data[i].title + '<br>')
+        $flexslider_ul_animals.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
       }
 
       // var li = $('<li>');
@@ -226,10 +253,15 @@ function ready(error, world) {
       // vid_list.append(li);
 
 
-    }
+    }  
+
 
   $top_videos_div.prepend('<h2>Top Videos</h2>');
   $news_div.prepend('<h2>News</h2>');
+  $music_div.prepend('<h2>Music</h2>');
+  $tech_div.prepend('<h2>Tech</h2>');
+  $entertainment_div.prepend('<h2>Entertainment</h2>');
+  $animals_div.prepend('<h2>Animals</h2>');
 
   $('body').on('click', '.close-me', function () {
       $('.tooltip').animate({'opacity':'0'}, 400)
@@ -291,5 +323,57 @@ function ready(error, world) {
 
 }
 
+function addListener() {
+  $('.thumbnail').on("click", function() {
+    var self = this;
+
+    embed_url = $(this).children('img').attr("data-id");
+    var $close_embed_video = $('<div>').addClass('close-embed-video').text('close');
+
+    $embed_window = $('<div>');
+    $embed_window.attr('class', 'embed_window');
+    $embed_window.css('position', 'absolute');
+    $embed_window.css('top', '30px');
+    $embed_window.css('right', '30px');
+    $embed_window.append($close_embed_video)
+
+    $embed_window.css('z-index', '99999');
+    $embed_window.css('display', 'block')
+    $embed_window.css('background', 'black')
+
+    $video_iframe = $('<iframe>');
+    $video_iframe.attr('src', embed_url);
+    $video_iframe.attr('class', 'click_page_embed_url');
+    $video_iframe.css('width', '869');
+    $video_iframe.css('height', '481');
+
+    $embed_window.append($video_iframe)
+
+    $('body').append($embed_window)
+
+    $('body').on('click', '.close-embed-video', function () {
+      $embed_window.fadeOut() 
+        $embed_window.remove();
+    });
+
+    // embed_window = d3.select('body')
+    //     .append('div')
+    //     .attr('class', 'embed_window')
+    //     .style('position', 'absolute')
+    //     .style('z-index', '9999')
+    //     .style('opacity', '0')
+    //   // .style('visibility', 'visible')
+    //     .style('top', '30px')
+    //     .style('right', '30px')
+    //     .html()
+    //   .transition().duration(400).style('opacity', '1')
+      // .style('display', 'block')
+  })
+}
 
 d3.select(self.frameElement).style('height', height + 'px');
+
+
+
+
+

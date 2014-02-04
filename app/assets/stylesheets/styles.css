@@ -54,6 +54,10 @@ a:hover {
   cursor: pointer;
 }
 
+.close-embed-video:hover {
+  cursor: pointer;
+}
+
 .stroke {
   fill: none;
   /*stroke: #000;*/
@@ -141,7 +145,20 @@ iframe {
   float: left;
 }
 
-.tooltip {
+iframe.click_page_embed_url {
+  position: absolute;
+  right: -1px;
+  top: 38px;
+}
+
+.close-embed-video {
+  position: absolute;
+  color: red;
+  top: 5px;
+  right: 5px;
+}
+
+.tooltip, .embed_window {
   color: #fff; 
   background: #000; 
   padding: 10px;
