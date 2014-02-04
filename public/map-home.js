@@ -151,30 +151,20 @@ function ready(error, world) {
     contents.append(header);
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
+    var div = $('<div>').addClass('close-me').text('close');
+    contents.append(div);
 
     for (var i=1; i < data.length; i++) {
       var li = $('<li>');
-      var frame = $('<img>').attr('src', data[i].thumbnail_url);
+
+      var frame = $('<iframe>').attr('src', data[i].thumbnail_url);
+
       frame.css('float', 'left').css('margin', '0 8px 5px 0');
       li.append(frame);
       var link = $('<a>').text(data[i].title).attr('href', data[i].normal_url)
       li.append(link);
       vid_list.append(li);
     }
-
-    var div = $('<div>').addClass('close-me').text('close');
-    contents.append(div);
-
-    //var contents = '<h3> <a href=/countries/' + data[0].id + '>' + data[0].name + '</a></h3>';
-    //contents += '<ul class="box-videos">'
-
-    // for (var i = 1; i < data.length; i++) {
-    //   contents += '<li><img src="' + data[i].thumbnail_url + '" style="float:left; margin:0 8px 5px 0;" /><a target="_blank" href="' + data[i].normal_url + '">"' + data[i].title + '</a></li>'
-    // };
-
-    //contents += '</ul>'
-    
-    //contents += '<div class="close-me">close</div>'
 
     $('body').on('click', '.close-me', function () {
       $('.tooltip').hide();
