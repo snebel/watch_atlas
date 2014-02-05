@@ -115,6 +115,13 @@ a:hover {
   color: red;
 }
 
+.close-me-embed-video {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  color: red;
+}
+
 .close-me:hover {
   cursor: pointer;
 }
