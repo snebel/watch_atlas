@@ -221,6 +221,10 @@ iframe.click_page_embed_url {
   left: 320px;
 }
 
+a.flex-prev {
+  background: url('/assets/images/arrow-left.png');
+}
+
 .tooltip, .embed_window {
   color: #fff; 
   background: #000; 

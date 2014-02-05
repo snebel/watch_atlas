@@ -38,7 +38,7 @@
 *********************************/
 .flexslider {margin: 0; padding: 0;}
 .flexslider .slides > li {font-size: 12px; margin-right: 10px; display: none; -webkit-backface-visibility: hidden; height: 170px;} /* Hide the slides before the JS is loaded. Avoids image jumping */
-.flexslider .slides img {width: 150px; display: block;border:1px solid #848484;margin-bottom:8px;}
+.flexslider .slides img {width: 150px; display: block;border:1px solid #585858;margin-bottom:8px;}
 .flexslider .slides img:hover {border:1px solid #ff0000;cursor: pointer;}
 .flex-pauseplay span {text-transform: capitalize;}
 
