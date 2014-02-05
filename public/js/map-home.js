@@ -158,7 +158,7 @@ function countryClick(d) {
       })
       //.transition().duration(700).style('opacity', '1')
       // .style('display', 'block')
-      
+
   }
 }
 
