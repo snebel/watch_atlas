@@ -262,8 +262,8 @@ function ready(error, world) {
       Circles.create({
         id:         id,
         percentage: percent,
-        radius:     50,
-        width:      10,
+        radius:     30,
+        width:      6,
         number:     percent,
         text:       ' '+text,
         colors:     ['#D3B6C6', '#4B253A'],
@@ -454,22 +454,7 @@ function ready(error, world) {
 
 }
 
- //circles
-    var circle = function circle() {
-    header.append(this.circle)
-    Circles.create({
-    id:         'circles-1',
-    percentage: 43,
-    radius:     60,
-    width:      10,
-    number:     7.13,
-    text:       '%',
-    colors:     ['#D3B6C6', '#4B253A'],
-    duration:   400
-    })
-    circle = $('<div>').attr('id', 'circles-1');
-    };  
- 
+
 
 function addListener() {
   $('.thumbnail').on("click", function() {
