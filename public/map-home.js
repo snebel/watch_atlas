@@ -321,7 +321,7 @@ function ready(error, world) {
 
 
   $('body').on('click', function () {
-    if (!$(event.target).closest('.tooltip').length) {
+    if (!$(event.target).closest('.tooltip').length) { // if the closest place where you clicked is not the tooltip, close the tooltip
         $('.tooltip').animate({'opacity':'0'}, 400)
         .queue(function () {
         $(this).remove();
