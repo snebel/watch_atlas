@@ -157,6 +157,10 @@ function ready(error, world) {
     .on('mouseover', countryHover)
       
     .on('mouseout', function(d){
+      $('.hovertip').animate({'opacity':'0'}, 400)
+        .queue(function () {
+          $(this).remove();
+        });
       if (valid_map_ids.indexOf(d.id) != -1) {
         d3.select('path#id_' + d.id).style('fill', '#16a085')
       } 
@@ -334,6 +338,13 @@ function ready(error, world) {
       vid_div.append('<a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
       contents.append(vid_div);
     }
+
+    // $('body').on('mouseout', function () {
+        
+    //     })
+    //     reset();
+    //   });
+
     return contents.html();
   }
 
