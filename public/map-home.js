@@ -220,13 +220,14 @@ function ready(error, world) {
     var contents = $('.tooltip');
     var header = $('<h1>');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
-    var flag = $('<img>').attr('src', data[0].flag_url).css('width', '100');
+    var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
     header.append(title);
+    header.append(flag);
     contents.append(header);
     // contents.append(flag);
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
-    var div = $('<div>').addClass('close-me').text('close');
+    var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
