@@ -14,7 +14,7 @@ class CountriesController < ApplicationController
 
     respond_to do |format|
       format.html
-
+      
       format.json do
         render json: ([@country] + @country.videos + [@info]).to_json
       end

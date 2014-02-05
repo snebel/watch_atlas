@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 // circles
 // copyright Artan Sinani
 // https://github.com/lugolabs/circles
+=======
+>>>>>>> 3cf4a76b6f79eaed56e571b5f05553c1f80acf59
 
 /*
   Lightwheight JavaScript library that generates circular graphs in SVG.

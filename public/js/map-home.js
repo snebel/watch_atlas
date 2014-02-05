@@ -110,7 +110,7 @@ function countryClick(d) {
     dataType: 'json'
   })
     .success(function (data) {
-      // console.log(data)
+      //console.log(data);
       zoomIn();
       makeTooltip(data, true);
         $('.flexslider').flexslider({
@@ -140,8 +140,8 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-        console.log('make Tooltip data: ' + data) 
-        tooltip = d3.select('#map-canvas')
+        //console.log('make Tooltip data: ' + data) 
+        d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
         .style('position', 'relative')
@@ -150,11 +150,13 @@ function countryClick(d) {
       // .style('visibility', 'visible')
         .style('top', '-750px')
         .style('left', '0px')
-        .html(function () {
-        if (good) { return htmlSuccessGen(data); }
-        else { return htmlFailGen(); }
+        .transition().duration(700).style('opacity', '1');
+
+        $('.tooltip').html(function () {
+        if (good) { return htmlSuccessGen(data); 
+        } else { return htmlFailGen(); }
       })
-      .transition().duration(700).style('opacity', '1')
+      //.transition().duration(700).style('opacity', '1')
       // .style('display', 'block')
       
   }
@@ -234,9 +236,9 @@ function ready(error, world) {
       }));
 
 
-  htmlSuccessGen = function (data) {
-    // $('.tooltip').empty();
-    console.log('html success: ' + data);
+  htmlSuccessGen = function(data) {
+    $('.tooltip').empty();
+    //console.log('html success: ' + data);
     var contents = $('.tooltip');
     var header = $('<h1 class="country-name">');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
@@ -244,7 +246,24 @@ function ready(error, world) {
     header.append(title);
     header.append(flag);
     contents.append(header);
-    // contents.append(flag);
+    
+    //data about overlapping countries
+    var circle_div = $('<div>').attr('id', 'circles-1');
+
+
+    // Circles.create({
+    //   id:         'circles-1',
+    //   percentage: 43,
+    //   radius:     60,
+    //   width:      10,
+    //   number:     7.13,
+    //   text:       '%',
+    //   colors:     ['#D3B6C6', '#4B253A'],
+    //   duration:   400
+    // });
+
+    contents.append(circle_div);
+
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
     var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
@@ -353,7 +372,35 @@ function ready(error, world) {
     
   });
 
-    return contents.html();
+    // return contents.html();
+
+    // var content = contents.html();
+
+    var content = contents.html();
+
+    var returnContent = function(content, func) {
+      console.log("returnContent fired!");
+      func();
+    }
+
+    $('.tooltip').append(content);
+
+    return returnContent(content, function() {
+              
+                Circles.create({
+                  id:         'circles-1',
+                  percentage: 43,
+                  radius:     60,
+                  width:      10,
+                  number:     7.13,
+                  text:       '%',
+                  colors:     ['#D3B6C6', '#4B253A'],
+                  duration:   400
+                });
+
+              console.log("circle created!");
+            });
+            
   }
 
 
