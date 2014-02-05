@@ -5,9 +5,11 @@ class Country < ActiveRecord::Base
 
   def get_overlapping_countries_info
     info = self.videos.map { |video| video.country_names(self.name) }
+    # [  [russia, algeria], [kenya, algeria] ]
     info.flatten!
 
-    country_counts = Hash.new(0)
+    country_counts = Hash.new(0) # { }
+
     info.each do |country_name|
       country_counts[country_name] += 1
     end
