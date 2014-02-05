@@ -34,6 +34,9 @@ g.append("path")
     .attr("d", path);
 
 function countryHover(d) {
+
+  var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+
   var self = this;
 
   d3.select('path#id_' + d.id)
@@ -47,28 +50,32 @@ function countryHover(d) {
   })
     .success(function (data) {
       console.log('hello');
-      var top_three_vids = ([data[1], data[2], data[3]]);
-      makeHovertip(top_three_vids);
+      var top_three_vids = (([data[1], data[2], data[3]]) );
+      var country_name = data[0].name;
+      makeHovertip(country_name, top_three_vids);
       addListener();
     })
     .fail(function(data){
       console.log("bad bad bad!")
     });
 
-  function makeHovertip(data) {
+  function makeHovertip(country, data) {
+    $('.hovertip').remove();
     tooltip = d3.select('#map-canvas')
     .append('div')
     .attr('class', 'hovertip')
-    .style('position', 'absolute')
+    .attr("style", "left:"+(mouse[0]+25)+"px;top:"+mouse[1]+"px")
+    // .style('position', 'absolute')
     .style('z-index', '9999')
     .style('opacity', '0')
   // .style('visibility', 'visible')
-    .style('top', '30px')
-    .style('right', '30px')
+    // .style('top', '30px')
+    // .style('right', '30px')
     .html(function () {
-      return htmlHoverSuccessGen(data);
+      return htmlHoverSuccessGen(country, data);
     })
-    .transition().duration(400).style('opacity', '1')
+    // .transition().duration(400).style('opacity', '1')
+    .style('opacity', '1')
   }  
 
 }
@@ -100,6 +107,8 @@ function countryClick(d) {
     });
 
   function zoomIn() {
+    d3.select('svg')
+      .style('opacity', '.5')
     if (active === d){ return reset();}
     g.selectAll('.active').classed('active', false);
     d3.select(self).classed('active', active = d);
@@ -120,7 +129,7 @@ function countryClick(d) {
         .style('z-index', '9999')
         .style('opacity', '0')
       // .style('visibility', 'visible')
-        .style('top', '-660px')
+        .style('top', '-750px')
         .style('left', '0px')
         .html(function () {
         if (good) { return htmlSuccessGen(data); }
@@ -134,6 +143,7 @@ function countryClick(d) {
 
 
 function reset() {
+  d3.select('svg').style('opacity', '1');
   g.selectAll('.active').classed('active', active = false);
   g.transition().duration(750).attr('transform', '');
 }
@@ -156,13 +166,13 @@ function ready(error, world) {
         return 'id_' + d.id
     })
     .style('fill', '#95a5a6')
-    .on('mouseover', countryHover)
+    // .on('mouseover', countryHover)
       
+
+    .on("mousemove", countryHover)
+
     .on('mouseout', function(d){
-      $('.hovertip').animate({'opacity':'0'}, 400)
-        .queue(function () {
-          $(this).remove();
-        });
+      $('.hovertip').remove();
       if (valid_map_ids.indexOf(d.id) != -1) {
         d3.select('path#id_' + d.id).style('fill', '#16a085')
       } 
@@ -170,6 +180,16 @@ function ready(error, world) {
         d3.select('path#id_' + d.id).style('fill', '#95a5a6')
       }
     })
+        
+
+        // tooltip
+        //   .classed("hidden", false)
+        //   .attr("style", "left:"+(mouse[0]+25)+"px;top:"+mouse[1]+"px")
+        //   .html(d.name)
+      // .on("mouseout",  function(d) {
+      //   tooltip.classed("hidden", true)
+      // })
+
     .on('click', countryClick);
 
     g.selectAll('path.globewater')
@@ -325,13 +345,17 @@ function ready(error, world) {
     return contents;
   }
 
-  htmlHoverSuccessGen = function(data) {
+  htmlHoverSuccessGen = function(country, data) {
+
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
       var vid_div = $('<div>');
+      vid_div.attr('class', 'hovertip-div')
       vid_div.append('<a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
       contents.append(vid_div);
     }
+
+    contents.prepend('<h2>' + country + '</h2>')
 
     return contents.html();
   }
