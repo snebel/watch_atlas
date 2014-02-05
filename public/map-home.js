@@ -227,7 +227,7 @@ function ready(error, world) {
     // contents.append(flag);
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
-    var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
+    // var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
@@ -257,7 +257,7 @@ function ready(error, world) {
     var $entertainment_div = $('<div>').attr('id', 'entertainment-videos')
     var $animals_div = $('<div>').attr('id', 'animals-videos')
 
-    contents.append(div);
+    // contents.append(div);
     contents.append($top_videos_div);
     contents.append($news_div);
     contents.append($music_div);
@@ -319,13 +319,18 @@ function ready(error, world) {
   $entertainment_div.prepend('<h2>Entertainment</h2>');
   $animals_div.prepend('<h2>Animals</h2>');
 
-  $('body').on('click', '.close-me', function () {
-      $('.tooltip').animate({'opacity':'0'}, 400)
-      .queue(function () {
+
+  $('body').on('click', function () {
+    if (!$(event.target).closest('.tooltip').length) {
+        $('.tooltip').animate({'opacity':'0'}, 400)
+        .queue(function () {
         $(this).remove();
+        reset();
       })
-      reset();
-    });
+
+    }
+    
+  });
 
     return contents.html();
   }
