@@ -1,15 +1,25 @@
 <div class="container">
+  
   <div class="sixteen columns">
-    <h1 class="remove-bottom" style="margin-top: 40px"><%=@video.title%></h1>
+    <h2 class="remove-bottom" style="margin-top: 40px"><%=@video.title%></h2>
     <h4>Genre: <%=@term%></h4>
     <hr />
   </div>
-  <div class="one-third column">
+
+  <div class="five columns">
     <h3>The Video</h3>
     <p>Straight from the YouTube source</p>
-    <iframe src="<%=@video.embed_url%>" max-width="100%" height="auto"></iframe>
   </div>
-  <div class="one-third column">
+
+  <div class="eleven columns">
+    <iframe src="<%=@video.embed_url%>" width="100%" height="350px" class="add-bottom"></iframe>
+  </div>
+
+  <div class="sixteen columns">
+    <hr />
+  </div>
+
+  <div class="eight columns">
     <h3>Rankings</h3>
     <p>Relative rank for category in given country</p>
     <ul class="square">
@@ -22,7 +32,8 @@
       <% end %>
     </ul>
   </div>
-  <div class="one-third column">
+
+  <div class="eight columns">
     <h3>Social Stats</h3>
     <p>Courtesy of SharedCount.com</p>
     <ul class="square">
@@ -35,4 +46,4 @@
     </ul>
   </div>
 
-</div><!-- container -->
+</div>
