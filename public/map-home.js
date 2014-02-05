@@ -2,7 +2,7 @@
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
 var width = 1200,
-    height = 700,
+    height = 800,
     sens = 0.9,
     focused,
     active;
@@ -110,7 +110,9 @@ function countryClick(d) {
     //end zoom stuff
   }
 
-  function makeTooltip(data, good) { //data => [country, vid1, vid2,...]  
+  function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
+        $('.tooltip').remove(); //remove the last tooltip from the dom
+        console.log('make Tooltip data: ' + data) 
         tooltip = d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -181,9 +183,9 @@ function ready(error, world) {
         };
       })
       .on('drag', function () {
-        console.log('dragging')
+        // console.log('dragging')
         var rotation_amount = 500;
-        console.log(d3.event);
+        // console.log(d3.event);
         var rotate = projection.rotate();
         projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
         g.selectAll('path.country')
@@ -194,7 +196,7 @@ function ready(error, world) {
 
   htmlSuccessGen = function (data) {
     // $('.tooltip').empty();
-    console.log(data);
+    console.log('html success: ' + data);
     var contents = $('.tooltip');
     var header = $('<h1>');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
@@ -285,14 +287,6 @@ function ready(error, world) {
         $flexslider_ul_animals.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
       }
 
-      // var li = $('<li>');
-      // var frame = $('<img>').attr('src', data[i].thumbnail_url);
-      // frame.css('float', 'left').css('margin', '0 8px 5px 0');
-      // li.append(frame);
-      // var link = $('<a>').text(data[i].title).attr('href', data[i].normal_url)
-      // li.append(link);
-      // vid_list.append(li);
-
 
     }  
 
@@ -339,12 +333,6 @@ function ready(error, world) {
       contents.append(vid_div);
     }
 
-    // $('body').on('mouseout', function () {
-        
-    //     })
-    //     reset();
-    //   });
-
     return contents.html();
   }
 
@@ -356,28 +344,28 @@ function ready(error, world) {
       .style('cursor', 'pointer')
   });
 
-  d3.select('#right-rotator')
-    .on('click', function () {
-      var rotate = projection.rotate();
-      var rotation_amount = 40;
-      var x_point = d3.event.x;
-      var y_point = d3.event.y;
-      console.log(rotate);
-      projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
-      g.selectAll('path.country').attr('d', path);
-    });
+  // d3.select('#right-rotator')
+  //   .on('click', function () {
+  //     var rotate = projection.rotate();
+  //     var rotation_amount = 40;
+  //     var x_point = d3.event.x;
+  //     var y_point = d3.event.y;
+  //     console.log(rotate);
+  //     projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
+  //     g.selectAll('path.country').attr('d', path);
+  //   });
 
 
-  d3.select('#left-rotator')
-    .on('click', function () {
-      var rotate = projection.rotate();
-      var rotation_amount = 40;
-      var x_point = d3.event.x;
-      var y_point = d3.event.y;
-      console.log(rotate);
-      projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
-      g.selectAll('path.country').attr('d', path);
-    });
+  // d3.select('#left-rotator')
+  //   .on('click', function () {
+  //     var rotate = projection.rotate();
+  //     var rotation_amount = 40;
+  //     var x_point = d3.event.x;
+  //     var y_point = d3.event.y;
+  //     console.log(rotate);
+  //     projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
+  //     g.selectAll('path.country').attr('d', path);
+  //   });
 
 }
 
@@ -414,18 +402,6 @@ function addListener() {
         $embed_window.remove();
     });
 
-    // embed_window = d3.select('body')
-    //     .append('div')
-    //     .attr('class', 'embed_window')
-    //     .style('position', 'absolute')
-    //     .style('z-index', '9999')
-    //     .style('opacity', '0')
-    //   // .style('visibility', 'visible')
-    //     .style('top', '30px')
-    //     .style('right', '30px')
-    //     .html()
-    //   .transition().duration(400).style('opacity', '1')
-      // .style('display', 'block')
   })
 }
 
