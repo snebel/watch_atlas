@@ -8,7 +8,7 @@ gem 'pg'
 gem 'json'
 gem 'pry'
 gem 'httparty'
-gem 'gon'
+gem 'rails_12factor', group: :production
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
