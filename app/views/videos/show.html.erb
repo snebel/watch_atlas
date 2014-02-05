@@ -1,14 +1,15 @@
-<div class="container">
-  
+<div class="container" style="background-color:rgba(255,255,255,.6)">
+
   <div class="sixteen columns">
-    <h2 class="remove-bottom" style="margin-top: 40px"><%=@video.title%></h2>
-    <h4>Genre: <%=@term%></h4>
+    <h2 class="remove-bottom" style="margin-top: 40px"><strong><%=@video.title%></strong></h2>
+    <h4>Category: <%=@term%></h4>
+    <%= link_to "Back", :back, class: "button" %>
     <hr />
   </div>
 
   <div class="five columns">
     <h3>The Video</h3>
-    <p>Straight from the YouTube source</p>
+    <p><em>Straight from the YouTube source</em></p>
   </div>
 
   <div class="eleven columns">
@@ -21,13 +22,13 @@
 
   <div class="eight columns">
     <h3>Rankings</h3>
-    <p>Relative rank for category in given country</p>
+    <p><em>Relative rank for category in given country</em></p>
     <ul class="square">
       <% @countries.each do |country| %>
       <% vids = country.videos.where(term: @term) %>
       <% rank = vids.index(@video) %>
       <li>
-        #<%= rank+1 %> in <%= country.name.downcase.capitalize%>
+        <strong>#<%= rank+1 %> in <%= country.name.downcase.capitalize%></strong>
       </li>
       <% end %>
     </ul>
@@ -35,7 +36,7 @@
 
   <div class="eight columns">
     <h3>Social Stats</h3>
-    <p>Courtesy of SharedCount.com</p>
+    <p><em>Courtesy of SharedCount.com</em></p>
     <ul class="square">
       <li><%= @shared[:commentcount] %> <strong>Facebook comments</strong></li>
       <li><%= @shared[:likecount] %> <strong>Facebook likes</strong></li>
