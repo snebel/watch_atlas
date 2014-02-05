@@ -1,6 +1,24 @@
 body {
   background: url('/stardust.png');
-  font-family: Helvetica;
+  font-family: 'Droid Sans', sans-serif;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Droid Sans', sans-serif;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+h1 a {
+  font-size: 62px;
+}
+
+.country-flag {
+  height: 47px;
+  margin-left: 15px;
 }
 
 a {
@@ -8,18 +26,43 @@ a {
   text-decoration: none;
 }
 
+svg {
+  width: 100%;
+}
+
+/*#star-background {
+  width: 700px;
+  height:600px;
+  position: absolute;
+  z-index: 999999;
+  pointer-events: none;
+  background: url('/stardust.png');
+}*/
+
 a:hover {
   text-decoration: underline;
 }
+
 #map-canvas {
-  width: 900;
-  display: inline;
+  width: 100%
+  z-index: 99;
+  margin: 0 auto;
 }
 
-#main-container {
-  width: 960px;
+/*#television {
+  width: 980px;
+  height:653px;
   margin: 0 auto;
-  margin-top: 65px;
+  position: absolute;
+  background: url('/oldschooltv.png');
+  z-index: 999999;
+  pointer-events: none;
+}*/
+
+#main-container {
+  width: 100%;
+/*  margin: 0 auto;*/
+  margin-top: 0px;
 }
 
 #left-rotator {
@@ -44,9 +87,9 @@ a:hover {
 }
 
 .close-me {
-  position: absolute;
-  top: 2px;
-  right: 2px;
+  position: fixed;
+  top: 62px;
+  right: 140px;
   color: red;
 }
 
@@ -112,10 +155,29 @@ ul.box-videos {
   stroke-width: .5px;
 }
 
+.hover-thumbnail {
+  font-size:11px;
+}
+
+
 .feature {
   fill: #ccc;
   cursor: pointer;
 }
+
+.hovertip-div {
+  width: 120px;
+  float:left;
+  margin-right:10px;
+  font-size:11px;
+  height:150px;
+  overflow: hidden;
+}
+
+
+
+
+
 
 .feature.active {
   fill: orange;
@@ -143,6 +205,7 @@ h3 {
 
 iframe {
   float: left;
+  border: none;
 }
 
 iframe.click_page_embed_url {
@@ -154,21 +217,43 @@ iframe.click_page_embed_url {
 .close-embed-video {
   position: absolute;
   color: red;
-  top: 5px;
-  right: 5px;
+  bottom: 6px;
+  left: 320px;
+}
+
+a.flex-prev {
+  background: url('/assets/images/arrow-left.png');
 }
 
 .tooltip, .embed_window {
   color: #fff; 
   background: #000; 
+  padding: 20px;
+  border: 3px solid #fff;
+  width: 80%;
+  height: 600px;
+  overflow: auto;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+.hovertip {
+  color: #fff; 
+  background: #000; 
   padding: 10px;
   border: 3px solid #fff;
-  width: 850px;
-  height: 500px;
+  width: 410px;
+  height: 180px;
   overflow: auto;
   border-radius: 4px; 
   position: absolute;
+  overflow:hidden;
 }
+
+.hovertip h2 {
+  margin:5px 0;
+}
+
 
 #news-videos img {
   float: left;

@@ -1,16 +1,15 @@
 // all of the countries in the database
-console.log('dev branch!!!!!');
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
-var width = 880,
-    height = 560,
+var width = 1200,
+    height = 800,
     sens = 0.9,
     focused,
     active;
 
 var projection = d3.geo.orthographic()
     .translate([width / 2, height / 2])
-    .scale(280)
+    .scale(310)
     .precision(.1)
     .clipAngle(90)
 
@@ -34,6 +33,53 @@ g.append("path")
     .style('cursor', 'move')
     .attr("d", path);
 
+function countryHover(d) {
+
+  var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+
+  var self = this;
+
+  d3.select('path#id_' + d.id)
+  .style('fill', '#d35400');
+  var self = this;
+
+  $.ajax({
+    method: 'get',
+    url: '/countries/maps/' + d.id,
+    dataType: 'json'
+  })
+    .success(function (data) {
+      console.log('hello');
+      var top_three_vids = (([data[1], data[2], data[3]]) );
+      var country_name = data[0].name;
+      makeHovertip(country_name, top_three_vids);
+      addListener();
+    })
+    .fail(function(data){
+      console.log("bad bad bad!")
+    });
+
+  function makeHovertip(country, data) {
+    $('.hovertip').remove();
+    tooltip = d3.select('#map-canvas')
+    .append('div')
+    .attr('class', 'hovertip')
+    .attr("style", "left:"+(mouse[0]+25)+"px;top:"+mouse[1]+"px")
+    // .style('position', 'absolute')
+    .style('z-index', '9999')
+    .style('opacity', '0')
+  // .style('visibility', 'visible')
+    // .style('top', '30px')
+    // .style('right', '30px')
+    .html(function () {
+      return htmlHoverSuccessGen(country, data);
+    })
+    // .transition().duration(400).style('opacity', '1')
+    .style('opacity', '1')
+  }  
+
+}
+
 
 
 function countryClick(d) {
@@ -51,16 +97,18 @@ function countryClick(d) {
         $('.flexslider').flexslider({
           animation: "slide",
           animationLoop: false,
-          itemWidth: 230,
+          itemWidth: 150,
           itemMargin: 15
           });
         addListener();
-        })
+    })
     .fail(function(data){
       makeTooltip(data, false);  
     });
 
   function zoomIn() {
+    d3.select('svg')
+      .style('opacity', '.5')
     if (active === d){ return reset();}
     g.selectAll('.active').classed('active', false);
     d3.select(self).classed('active', active = d);
@@ -71,21 +119,23 @@ function countryClick(d) {
     //end zoom stuff
   }
 
-  function makeTooltip(data, good) { //data => [country, vid1, vid2,...]  
-        tooltip = d3.select('body')
+  function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
+        $('.tooltip').remove(); //remove the last tooltip from the dom
+        console.log('make Tooltip data: ' + data) 
+        tooltip = d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
-        .style('position', 'absolute')
+        .style('position', 'relative')
         .style('z-index', '9999')
         .style('opacity', '0')
       // .style('visibility', 'visible')
-        .style('top', '30px')
-        .style('right', '30px')
+        .style('top', '-750px')
+        .style('left', '0px')
         .html(function () {
         if (good) { return htmlSuccessGen(data); }
         else { return htmlFailGen(); }
       })
-      .transition().duration(400).style('opacity', '1')
+      .transition().duration(700).style('opacity', '1')
       // .style('display', 'block')
       
   }
@@ -93,6 +143,7 @@ function countryClick(d) {
 
 
 function reset() {
+  d3.select('svg').style('opacity', '1');
   g.selectAll('.active').classed('active', active = false);
   g.transition().duration(750).attr('transform', '');
 }
@@ -115,11 +166,13 @@ function ready(error, world) {
         return 'id_' + d.id
     })
     .style('fill', '#95a5a6')
-    .on('mouseover', function(d){
-      d3.select('path#id_' + d.id)
-        .style('fill', '#d35400')
-    })
+    // .on('mouseover', countryHover)
+      
+
+    .on("mousemove", countryHover)
+
     .on('mouseout', function(d){
+      $('.hovertip').remove();
       if (valid_map_ids.indexOf(d.id) != -1) {
         d3.select('path#id_' + d.id).style('fill', '#16a085')
       } 
@@ -127,6 +180,16 @@ function ready(error, world) {
         d3.select('path#id_' + d.id).style('fill', '#95a5a6')
       }
     })
+        
+
+        // tooltip
+        //   .classed("hidden", false)
+        //   .attr("style", "left:"+(mouse[0]+25)+"px;top:"+mouse[1]+"px")
+        //   .html(d.name)
+      // .on("mouseout",  function(d) {
+      //   tooltip.classed("hidden", true)
+      // })
+
     .on('click', countryClick);
 
     g.selectAll('path.globewater')
@@ -140,9 +203,9 @@ function ready(error, world) {
         };
       })
       .on('drag', function () {
-        console.log('dragging')
+        // console.log('dragging')
         var rotation_amount = 500;
-        console.log(d3.event);
+        // console.log(d3.event);
         var rotate = projection.rotate();
         projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
         g.selectAll('path.country')
@@ -153,17 +216,18 @@ function ready(error, world) {
 
   htmlSuccessGen = function (data) {
     // $('.tooltip').empty();
-    console.log(data);
+    console.log('html success: ' + data);
     var contents = $('.tooltip');
     var header = $('<h1>');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
-    var flag = $('<img>').attr('src', data[0].flag_url).css('width', '100');
+    var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
     header.append(title);
+    header.append(flag);
     contents.append(header);
     // contents.append(flag);
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
-    var div = $('<div>').addClass('close-me').text('close');
+    // var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
@@ -193,7 +257,7 @@ function ready(error, world) {
     var $entertainment_div = $('<div>').attr('id', 'entertainment-videos')
     var $animals_div = $('<div>').attr('id', 'animals-videos')
 
-    contents.append(div);
+    // contents.append(div);
     contents.append($top_videos_div);
     contents.append($news_div);
     contents.append($music_div);
@@ -244,14 +308,6 @@ function ready(error, world) {
         $flexslider_ul_animals.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
       }
 
-      // var li = $('<li>');
-      // var frame = $('<img>').attr('src', data[i].thumbnail_url);
-      // frame.css('float', 'left').css('margin', '0 8px 5px 0');
-      // li.append(frame);
-      // var link = $('<a>').text(data[i].title).attr('href', data[i].normal_url)
-      // li.append(link);
-      // vid_list.append(li);
-
 
     }  
 
@@ -263,13 +319,18 @@ function ready(error, world) {
   $entertainment_div.prepend('<h2>Entertainment</h2>');
   $animals_div.prepend('<h2>Animals</h2>');
 
-  $('body').on('click', '.close-me', function () {
-      $('.tooltip').animate({'opacity':'0'}, 400)
-      .queue(function () {
+
+  $('body').on('click', function () {
+    if (!$(event.target).closest('.tooltip').length) { // if the closest place where you clicked is not the tooltip, close the tooltip
+        $('.tooltip').animate({'opacity':'0'}, 400)
+        .queue(function () {
         $(this).remove();
+        reset();
       })
-      reset();
-    });
+
+    }
+    
+  });
 
     return contents.html();
   }
@@ -290,6 +351,21 @@ function ready(error, world) {
     return contents;
   }
 
+  htmlHoverSuccessGen = function(country, data) {
+
+    var contents = $('<div>');
+    for (var i=0; i < data.length; i++) {
+      var vid_div = $('<div>');
+      vid_div.attr('class', 'hovertip-div')
+      vid_div.append('<a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
+      contents.append(vid_div);
+    }
+
+    contents.prepend('<h2>' + country + '</h2>')
+
+    return contents.html();
+  }
+
   //populate active countries with different color
 
   valid_map_ids.forEach(function (x) {
@@ -298,28 +374,28 @@ function ready(error, world) {
       .style('cursor', 'pointer')
   });
 
-  d3.select('#right-rotator')
-    .on('click', function () {
-      var rotate = projection.rotate();
-      var rotation_amount = 40;
-      var x_point = d3.event.x;
-      var y_point = d3.event.y;
-      console.log(rotate);
-      projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
-      g.selectAll('path.country').attr('d', path);
-    });
+  // d3.select('#right-rotator')
+  //   .on('click', function () {
+  //     var rotate = projection.rotate();
+  //     var rotation_amount = 40;
+  //     var x_point = d3.event.x;
+  //     var y_point = d3.event.y;
+  //     console.log(rotate);
+  //     projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
+  //     g.selectAll('path.country').attr('d', path);
+  //   });
 
 
-  d3.select('#left-rotator')
-    .on('click', function () {
-      var rotate = projection.rotate();
-      var rotation_amount = 40;
-      var x_point = d3.event.x;
-      var y_point = d3.event.y;
-      console.log(rotate);
-      projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
-      g.selectAll('path.country').attr('d', path);
-    });
+  // d3.select('#left-rotator')
+  //   .on('click', function () {
+  //     var rotate = projection.rotate();
+  //     var rotation_amount = 40;
+  //     var x_point = d3.event.x;
+  //     var y_point = d3.event.y;
+  //     console.log(rotate);
+  //     projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
+  //     g.selectAll('path.country').attr('d', path);
+  //   });
 
 }
 
@@ -332,9 +408,9 @@ function addListener() {
 
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
-    $embed_window.css('position', 'absolute');
-    $embed_window.css('top', '30px');
-    $embed_window.css('right', '30px');
+    $embed_window.css('position', 'relative');
+    $embed_window.css('top', '-1306px');
+    $embed_window.css('left', '0px');
     $embed_window.append($close_embed_video)
 
     $embed_window.css('z-index', '99999');
@@ -344,30 +420,18 @@ function addListener() {
     $video_iframe = $('<iframe>');
     $video_iframe.attr('src', embed_url);
     $video_iframe.attr('class', 'click_page_embed_url');
-    $video_iframe.css('width', '869');
-    $video_iframe.css('height', '481');
+    $video_iframe.css('width', '642');
+    $video_iframe.css('height', '470');
 
     $embed_window.append($video_iframe)
 
-    $('body').append($embed_window)
+    $('#map-canvas').append($embed_window)
 
     $('body').on('click', '.close-embed-video', function () {
       $embed_window.fadeOut() 
         $embed_window.remove();
     });
 
-    // embed_window = d3.select('body')
-    //     .append('div')
-    //     .attr('class', 'embed_window')
-    //     .style('position', 'absolute')
-    //     .style('z-index', '9999')
-    //     .style('opacity', '0')
-    //   // .style('visibility', 'visible')
-    //     .style('top', '30px')
-    //     .style('right', '30px')
-    //     .html()
-    //   .transition().duration(400).style('opacity', '1')
-      // .style('display', 'block')
   })
 }
 
