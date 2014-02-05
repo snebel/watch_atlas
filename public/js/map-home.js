@@ -35,6 +35,7 @@ g.append("path")
 
 function countryHover(d) {
 
+
   d3.select('path#id_' + d.id)
   .style('fill', '#d35400');
 
@@ -77,10 +78,12 @@ function countryHover(d) {
 
   function makeHovertip(country, data) {
     $('.hovertip').remove();
+
     tooltip = d3.select('#map-canvas')
     .append('div')
     .attr('class', 'hovertip')
-    .attr("style", "left:"+(mouse[0]+25)+"px;top:"+mouse[1]+"px")
+    // .attr('id', 'ptooltip-1')
+    .attr("style", "left:"+(mouse[0])+"px;top:"+mouse[1]+"px")
     // .style('position', 'absolute')
     .style('z-index', '9999')
     .style('opacity', '0')
@@ -88,6 +91,7 @@ function countryHover(d) {
     // .style('top', '30px')
     // .style('right', '30px')
     .html(function () {
+        // $('[title|=ptooltip]').pTooltip();
       return htmlHoverSuccessGen(country, data);
     })
     // .transition().duration(400).style('opacity', '1')
@@ -181,6 +185,7 @@ function ready(error, world) {
     .enter().insert('path')
     .attr('class', 'country')
     .attr('d', path)
+    .attr('title', 'ptooltip-1')
     .attr('id', function(d){
         return 'id_' + d.id
     })
@@ -191,16 +196,37 @@ function ready(error, world) {
     .on("mouseover", countryHover)
 
     .on('mouseout', function(d){
-      $('.hovertip').remove();
 
-      if (valid_map_ids.indexOf(d.id) != -1) {
-        d3.select('path#id_' + d.id).style('fill', '#16a085')
-      } 
-      else {
-        d3.select('path#id_' + d.id).style('fill', '#95a5a6')
+
+       if (valid_map_ids.indexOf(d.id) != -1) {
+          d3.select('path#id_' + d.id).style('fill', '#16a085')
+        } 
+        else {
+          d3.select('path#id_' + d.id).style('fill', '#95a5a6')
+
+        }
+    
+      var isHoverTipHovered = $('.hovertip').is(":hover");
+
+      if ( isHoverTipHovered ) { //if we are hovering over the hovertip
+        console.log('hovertip');
+        // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
+
+      }else{
+         //if you go inside hovertip, it will stay orange. if you don't it will be green. 
+
+        // d3.select('path#id_' + d.id).style('fill', '#16a085')
+
+    
+          $('.hovertip').remove();
+
+
       }
+
+
+
     })
-        
+      
 
         // tooltip
         //   .classed("hidden", false)
@@ -460,6 +486,7 @@ function addListener() {
 }
 
 d3.select(self.frameElement).style('height', height + 'px');
+
 
 
 
