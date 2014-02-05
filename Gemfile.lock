@@ -38,15 +38,12 @@ GEM
     coffee-script-source (1.7.0)
     erubis (2.7.0)
     execjs (2.0.2)
-<<<<<<< HEAD
-=======
     gon (5.0.1)
       actionpack (>= 2.3.0)
       json
     google-translate (1.0.1)
       json_pure
       thor
->>>>>>> 94bf4bddf2658040e6c21c5434ddae0a30f3d03a
     hike (1.2.3)
     httparty (0.12.0)
       json (~> 1.8)
@@ -135,11 +132,8 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
-<<<<<<< HEAD
-=======
   gon
   google-translate
->>>>>>> 94bf4bddf2658040e6c21c5434ddae0a30f3d03a
   httparty
   jbuilder (~> 1.2)
   jquery-rails
