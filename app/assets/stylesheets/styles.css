@@ -1,6 +1,7 @@
 body {
-  /*background: url('/stardust.png');*/
+  background: url('/stardust.png');
   font-family: Helvetica;
+  margin: 0;
 }
 
 a {
@@ -8,9 +9,9 @@ a {
   text-decoration: none;
 }
 
-svg {
+/*svg {
   margin: 50px 0 0 245px;
-}
+}*/
 
 /*#star-background {
   width: 700px;
@@ -26,13 +27,13 @@ a:hover {
 }
 
 #map-canvas {
-  width: 600px;
-  position:absolute;
+  width: 1200px;
   /*display: inline;*/
   z-index: 99;
+  margin: 0 auto;
 }
 
-#television {
+/*#television {
   width: 980px;
   height:653px;
   margin: 0 auto;
@@ -40,12 +41,12 @@ a:hover {
   background: url('/oldschooltv.png');
   z-index: 999999;
   pointer-events: none;
-}
+}*/
 
 #main-container {
-  width: 960px;
-  margin: 0 auto;
-  margin-top: 30px;
+  width: 100%;
+/*  margin: 0 auto;*/
+  margin-top: 0px;
 }
 
 #left-rotator {

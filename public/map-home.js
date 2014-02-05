@@ -1,22 +1,22 @@
 // all of the countries in the database
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
-var width = 600,
-    height = 500,
+var width = 1200,
+    height = 700,
     sens = 0.9,
     focused,
     active;
 
 var projection = d3.geo.orthographic()
     .translate([width / 2, height / 2])
-    .scale(210)
+    .scale(310)
     .precision(.1)
     .clipAngle(90)
 
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select('body').append('svg')
+var svg = d3.select('#map-canvas').append('svg')
     .attr('width', width)
     .attr('height', height);
 
