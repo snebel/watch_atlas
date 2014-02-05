@@ -229,20 +229,20 @@ function ready(error, world) {
     
     //data about overlapping countries
     var circle_div = $('<div>').attr('id', 'circles-1');
-
-
-    // Circles.create({
-    //   id:         'circles-1',
-    //   percentage: 43,
-    //   radius:     60,
-    //   width:      10,
-    //   number:     7.13,
-    //   text:       '%',
-    //   colors:     ['#D3B6C6', '#4B253A'],
-    //   duration:   400
-    // });
-
     contents.append(circle_div);
+
+    Circles.create({
+      id:         'circles-1',
+      percentage: 43,
+      radius:     60,
+      width:      10,
+      number:     7.13,
+      text:       '%',
+      colors:     ['#D3B6C6', '#4B253A'],
+      duration:   400
+    });
+
+    
 
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
@@ -331,41 +331,28 @@ function ready(error, world) {
     }  
 
 
-  $top_videos_div.prepend('<h2>Top Videos</h2>');
-  $news_div.prepend('<h2>News</h2>');
-  $music_div.prepend('<h2>Music</h2>');
-  $tech_div.prepend('<h2>Tech</h2>');
-  $entertainment_div.prepend('<h2>Entertainment</h2>');
-  $animals_div.prepend('<h2>Animals</h2>');
+    $top_videos_div.prepend('<h2>Top Videos</h2>');
+    $news_div.prepend('<h2>News</h2>');
+    $music_div.prepend('<h2>Music</h2>');
+    $tech_div.prepend('<h2>Tech</h2>');
+    $entertainment_div.prepend('<h2>Entertainment</h2>');
+    $animals_div.prepend('<h2>Animals</h2>');
 
 
-  $('body').on('click', function () {
-    if (!$(event.target).closest('.tooltip').length) { // if the closest place where you clicked is not the tooltip, close the tooltip
-        $('.tooltip').animate({'opacity':'0'}, 400)
-        .queue(function () {
-        $(this).remove();
-        reset();
-      })
+    $('body').on('click', function () {
+      if (!$(event.target).closest('.tooltip').length) { // if the closest place where you clicked is not the tooltip, close the tooltip
+          $('.tooltip').animate({'opacity':'0'}, 400)
+          .queue(function () {
+          $(this).remove();
+          reset();
+        })
 
-    }
-    
-  });
-
-  $('.tooltip').append(contents.html());
-
-  returnContent(content, function() {
-    Circles.create({
-      id:         'circles-1',
-      percentage: 43,
-      radius:     60,
-      width:      10,
-      number:     7.13,
-      text:       '%',
-      colors:     ['#D3B6C6', '#4B253A'],
-      duration:   400
+      }
+      
     });
-  });
-            
+
+    $('.tooltip').append(contents.html());
+  
   }
 
 
