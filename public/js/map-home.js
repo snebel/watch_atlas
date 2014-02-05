@@ -218,7 +218,7 @@ function ready(error, world) {
     // $('.tooltip').empty();
     console.log('html success: ' + data);
     var contents = $('.tooltip');
-    var header = $('<h1>');
+    var header = $('<h1 class="country-name">');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
     var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
     header.append(title);
@@ -311,12 +311,12 @@ function ready(error, world) {
 
     }  
 
-  $top_videos_div.prepend('<h2>Top Videos</h2>');
-  $news_div.prepend('<h2>News</h2>');
-  $music_div.prepend('<h2>Music</h2>');
-  $tech_div.prepend('<h2>Tech</h2>');
-  $entertainment_div.prepend('<h2>Entertainment</h2>');
-  $animals_div.prepend('<h2>Animals</h2>');
+  $top_videos_div.prepend('<h2 class="category-title">Top Videos</h2>');
+  $news_div.prepend('<h2 class="category-title">News</h2>');
+  $music_div.prepend('<h2 class="category-title">Music</h2>');
+  $tech_div.prepend('<h2 class="category-title">Tech</h2>');
+  $entertainment_div.prepend('<h2 class="category-title">Entertainment</h2>');
+  $animals_div.prepend('<h2 class="category-title">Animals</h2>');
 
 
   $('body').on('click', '.close-me', function () {
@@ -355,11 +355,11 @@ function ready(error, world) {
     for (var i=0; i < data.length; i++) {
       var vid_div = $('<div>');
       vid_div.attr('class', 'hovertip-div')
-      vid_div.append('<a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
+      vid_div.append('<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>');
       contents.append(vid_div);
     }
 
-    contents.prepend('<h2>' + country + '</h2>')
+    contents.prepend('<h2 class="country-name">' + country + '</h2>')
 
     return contents.html();
   }
