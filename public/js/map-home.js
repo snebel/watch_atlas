@@ -83,6 +83,9 @@ function countryHover(d) {
 
 
 function countryClick(d) {
+
+  $('.embed_window').remove();
+
   var self = this;
 
   $.ajax({
@@ -121,7 +124,7 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-        
+        //console.log('make Tooltip data: ' + data) 
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -131,12 +134,12 @@ function countryClick(d) {
       // .style('visibility', 'visible')
         .style('top', '-750px')
         .style('left', '0px')
-        
+        .transition().duration(700).style('opacity', '1');
 
         $('.tooltip').html(function () {
         if (good) { return htmlSuccessGen(data); 
         } else { return htmlFailGen(); }
-      }).transition().duration(5000).style('opacity', '1');
+      })
       //.transition().duration(700).style('opacity', '1')
       // .style('display', 'block')
       
@@ -171,7 +174,7 @@ function ready(error, world) {
     // .on('mouseover', countryHover)
       
 
-    .on("mousemove", countryHover)
+    .on("mouseover", countryHover)
 
     .on('mouseout', function(d){
       $('.hovertip').remove();
@@ -220,7 +223,7 @@ function ready(error, world) {
     $('.tooltip').empty();
     //console.log('html success: ' + data);
     var contents = $('.tooltip');
-    var header = $('<h1>');
+    var header = $('<h1 class="country-name">');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
     var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
     header.append(title);
@@ -246,7 +249,7 @@ function ready(error, world) {
 
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
-    // var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
+    var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
@@ -276,7 +279,7 @@ function ready(error, world) {
     var $entertainment_div = $('<div>').attr('id', 'entertainment-videos')
     var $animals_div = $('<div>').attr('id', 'animals-videos')
 
-    // contents.append(div);
+    contents.append(div); // the close me div
     contents.append($top_videos_div);
     contents.append($news_div);
     contents.append($music_div);
@@ -330,41 +333,53 @@ function ready(error, world) {
 
     }  
 
+  $top_videos_div.prepend('<h2 class="category-title">Top Videos</h2>');
+  $news_div.prepend('<h2 class="category-title">News</h2>');
+  $music_div.prepend('<h2 class="category-title">Music</h2>');
+  $tech_div.prepend('<h2 class="category-title">Tech</h2>');
+  $entertainment_div.prepend('<h2 class="category-title">Entertainment</h2>');
+  $animals_div.prepend('<h2 class="category-title">Animals</h2>');
 
-  $top_videos_div.prepend('<h2>Top Videos</h2>');
-  $news_div.prepend('<h2>News</h2>');
-  $music_div.prepend('<h2>Music</h2>');
-  $tech_div.prepend('<h2>Tech</h2>');
-  $entertainment_div.prepend('<h2>Entertainment</h2>');
-  $animals_div.prepend('<h2>Animals</h2>');
 
-
-  $('body').on('click', function () {
-    if (!$(event.target).closest('.tooltip').length) { // if the closest place where you clicked is not the tooltip, close the tooltip
+  $('body').on('click', '.close-me', function () {
+  
         $('.tooltip').animate({'opacity':'0'}, 400)
         .queue(function () {
         $(this).remove();
-        reset();
       })
 
-    }
+    reset();
     
   });
 
-  $('.tooltip').append(contents.html());
+    // return contents.html();
 
-  returnContent(content, function() {
-    Circles.create({
-      id:         'circles-1',
-      percentage: 43,
-      radius:     60,
-      width:      10,
-      number:     7.13,
-      text:       '%',
-      colors:     ['#D3B6C6', '#4B253A'],
-      duration:   400
-    });
-  });
+    // var content = contents.html();
+
+    var content = contents.html();
+
+    var returnContent = function(content, func) {
+      console.log("returnContent fired!");
+      func();
+    }
+
+    $('.tooltip').append(content);
+
+    return returnContent(content, function() {
+              
+                Circles.create({
+                  id:         'circles-1',
+                  percentage: 43,
+                  radius:     60,
+                  width:      10,
+                  number:     7.13,
+                  text:       '%',
+                  colors:     ['#D3B6C6', '#4B253A'],
+                  duration:   400
+                });
+
+              console.log("circle created!");
+            });
             
   }
 
@@ -390,11 +405,11 @@ function ready(error, world) {
     for (var i=0; i < data.length; i++) {
       var vid_div = $('<div>');
       vid_div.attr('class', 'hovertip-div')
-      vid_div.append('<a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
+      vid_div.append('<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>');
       contents.append(vid_div);
     }
 
-    contents.prepend('<h2>' + country + '</h2>')
+    contents.prepend('<h2 class="country-name">' + country + '</h2>')
 
     return contents.html();
   }
@@ -442,7 +457,7 @@ function addListener() {
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
     $embed_window.css('position', 'relative');
-    $embed_window.css('top', '-1306px');
+    $embed_window.css('top', '-1396px');
     $embed_window.css('left', '0px');
     $embed_window.append($close_embed_video)
 
@@ -450,13 +465,17 @@ function addListener() {
     $embed_window.css('display', 'block')
     $embed_window.css('background', 'black')
 
+    $video_container = $('<div>')
+    $video_container.attr('class', 'video-container')
+
     $video_iframe = $('<iframe>');
     $video_iframe.attr('src', embed_url);
     $video_iframe.attr('class', 'click_page_embed_url');
-    $video_iframe.css('width', '642');
-    $video_iframe.css('height', '470');
+    // $video_iframe.css('width', '642');
+    // $video_iframe.css('height', '470');
 
-    $embed_window.append($video_iframe)
+    $embed_window.append($video_container)
+    $video_container.append($video_iframe)
 
     $('#map-canvas').append($embed_window)
 
