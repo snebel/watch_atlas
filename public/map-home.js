@@ -1,5 +1,4 @@
 // all of the countries in the database
-console.log('dev branch!!!!!');
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
 var width = 880,
@@ -37,16 +36,43 @@ g.append("path")
 function countryHover(d) {
   var self = this;
 
+  d3.select('path#id_' + d.id)
+  .style('fill', '#d35400');
+  var self = this;
+
   $.ajax({
     method: 'get',
     url: '/countries/maps/' + d.id,
     dataType: 'json'
   })
     .success(function (data) {
-      console.log("hello")
+      var top_three_vids = ([data[1], data[2], data[3]]);
+      makeHovertip(top_three_vids);
+      addListener();
     })
+    .fail(function(data){
+      console.log("bad bad bad!")
+    });
+
+  function makeHovertip(data) {
+    tooltip = d3.select('body')
+    .append('div')
+    .attr('class', 'hovertip')
+    .style('position', 'absolute')
+    .style('z-index', '9999')
+    .style('opacity', '0')
+  // .style('visibility', 'visible')
+    .style('top', '30px')
+    .style('right', '30px')
+    .html(function () {
+      return htmlHoverSuccessGen(data);
+    })
+    .transition().duration(400).style('opacity', '1')
+  }  
 
 }
+
+
 
 function countryClick(d) {
   var self = this;
@@ -67,7 +93,7 @@ function countryClick(d) {
           itemMargin: 15
           });
         addListener();
-        })
+    })
     .fail(function(data){
       makeTooltip(data, false);  
     });
@@ -127,11 +153,8 @@ function ready(error, world) {
         return 'id_' + d.id
     })
     .style('fill', '#95a5a6')
-    .on('mouseover', function(d){
-      d3.select('path#id_' + d.id)
-        .style('fill', '#d35400');
-        countryHover;
-    })
+    .on('mouseover', countryHover)
+      
     .on('mouseout', function(d){
       if (valid_map_ids.indexOf(d.id) != -1) {
         d3.select('path#id_' + d.id).style('fill', '#16a085')
@@ -301,6 +324,16 @@ function ready(error, world) {
       });
 
     return contents;
+  }
+
+  htmlHoverSuccessGen = function(data) {
+    var contents = $('<div>');
+    for (var i=0; i < data.length; i++) {
+      var vid_div = $('<div>');
+      vid_div.append('<a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
+      contents.append(vid_div);
+    }
+    return contents.html();
   }
 
   //populate active countries with different color

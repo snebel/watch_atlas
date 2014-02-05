@@ -158,6 +158,18 @@ iframe.click_page_embed_url {
   right: 5px;
 }
 
+.hovertip {
+  color: #fff; 
+  background: #000; 
+  padding: 10px;
+  border: 3px solid #fff;
+  width: 450px;
+  height: 300px;
+  overflow: auto;
+  border-radius: 4px; 
+  position: absolute;
+}
+
 .tooltip, .embed_window {
   color: #fff; 
   background: #000; 
