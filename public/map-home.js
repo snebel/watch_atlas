@@ -56,7 +56,7 @@ function countryHover(d) {
     });
 
   function makeHovertip(data) {
-    tooltip = d3.select('body')
+    tooltip = d3.select('#map-canvas')
     .append('div')
     .attr('class', 'hovertip')
     .style('position', 'absolute')
@@ -111,15 +111,15 @@ function countryClick(d) {
   }
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...]  
-        tooltip = d3.select('body')
+        tooltip = d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
-        .style('position', 'absolute')
+        .style('position', 'relative')
         .style('z-index', '9999')
         .style('opacity', '0')
       // .style('visibility', 'visible')
-        .style('top', '95px')
-        .style('left', '240px')
+        .style('top', '-660px')
+        .style('left', '0px')
         .html(function () {
         if (good) { return htmlSuccessGen(data); }
         else { return htmlFailGen(); }
@@ -390,9 +390,9 @@ function addListener() {
 
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
-    $embed_window.css('position', 'absolute');
-    $embed_window.css('top', '35px');
-    $embed_window.css('left', '225px');
+    $embed_window.css('position', 'relative');
+    $embed_window.css('top', '-1306px');
+    $embed_window.css('left', '0px');
     $embed_window.append($close_embed_video)
 
     $embed_window.css('z-index', '99999');
@@ -407,7 +407,7 @@ function addListener() {
 
     $embed_window.append($video_iframe)
 
-    $('body').append($embed_window)
+    $('#map-canvas').append($embed_window)
 
     $('body').on('click', '.close-embed-video', function () {
       $embed_window.fadeOut() 
