@@ -9,6 +9,7 @@ gem 'json'
 gem 'pry'
 gem 'httparty'
 gem 'rails_12factor', group: :production
+gem 'google-translate'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
