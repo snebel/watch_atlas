@@ -83,6 +83,9 @@ function countryHover(d) {
 
 
 function countryClick(d) {
+
+  $('.embed_window').remove();
+  
   var self = this;
 
   $.ajax({
