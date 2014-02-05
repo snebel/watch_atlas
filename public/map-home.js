@@ -46,6 +46,7 @@ function countryHover(d) {
     dataType: 'json'
   })
     .success(function (data) {
+      console.log('hello');
       var top_three_vids = ([data[1], data[2], data[3]]);
       makeHovertip(top_three_vids);
       addListener();
