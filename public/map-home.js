@@ -51,7 +51,7 @@ function countryClick(d) {
         $('.flexslider').flexslider({
           animation: "slide",
           animationLoop: false,
-          itemWidth: 230,
+          itemWidth: 150,
           itemMargin: 15
           });
         addListener();
@@ -333,8 +333,8 @@ function addListener() {
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
     $embed_window.css('position', 'absolute');
-    $embed_window.css('top', '30px');
-    $embed_window.css('right', '30px');
+    $embed_window.css('top', '35px');
+    $embed_window.css('left', '225px');
     $embed_window.append($close_embed_video)
 
     $embed_window.css('z-index', '99999');
@@ -344,8 +344,8 @@ function addListener() {
     $video_iframe = $('<iframe>');
     $video_iframe.attr('src', embed_url);
     $video_iframe.attr('class', 'click_page_embed_url');
-    $video_iframe.css('width', '869');
-    $video_iframe.css('height', '481');
+    $video_iframe.css('width', '642');
+    $video_iframe.css('height', '470');
 
     $embed_window.append($video_iframe)
 

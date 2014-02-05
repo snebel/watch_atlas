@@ -169,6 +169,7 @@ h3 {
 
 iframe {
   float: left;
+  border: none;
 }
 
 iframe.click_page_embed_url {
@@ -180,11 +181,11 @@ iframe.click_page_embed_url {
 .close-embed-video {
   position: absolute;
   color: red;
-  top: 5px;
-  right: 5px;
+  bottom: 6px;
+  left: 320px;
 }
 
-.tooltip, .embed_window {
+.tooltip {
   color: #fff; 
   background: #000; 
   padding: 10px 10px 10px 30px;
@@ -194,6 +195,20 @@ iframe.click_page_embed_url {
   overflow: auto;
 /*  border-radius: 4px; */
   position: absolute;
+}
+
+
+.embed_window {
+  color: #fff; 
+  background: #000; 
+ /* padding: 10px 10px 10px 30px;*/
+/*  border: 3px solid #fff;*/
+  width: 660px;
+  height: 550px;
+  overflow: auto;
+/*  border-radius: 4px; */
+  position: absolute;
+
 }
 
 #news-videos img {
