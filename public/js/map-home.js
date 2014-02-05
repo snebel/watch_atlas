@@ -410,7 +410,7 @@ function addListener() {
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
     $embed_window.css('position', 'relative');
-    $embed_window.css('top', '-1306px');
+    $embed_window.css('top', '-1396px');
     $embed_window.css('left', '0px');
     $embed_window.append($close_embed_video)
 
