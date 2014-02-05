@@ -34,4 +34,5 @@ class Video < ActiveRecord::Base
       pins: pinterest,
     }
   end
+
 end
