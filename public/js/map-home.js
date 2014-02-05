@@ -85,7 +85,7 @@ function countryHover(d) {
 function countryClick(d) {
 
   $('.embed_window').remove();
-  
+
   var self = this;
 
   $.ajax({
@@ -418,13 +418,17 @@ function addListener() {
     $embed_window.css('display', 'block')
     $embed_window.css('background', 'black')
 
+    $video_container = $('<div>')
+    $video_container.attr('class', 'video-container')
+
     $video_iframe = $('<iframe>');
     $video_iframe.attr('src', embed_url);
     $video_iframe.attr('class', 'click_page_embed_url');
-    $video_iframe.css('width', '642');
-    $video_iframe.css('height', '470');
+    // $video_iframe.css('width', '642');
+    // $video_iframe.css('height', '470');
 
-    $embed_window.append($video_iframe)
+    $embed_window.append($video_container)
+    $video_container.append($video_iframe)
 
     $('#map-canvas').append($embed_window)
 
