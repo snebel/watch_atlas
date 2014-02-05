@@ -1,28 +1,38 @@
-<div id="video_iframe">
-  <iframe src="<%=@video.embed_url%>" height="400px" width="500px" style="display:block"></iframe>
-</div>
-<div id="video_stats"> 
-  <div>
-    <h2>Where is this video popular?</h2>
-    <h3>Category: <%=@term%> </h3>
-    <h3>Rank:</h3>
-    <ul>
+<div class="container">
+  <div class="sixteen columns">
+    <h1 class="remove-bottom" style="margin-top: 40px"><%=@video.title%></h1>
+    <h4>Genre: <%=@term%></h4>
+    <hr />
+  </div>
+  <div class="one-third column">
+    <h3>The Video</h3>
+    <p>Straight from the YouTube source</p>
+    <iframe src="<%=@video.embed_url%>" max-width="100%" height="auto"></iframe>
+  </div>
+  <div class="one-third column">
+    <h3>Rankings</h3>
+    <p>Relative rank for category in given country</p>
+    <ul class="square">
       <% @countries.each do |country| %>
-        <% vids = country.videos.where(term: @term) %>
-        <% rank = vids.index(@video) %>
-        <li><%= "##{rank+1} in #{country.name}" %></li>
+      <% vids = country.videos.where(term: @term) %>
+      <% rank = vids.index(@video) %>
+      <li>
+        #<%= rank+1 %> in <%= country.name.downcase.capitalize%>
+      </li>
       <% end %>
     </ul>
   </div>
-  <div>
-    <h3>Share Stats</h3>
-    <ul>
-      <li><%= @shared[:commentcount] %> <strong>FB comments</strong></li>
-      <li><%= @shared[:likecount] %> <strong>FB likes</strong></li>
-      <li><%= @shared[:sharecount] %> <strong>FB shares</strong></li>
+  <div class="one-third column">
+    <h3>Social Stats</h3>
+    <p>Courtesy of SharedCount.com</p>
+    <ul class="square">
+      <li><%= @shared[:commentcount] %> <strong>Facebook comments</strong></li>
+      <li><%= @shared[:likecount] %> <strong>Facebook likes</strong></li>
+      <li><%= @shared[:sharecount] %> <strong>Facebook shares</strong></li>
       <li><%= @shared[:tweets] %> <strong>Tweets</strong></li>
       <li><%= @shared[:plus_ones] %> <strong>Google +1's</strong></li>
       <li><%= @shared[:pins] %> <strong>Pins</strong></li>
     </ul>
   </div>
-</div>
+
+</div><!-- container -->

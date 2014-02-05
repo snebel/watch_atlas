@@ -1,5 +1,3 @@
-$(function() {
-
 var parallax = (function() {
  'use strict';
 
@@ -28,9 +26,10 @@ var parallax = (function() {
       		scroll = (((top - offset) / liHeight) * diffHeight);
 
       		$div.css('webkitTransform', "translate3d(0px, " + scroll + "px, " + scroll*(-20000) + "px)");
-      	}
+    	  }
       };
-
 })();
-	$(window).on('scroll', parallax);
+
+$(function() {
+  $(window).on('scroll', parallax);
 });
