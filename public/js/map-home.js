@@ -169,7 +169,7 @@ function ready(error, world) {
     // .on('mouseover', countryHover)
       
 
-    .on("mousemove", countryHover)
+    .on("mouseover", countryHover)
 
     .on('mouseout', function(d){
       $('.hovertip').remove();
