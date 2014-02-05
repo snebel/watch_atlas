@@ -1,22 +1,22 @@
 // all of the countries in the database
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
-var width = 880,
-    height = 560,
+var width = 600,
+    height = 500,
     sens = 0.9,
     focused,
     active;
 
 var projection = d3.geo.orthographic()
     .translate([width / 2, height / 2])
-    .scale(280)
+    .scale(210)
     .precision(.1)
     .clipAngle(90)
 
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select('#map-canvas').append('svg')
+var svg = d3.select('body').append('svg')
     .attr('width', width)
     .attr('height', height);
 
@@ -89,7 +89,7 @@ function countryClick(d) {
         $('.flexslider').flexslider({
           animation: "slide",
           animationLoop: false,
-          itemWidth: 230,
+          itemWidth: 150,
           itemMargin: 15
           });
         addListener();
@@ -117,13 +117,13 @@ function countryClick(d) {
         .style('z-index', '9999')
         .style('opacity', '0')
       // .style('visibility', 'visible')
-        .style('top', '30px')
-        .style('right', '30px')
+        .style('top', '95px')
+        .style('left', '240px')
         .html(function () {
         if (good) { return htmlSuccessGen(data); }
         else { return htmlFailGen(); }
       })
-      .transition().duration(400).style('opacity', '1')
+      .transition().duration(700).style('opacity', '1')
       // .style('display', 'block')
       
   }
@@ -379,8 +379,8 @@ function addListener() {
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
     $embed_window.css('position', 'absolute');
-    $embed_window.css('top', '30px');
-    $embed_window.css('right', '30px');
+    $embed_window.css('top', '35px');
+    $embed_window.css('left', '225px');
     $embed_window.append($close_embed_video)
 
     $embed_window.css('z-index', '99999');
@@ -390,8 +390,8 @@ function addListener() {
     $video_iframe = $('<iframe>');
     $video_iframe.attr('src', embed_url);
     $video_iframe.attr('class', 'click_page_embed_url');
-    $video_iframe.css('width', '869');
-    $video_iframe.css('height', '481');
+    $video_iframe.css('width', '642');
+    $video_iframe.css('height', '470');
 
     $embed_window.append($video_iframe)
 
