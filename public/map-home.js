@@ -169,7 +169,7 @@ function ready(error, world) {
     // .on('mouseover', countryHover)
       
 
-    .on("mousemove", countryHover)
+    .on("mouseover", countryHover)
 
     .on('mouseout', function(d){
       $('.hovertip').remove();
@@ -227,7 +227,7 @@ function ready(error, world) {
     // contents.append(flag);
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
-    // var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
+    var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
@@ -257,7 +257,7 @@ function ready(error, world) {
     var $entertainment_div = $('<div>').attr('id', 'entertainment-videos')
     var $animals_div = $('<div>').attr('id', 'animals-videos')
 
-    // contents.append(div);
+    contents.append(div); // the close me div
     contents.append($top_videos_div);
     contents.append($news_div);
     contents.append($music_div);
@@ -311,7 +311,6 @@ function ready(error, world) {
 
     }  
 
-
   $top_videos_div.prepend('<h2>Top Videos</h2>');
   $news_div.prepend('<h2>News</h2>');
   $music_div.prepend('<h2>Music</h2>');
@@ -320,15 +319,14 @@ function ready(error, world) {
   $animals_div.prepend('<h2>Animals</h2>');
 
 
-  $('body').on('click', function () {
-    if (!$(event.target).closest('.tooltip').length) { // if the closest place where you clicked is not the tooltip, close the tooltip
+  $('body').on('click', '.close-me', function () {
+  
         $('.tooltip').animate({'opacity':'0'}, 400)
         .queue(function () {
         $(this).remove();
-        reset();
       })
 
-    }
+    reset();
     
   });
 
