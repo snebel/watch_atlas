@@ -406,6 +406,7 @@ function addListener() {
 
     embed_url = $(this).children('img').attr("data-id");
     var $close_embed_video = $('<div>').addClass('close-embed-video').text('close');
+    var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel.png" />');
 
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
@@ -429,6 +430,7 @@ function addListener() {
 
     $embed_window.append($video_container)
     $video_container.append($video_iframe)
+    $embed_window.append($div)
 
     $('#map-canvas').append($embed_window)
 
