@@ -178,18 +178,3 @@ rect {
   fill: none;
   pointer-events: all;
 }
-
-#video_iframe {
-  display: inline-block;
-  position: relative;
-  margin-top: 50px;
-}
-
-#video_stats {
-  display: inline-block;
-  position: absolute;
-  background-color: white;
-  margin-top: 50px;
-  margin-left: 50px;
-}
-

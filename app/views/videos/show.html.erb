@@ -1,28 +1,40 @@
-<div id="video_iframe">
-  <iframe src="<%=@video.embed_url%>" height="400px" width="500px" style="display:block"></iframe>
-</div>
-<div id="video_stats"> 
-  <div>
-    <h2>Where is this video popular?</h2>
-    <h3>Category: <%=@term%> </h3>
-    <h3>Rank:</h3>
-    <ul>
-      <% @countries.each do |country| %>
-        <% vids = country.videos.where(term: @term) %>
-        <% rank = vids.index(@video) %>
-        <li><%= "##{rank+1} in #{country.name}" %></li>
-      <% end %>
-    </ul>
+<div class="body_div">
+
+  <div class="video_show_header img3">
+    <div id ="title">
+      <h1><%=@video.title%></h1>
+      <h2>Genre: <%=@term%></h2>
+    </div>
+    <div id="iframe">
+      <iframe src="<%=@video.embed_url%>" height="100%" width="100%"></iframe>
+    </div>
   </div>
-  <div>
-    <h3>Share Stats</h3>
-    <ul>
-      <li><%= @shared[:commentcount] %> <strong>FB comments</strong></li>
-      <li><%= @shared[:likecount] %> <strong>FB likes</strong></li>
-      <li><%= @shared[:sharecount] %> <strong>FB shares</strong></li>
-      <li><%= @shared[:tweets] %> <strong>Tweets</strong></li>
-      <li><%= @shared[:plus_ones] %> <strong>Google +1's</strong></li>
-      <li><%= @shared[:pins] %> <strong>Pins</strong></li>
-    </ul>
-  </div>
+
+  <ul class="parallax">
+    <li>
+      <div class="parallax-background img2"></div>
+      <div class="video_stats"> 
+        <h3>Country Rankings</h3>
+        <ul id="rankings_list">
+          <% @countries.each do |country| %>
+            <% vids = country.videos.where(term: @term) %>
+            <% rank = vids.index(@video) %>
+            <li>#<%= rank+1 %> in <%= country.name.downcase.capitalize%></li>
+          <% end %>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <div class="parallax-background img1"></div>
+      <div class="share_stats">
+        <h3>Share Stats</h3>
+        <h2><%= @shared[:commentcount] %> <strong>FB comments</strong></h2>
+        <h2><%= @shared[:likecount] %> <strong>FB likes</strong></h2>
+        <h2><%= @shared[:sharecount] %> <strong>FB shares</strong></h2>
+        <h2><%= @shared[:tweets] %> <strong>Tweets</strong></h2>
+        <h2><%= @shared[:plus_ones] %> <strong>Google +1's</strong></h2>
+        <h2><%= @shared[:pins] %> <strong>Pins</strong></h2>
+      </div>
+    </li>
+  </ul>
 </div>

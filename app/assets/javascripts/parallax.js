@@ -1,36 +1,35 @@
-$(function() {
+// var parallax = (function() {
+//  'use strict';
 
-var parallax = (function() {
- 'use strict';
+//   var $container = $('.parallax'),
+//       $divs = $container.find('div.parallax-background'),
+//       len = $divs.length,
+//       liHeight = $divs.first().closest('li').height(),
+//       diffHeight = $divs.first().height() - liHeight,
+//       bodyScroll = document.documentElement, 
+//       top,
+//       i,
+//       $div,
+//       offset,
+//       scroll;
 
-  var $container = $('.parallax'),
-      $divs = $container.find('div.parallax-background'),
-      len = $divs.length,
-      liHeight = $divs.first().closest('li').height(),
-      diffHeight = $divs.first().height() - liHeight,
-      bodyScroll = document.documentElement, 
-      top,
-      i,
-      $div,
-      offset,
-      scroll;
+//       return function() {
 
-      return function() {
+//       	top = bodyScroll.scrollTop;
 
-      	top = bodyScroll.scrollTop;
+//       	for (i = 0; i < len; i++) {
 
-      	for (i = 0; i < len; i++) {
+//       		$div = $divs.eq(i);
 
-      		$div = $divs.eq(i);
+//       		offset = $div.offset().top;
 
-      		offset = $div.offset().top;
+//       		scroll = (((top - offset) / liHeight) * diffHeight);
 
-      		scroll = (((top - offset) / liHeight) * diffHeight);
+//       		$div.css('webkitTransform', "translate3d(0px, " + scroll + "px, " + scroll*(-20000) + "px)");
+//     	  }
+//       };
+// })();
 
-      		$div.css('webkitTransform', "translate3d(0px, " + scroll + "px, " + scroll*(-20000) + "px)");
-      	}
-      };
-
-})();
-	$(window).on('scroll', parallax);
-});
+// $(function() {
+//   $(window).on('scroll', parallax);
+// });
