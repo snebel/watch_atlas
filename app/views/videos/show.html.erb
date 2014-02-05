@@ -1,40 +1,38 @@
-<div class="body_div">
-
-  <div class="video_show_header img3">
-    <div id ="title">
-      <h1><%=@video.title%></h1>
-      <h2>Genre: <%=@term%></h2>
-    </div>
-    <div id="iframe">
-      <iframe src="<%=@video.embed_url%>" height="100%" width="100%"></iframe>
-    </div>
+<div class="container">
+  <div class="sixteen columns">
+    <h1 class="remove-bottom" style="margin-top: 40px"><%=@video.title%></h1>
+    <h4>Genre: <%=@term%></h4>
+    <hr />
+  </div>
+  <div class="one-third column">
+    <h3>The Video</h3>
+    <p>Straight from the YouTube source</p>
+    <iframe src="<%=@video.embed_url%>" max-width="100%" height="auto"></iframe>
+  </div>
+  <div class="one-third column">
+    <h3>Rankings</h3>
+    <p>Relative rank for category in given country</p>
+    <ul class="square">
+      <% @countries.each do |country| %>
+      <% vids = country.videos.where(term: @term) %>
+      <% rank = vids.index(@video) %>
+      <li>
+        #<%= rank+1 %> in <%= country.name.downcase.capitalize%>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="one-third column">
+    <h3>Social Stats</h3>
+    <p>Courtesy of SharedCount.com</p>
+    <ul class="square">
+      <li><%= @shared[:commentcount] %> <strong>Facebook comments</strong></li>
+      <li><%= @shared[:likecount] %> <strong>Facebook likes</strong></li>
+      <li><%= @shared[:sharecount] %> <strong>Facebook shares</strong></li>
+      <li><%= @shared[:tweets] %> <strong>Tweets</strong></li>
+      <li><%= @shared[:plus_ones] %> <strong>Google +1's</strong></li>
+      <li><%= @shared[:pins] %> <strong>Pins</strong></li>
+    </ul>
   </div>
 
-  <ul class="parallax">
-    <li>
-      <div class="parallax-background img2"></div>
-      <div class="video_stats"> 
-        <h3>Country Rankings</h3>
-        <ul id="rankings_list">
-          <% @countries.each do |country| %>
-            <% vids = country.videos.where(term: @term) %>
-            <% rank = vids.index(@video) %>
-            <li>#<%= rank+1 %> in <%= country.name.downcase.capitalize%></li>
-          <% end %>
-        </ul>
-      </div>
-    </li>
-    <li>
-      <div class="parallax-background img1"></div>
-      <div class="share_stats">
-        <h3>Share Stats</h3>
-        <h2><%= @shared[:commentcount] %> <strong>FB comments</strong></h2>
-        <h2><%= @shared[:likecount] %> <strong>FB likes</strong></h2>
-        <h2><%= @shared[:sharecount] %> <strong>FB shares</strong></h2>
-        <h2><%= @shared[:tweets] %> <strong>Tweets</strong></h2>
-        <h2><%= @shared[:plus_ones] %> <strong>Google +1's</strong></h2>
-        <h2><%= @shared[:pins] %> <strong>Pins</strong></h2>
-      </div>
-    </li>
-  </ul>
-</div>
+</div><!-- container -->
