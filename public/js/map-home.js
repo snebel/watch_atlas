@@ -237,6 +237,7 @@ function ready(error, world) {
 
 
   htmlSuccessGen = function(data) {
+    console.log(data);
     $('.tooltip').empty();
     //console.log('html success: ' + data);
     var contents = $('.tooltip');
@@ -248,21 +249,37 @@ function ready(error, world) {
     contents.append(header);
     
     //data about overlapping countries
-    var circle_div = $('<div>').attr('id', 'circles-1');
-
-
-    // Circles.create({
-    //   id:         'circles-1',
-    //   percentage: 43,
-    //   radius:     60,
-    //   width:      10,
-    //   number:     7.13,
-    //   text:       '%',
-    //   colors:     ['#D3B6C6', '#4B253A'],
-    //   duration:   400
-    // });
-
+    
+    var circle_div = $('<div>').attr('id', 'circle-1').css('float', 'right').css('clear', 'left');
     contents.append(circle_div);
+    var circle_div = $('<div>').attr('id', 'circle-2').css('float', 'right').css('clear', 'left');
+    contents.append(circle_div);
+    var circle_div = $('<div>').attr('id', 'circle-3').css('float', 'right').css('clear', 'left');
+    contents.append(circle_div);
+
+
+    function makeCircle(id, percent, text, color){
+      Circles.create({
+        id:         id,
+        percentage: percent,
+        radius:     50,
+        width:      10,
+        number:     percent,
+        text:       ' '+text,
+        colors:     ['#D3B6C6', '#4B253A'],
+        duration:   400
+      });
+    }
+    var country_data = data[data.length - 1];
+    var first = country_data[0];
+    var second = country_data[1];
+    var third = country_data[2];    
+
+    makeCircle('circle-1', parseInt(first[1]/60*100), first[0], 'blue');
+    makeCircle('circle-2', parseInt(second[1]/60*100), second[0], 'blue');
+    makeCircle('circle-3', parseInt(third[1]/60*100), third[0], 'blue');
+
+    
 
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
@@ -353,54 +370,24 @@ function ready(error, world) {
 
     }  
 
-  $top_videos_div.prepend('<h2 class="category-title">Top Videos</h2>');
-  $news_div.prepend('<h2 class="category-title">News</h2>');
-  $music_div.prepend('<h2 class="category-title">Music</h2>');
-  $tech_div.prepend('<h2 class="category-title">Tech</h2>');
-  $entertainment_div.prepend('<h2 class="category-title">Entertainment</h2>');
-  $animals_div.prepend('<h2 class="category-title">Animals</h2>');
+    $top_videos_div.prepend('<h2 class="category-title">Top Videos</h2>');
+    $news_div.prepend('<h2 class="category-title">News</h2>');
+    $music_div.prepend('<h2 class="category-title">Music</h2>');
+    $tech_div.prepend('<h2 class="category-title">Tech</h2>');
+    $entertainment_div.prepend('<h2 class="category-title">Entertainment</h2>');
+    $animals_div.prepend('<h2 class="category-title">Animals</h2>');
 
 
-  $('body').on('click', '.close-me', function () {
-  
-        $('.tooltip').animate({'opacity':'0'}, 400)
-        .queue(function () {
+    $('body').on('click', '.close-me', function () {
+      $('.tooltip').animate({'opacity':'0'}, 400)
+      .queue(function () {
         $(this).remove();
       })
+      reset();
+    });
 
-    reset();
-    
-  });
-
-    // return contents.html();
-
-    // var content = contents.html();
-
-    var content = contents.html();
-
-    var returnContent = function(content, func) {
-      console.log("returnContent fired!");
-      func();
-    }
-
-    $('.tooltip').append(content);
-
-    return returnContent(content, function() {
-              
-                Circles.create({
-                  id:         'circles-1',
-                  percentage: 43,
-                  radius:     60,
-                  width:      10,
-                  number:     7.13,
-                  text:       '%',
-                  colors:     ['#D3B6C6', '#4B253A'],
-                  duration:   400
-                });
-
-              console.log("circle created!");
-            });
-            
+    $('.tooltip').append(contents.html());
+  
   }
 
 
