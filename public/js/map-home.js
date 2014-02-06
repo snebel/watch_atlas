@@ -73,10 +73,7 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
-<<<<<<< HEAD
 
-=======
->>>>>>> 74483e5638fd6588244c7837e28bad5768a29c74
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -104,10 +101,7 @@ function countryHover(d) {
 
     })
     .fail(function(data){
-<<<<<<< HEAD
 
-=======
->>>>>>> 74483e5638fd6588244c7837e28bad5768a29c74
     });
 
   function makeHovertip(country, data) {
@@ -172,10 +166,7 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-<<<<<<< HEAD
 
-=======
->>>>>>> 74483e5638fd6588244c7837e28bad5768a29c74
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -240,11 +231,7 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-<<<<<<< HEAD
 
-=======
-        //
->>>>>>> 74483e5638fd6588244c7837e28bad5768a29c74
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
