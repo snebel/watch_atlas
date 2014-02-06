@@ -200,7 +200,7 @@ function ready(error, world) {
         d3.select('path#id_' + d.id).style('fill', '#95a5a6')
       }
     
-      var isHoverTipHovered = $('.hovertip').is("hover");
+      var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
 
