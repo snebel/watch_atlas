@@ -63,44 +63,26 @@ g.append("path")
 
 function countryHover(d) {
 
-
   d3.select('path#id_' + d.id)
   .style('fill', '#d35400');
 
   $tooltip = $('.tooltip');
 
-  
-
-  if ($tooltip.length != 0) {
-    var make_hover_tip = false
-  }
-
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
 
-  var self = this;
-
-  $.ajax({
-    method: 'get',
-    url: '/countries/maps/' + d.id,
-    dataType: 'json'
-  })
-    .success(function (data) {
-
-      var top_three_vids = (([data[1], data[2], data[3]]) );
-      var country_name = data[0].name;
-
-      if (make_hover_tip === false) {
-
-      }else{
-
-      makeHovertip(country_name, top_three_vids);
-      addListener();
-
-    }
-
+  if (valid_map_ids.indexOf(d.id) != -1 && $tooltip.length == 0) {
+    $.ajax({
+      method: 'get',
+      url: '/countries/maps/' + d.id,
+      dataType: 'json'
     })
-    .fail(function(data){
-    });
+      .success(function (data) {
+        var top_three_vids = (([data[1], data[2], data[3]]) );
+        var country_name = data[0].name;
+        makeHovertip(country_name, top_three_vids);
+        addListener();
+      })
+  }
 
   function makeHovertip(country, data) {
     $('.hovertip').remove();
@@ -225,24 +207,15 @@ function ready(error, world) {
 
         }
     
-      var isHoverTipHovered = $('.hovertip').is(":hover");
+      var isHoverTipHovered = $('.hovertip').is("hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-        //
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
-
       }else{
          //if you go inside hovertip, it will stay orange. if you don't it will be green. 
-
         // d3.select('path#id_' + d.id).style('fill', '#16a085')
-
-    
           $('.hovertip').remove();
-
-
       }
-
-
 
     })
       
