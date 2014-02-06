@@ -115,6 +115,19 @@ a:hover {
   color: red;
 }
 
+.embed-video-hovertip {
+  line-height: 14px;
+}
+
+.embed-video-hovertip img{
+border: 1px solid #585858;
+}
+
+.embed-video-hovertip img:hover{
+  cursor: pointer;
+  border: 1px solid #ff0000;
+}
+
 .close-me-embed-video {
   position: absolute;
   top: 12px;
@@ -197,10 +210,10 @@ ul.box-videos {
 .hovertip-div {
   width: 120px;
   float:left;
-  margin-right:10px;
+  margin: 0px 5px;
   font-size:11px;
   height:150px;
-  overflow: hidden;
+  line-height: 13px;
 }
 
 
@@ -279,8 +292,15 @@ a.flex-prev {
   overflow:hidden;
 }
 
+.hovertip_videos_container {
+  overflow: auto;
+  margin: 0 auto;
+  width: 390px;
+}
+
 .hovertip h2 {
   margin:5px 0;
+  padding-left: 12px;
 }
 
 
