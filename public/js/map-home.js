@@ -59,14 +59,7 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
-// <<<<<<< HEAD
-//<<<<<<< HEAD
-    //console.log('tooltip exists');
-//=======
-    // console.log('tooltip exists');
-// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
+
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -79,14 +72,7 @@ function countryHover(d) {
     dataType: 'json'
   })
     .success(function (data) {
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-      //console.log('hello');
-// =======
-      // console.log('hello');
-// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
+
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
 
@@ -101,14 +87,7 @@ function countryHover(d) {
 
     })
     .fail(function(data){
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-      //console.log("bad bad bad!")
-// =======
-      // console.log("bad bad bad!")
-// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
+
     });
 
   function makeHovertip(country, data) {
@@ -173,13 +152,7 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-        ////console.log('make Tooltip data: ' + data) 
-// =======
-// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
+
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -244,12 +217,7 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-// <<<<<<< HEAD
 
-        //console.log('hovertip');
-        // console.log('hovertip');
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
