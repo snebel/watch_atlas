@@ -98,7 +98,7 @@ function countryHover(d) {
     .html(function () {
       return htmlHoverSuccessGen(country, data);
     }).style('opacity', '1')
-     //.transition().duration(300).style('opacity', '1')
+     .transition().duration(3).style('opacity', '1')
   }  
 }
 
