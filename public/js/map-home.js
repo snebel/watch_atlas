@@ -35,6 +35,7 @@ g.append("path")
 
 function countryHover(d) {
 
+
   d3.select('path#id_' + d.id)
   .style('fill', '#d35400');
 
@@ -77,10 +78,12 @@ function countryHover(d) {
 
   function makeHovertip(country, data) {
     $('.hovertip').remove();
+
     tooltip = d3.select('#map-canvas')
     .append('div')
     .attr('class', 'hovertip')
-    .attr("style", "left:"+(mouse[0]+25)+"px;top:"+mouse[1]+"px")
+    // .attr('id', 'ptooltip-1')
+    .attr("style", "left:"+(mouse[0])+"px;top:"+mouse[1]+"px")
     // .style('position', 'absolute')
     .style('z-index', '9999')
     .style('opacity', '0')
@@ -88,6 +91,7 @@ function countryHover(d) {
     // .style('top', '30px')
     // .style('right', '30px')
     .html(function () {
+        // $('[title|=ptooltip]').pTooltip();
       return htmlHoverSuccessGen(country, data);
     })
     // .transition().duration(400).style('opacity', '1')
@@ -158,7 +162,7 @@ function countryClick(d) {
       })
       //.transition().duration(700).style('opacity', '1')
       // .style('display', 'block')
-      
+
   }
 }
 
@@ -183,6 +187,7 @@ function ready(error, world) {
     .enter().insert('path')
     .attr('class', 'country')
     .attr('d', path)
+    .attr('title', 'ptooltip-1')
     .attr('id', function(d){
         return 'id_' + d.id
     })
@@ -193,16 +198,37 @@ function ready(error, world) {
     .on("mouseover", countryHover)
 
     .on('mouseout', function(d){
-      $('.hovertip').remove();
 
-      if (valid_map_ids.indexOf(d.id) != -1) {
-        d3.select('path#id_' + d.id).style('fill', '#16a085')
-      } 
-      else {
-        d3.select('path#id_' + d.id).style('fill', '#95a5a6')
+
+       if (valid_map_ids.indexOf(d.id) != -1) {
+          d3.select('path#id_' + d.id).style('fill', '#16a085')
+        } 
+        else {
+          d3.select('path#id_' + d.id).style('fill', '#95a5a6')
+
+        }
+    
+      var isHoverTipHovered = $('.hovertip').is(":hover");
+
+      if ( isHoverTipHovered ) { //if we are hovering over the hovertip
+        console.log('hovertip');
+        // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
+
+      }else{
+         //if you go inside hovertip, it will stay orange. if you don't it will be green. 
+
+        // d3.select('path#id_' + d.id).style('fill', '#16a085')
+
+    
+          $('.hovertip').remove();
+
+
       }
+
+
+
     })
-        
+      
 
         // tooltip
         //   .classed("hidden", false)
@@ -249,13 +275,12 @@ function ready(error, world) {
     contents.append(header);
     
     //data about overlapping countries
-    
-    var circle_div = $('<div>').attr('id', 'circle-1').css('float', 'right').css('clear', 'left');
-    contents.append(circle_div);
-    var circle_div = $('<div>').attr('id', 'circle-2').css('float', 'right').css('clear', 'left');
-    contents.append(circle_div);
-    var circle_div = $('<div>').attr('id', 'circle-3').css('float', 'right').css('clear', 'left');
-    contents.append(circle_div);
+    var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
+    var circle_one = $('<div>').attr('id', 'circle-1').css('float', 'right')
+    var circle_two = $('<div>').attr('id', 'circle-2').css('float', 'right')
+    var circle_three = $('<div>').attr('id', 'circle-3').css('float', 'right')
+    circles.append(circle_three).append(circle_two).append(circle_one);
+    contents.append(circles);
 
 
     function makeCircle(id, percent, text, color){
@@ -265,7 +290,7 @@ function ready(error, world) {
         radius:     30,
         width:      6,
         number:     percent,
-        text:       ' '+text,
+        text:       ' % '+text,
         colors:     ['#D3B6C6', '#4B253A'],
         duration:   400
       });
@@ -412,7 +437,7 @@ function ready(error, world) {
     for (var i=0; i < data.length; i++) {
       var vid_div = $('<div>');
       vid_div.attr('class', 'hovertip-div')
-      vid_div.append('<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>');
+      vid_div.append('<a class="embed-video-hovertip">' + '<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
       contents.append(vid_div);
     }
 
@@ -499,6 +524,7 @@ function addListener() {
 }
 
 d3.select(self.frameElement).style('height', height + 'px');
+
 
 
 
