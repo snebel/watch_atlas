@@ -36,14 +36,16 @@ h2.category-title {
 
 h3.circles-intro {
   color: #fff;
+  font-size: 22px;
+  padding-top: 10px;
 }
 
 #circles-holder-unique {
   color: #fff;
   position: absolute;
   top:0;
-  right: 40px;
-  width:35%;
+  right: 30px;
+  width:300px;
 }
 
 #unique {
@@ -202,7 +204,10 @@ rect {
   stroke-width: .5px;
   stroke-opacity: .5;
 }
-
+.circle-thing {
+  text-align: center;
+  margin: 0 15px;
+}
 .land {
   fill: #f7f7f7;
 }
@@ -310,12 +315,11 @@ a.flex-prev {
   color: #fff; 
   background: #000; 
   padding: 20px;
-  border: 2px solid #fff;
   width: 80%;
   height: 600px;
   overflow: auto;
   margin: 0 auto;
-  border-radius: 4px;
+  box-shadow: 0 0 5px #888;
 }
 
 #sorry.tooltip {
@@ -323,26 +327,25 @@ a.flex-prev {
   background: #000; 
   font-size: 22px;
   padding: 20px;
-  border: 2px solid #fff;
   width: 50%;
   height: 25px;
   overflow: auto;
   text-align:center;
   margin: 0 auto;
-  border-radius: 4px;
+  box-shadow: 0 0 5px #888;
 }
 
 .hovertip {
   color: #fff; 
   background: #000; 
   padding: 10px;
-  border: 2px solid black;
   width: 410px;
   height: 150px;
   overflow: auto;
   border-radius: 4px; 
   position: absolute;
   overflow:hidden;
+  box-shadow: 0 0 5px #888;
 }
 
 .hovertip_videos_container {
@@ -416,6 +419,15 @@ rect {
 
 .circles-text-wrp {
   overflow: hidden;
+  font-size: 22.5px !important;
+  text-shadow: 2px 2px 2px black;
+  text-align: left !important;
+  text-indent: 20px;
+  text-align:center;
+}
+
+span.circles-text {
+  width: 220px !important;
 }
 
 .clearfix:after {
@@ -449,13 +461,14 @@ rect {
   width: 800px;
   margin:0 auto;
   position:absolute;
-  top:325px;
+  top:350px;
+  pointer-events: none;
 }
 
 #white_thingy {
   position: absolute;
-  margin-left: -40px;
-  margin-top: 20px;
+  left: -40px;
+  top: 20px;
   background-color: #D92534;
   height: 50px;
   width: 400px;
@@ -468,17 +481,13 @@ rect {
 
 #explanatory_text_container {
   position: absolute;
-  top: 2%;
-  margin: 0 auto;
-  width: 100%;
-  height: 5%;
-  line-height: 30px;
+  top: 20px;
+  right: 20px;
+  width: 325px;
+  line-height: 26px;
 }
 
 #explanatory_text{
-  float: right;
-  margin-right: 5%;
-  width: 22%;
   color: white;
   font-size: 20px;
 }
@@ -494,7 +503,7 @@ rect {
 
 #moon-man {
   overflow:hidden;
-  width: 2000px;
+  width: 65px;
   margin:0 auto;
   position:absolute;
   top:325px;
@@ -511,9 +520,11 @@ rect {
 #left-arrow {
   float:left;
    opacity:.7;
+   pointer-events: all;
 }
 
 #right-arrow {
   float:right;
    opacity:.7;
+   pointer-events:all;
 }
