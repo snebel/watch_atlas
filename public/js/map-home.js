@@ -93,52 +93,46 @@ function countryHover(d) {
     .html(function () {
       return htmlHoverSuccessGen(country, data);
     })
-    // .transition().duration(400).style('opacity', '1')
-    .style('opacity', '1')
+     //.transition().duration(300).style('opacity', '1')
+     .style('opacity', '1')
   }  
 }
 
-
-
 function countryClick(d) {
-
-  $('.embed_window').remove();
-
   var self = this;
-
-  $.ajax({
-    method: 'get',
-    url: '/countries/maps/' + d.id,
-    dataType: 'json'
-  })
-    .success(function (data) {
-      ////console.log(data);
-      zoomIn();
-      makeTooltip(data, true);
+  //$('.embed_window').remove();
+  if (valid_map_ids.indexOf(d.id) != -1) {
+    $.ajax({
+      method: 'get',
+      url: '/countries/maps/' + d.id,
+      dataType: 'json'
+    })
+      .success(function (data) {
+        zoomIn();
+        makeTooltip(data, true);
         $('.flexslider').flexslider({
           animation: "slide",
           slideshow: false,
           animationLoop: false,
           itemWidth: 150,
           itemMargin: 15
-          });
+        });
         addListener();
-    })
-    .fail(function(data){
-      makeTooltip(data, false);  
-    });
+      })
+  }
+  else {
+    makeTooltip('', false);
+  }
 
   function zoomIn() {
-    d3.select('svg')
-      .style('opacity', '.7')
     if (active === d){ return reset();}
+    d3.select('svg').style('opacity', '.7')
     g.selectAll('.active').classed('active', false);
     d3.select(self).classed('active', active = d);
 
     var b = path.bounds(d);
     g.transition().duration(750).attr('transform',
-        'translate(' + projection.translate() + ')' + 'scale(' + .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height) + ')' + 'translate(' + -(b[1][0] + b[0][0]) / 2 + ',' + -(b[1][1] + b[0][1]) / 2 + ')');
-    //end zoom stuff
+      'translate(' + projection.translate() + ')' + 'scale(' + 0.4 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height) + ')' + 'translate(' + -(b[1][0] + b[0][0]) / 2 + ',' + -(b[1][1] + b[0][1]) / 2 + ')');
   }
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
