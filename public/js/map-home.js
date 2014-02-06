@@ -244,7 +244,7 @@ function ready(error, world) {
       //   };
       // })
       .on('drag', function () {
-        var rotation_amount = 20;
+        var rotation_amount = 10;
         console.log(d3.event);
         console.log(d3.event.dx);
         // if (d3.event.dx < 0) {var x = -1;}
@@ -256,7 +256,7 @@ function ready(error, world) {
         var rotate = projection.rotate();
         console.log(rotate);
 
-        projection.rotate([rotate[0] + d3.event.dx*rotation_amount, 0, 0]); //(rotate[0] + rotation_amount), rotate[1] + d3.event.dy*rotation_amount  
+        projection.rotate([rotate[0] + d3.event.dx*rotation_amount, rotate[1] + -1*d3.event.dy*rotation_amount, 0]); //(rotate[0] + rotation_amount), rotate[1] + d3.event.dy*rotation_amount  
         g.selectAll('path.country').attr('d', path);        
         g.selectAll('.focused').classed('focused', focused = false);
       }));
