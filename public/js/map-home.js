@@ -25,7 +25,8 @@ var svg = d3.select('#map-canvas').append('svg')
 
 var g = svg.append('g');
 
-
+var arrows_div_left_margin = parseInt( (width - 800) / 2 );
+$('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
 // function redraw() {
 //     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -92,9 +93,8 @@ function countryHover(d) {
     .style('opacity', '0')
     .html(function () {
       return htmlHoverSuccessGen(country, data);
-    })
+    }).style('opacity', '1')
      //.transition().duration(300).style('opacity', '1')
-     .style('opacity', '1')
   }  
 }
 
@@ -189,15 +189,12 @@ function ready(error, world) {
     .on("mouseover", countryHover)
 
     .on('mouseout', function(d){
-
-
-       if (valid_map_ids.indexOf(d.id) != -1) {
-          d3.select('path#id_' + d.id).style('fill', '#16a085')
-        } 
-        else {
-          d3.select('path#id_' + d.id).style('fill', '#95a5a6')
-
-        }
+     if (valid_map_ids.indexOf(d.id) != -1) {
+        d3.select('path#id_' + d.id).style('fill', '#16a085')
+      } 
+      else {
+        d3.select('path#id_' + d.id).style('fill', '#95a5a6')
+      }
     
       var isHoverTipHovered = $('.hovertip').is("hover");
 
@@ -283,13 +280,14 @@ function ready(error, world) {
     // var similar_container = $('div');
     //make first set of circles
     var $circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('width', '100%');
-    var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
-    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '21%').css('float', 'left');
-    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '21%').css('float', 'left');
-    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '21%').css('float', 'left');
+    var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '20%').css('float', 'left');
+    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '20%').css('float', 'left');
+    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '20%').css('float', 'left');
+    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '20%').css('float', 'left');
+    var $circle_four = $('<div>').attr('id', 'circle-4').css('width', '20%').css('float', 'left');
 
     $contents.append($circles);
-    $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three)
+    $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three).append($circle_four);
     $contents.append($circles);
     $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
 
@@ -302,21 +300,23 @@ function ready(error, world) {
     makeCircle('circle-1', parseInt(first[1]/60*100), first[0], '#9CB9D9', '#162E76');
     makeCircle('circle-2', parseInt(second[1]/60*100), second[0], '#9CB9D9', '#162E76');
     makeCircle('circle-3', parseInt(third[1]/60*100), third[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-3', parseInt(fourth[1]/60*100), fourth[0], '#9CB9D9', '#162E76');
     //end first row of circles
 
     //make unique circle row
-    var $unique_circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('margin-top', '20px');
-    var $unique_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
-    var $circle_unique = $('<div>').attr('id', 'unique').css('width', '20%').css('float', 'left');
+    var $unique_circles = $('<div>').attr('id', 'circles-holder-unique').attr('class', 'clearfix');
+
+    // var $unique_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
+    var $circle_unique = $('<div>').attr('id', 'unique');
 
     $contents.append($unique_circles);
-    $unique_circles.css('width', '100%');
-    $unique_circles.append($unique_intro).append($circle_unique)
+    // $unique_circles.css('width', '100%');
+    $unique_circles.append($circle_unique)
     $contents.append($unique_circles);
-    $unique_intro.html('<h3 class="circles-intro">Unique Videos:</h3>');
+    // $unique_intro.html('<h3 class="circles-intro">Unique Videos:</h3>');
     //console.log(data[0].name);
     var unique = country_data[country_data.length - 1];
-    makeCircle('unique', parseInt(unique[1]/60*100), "", '#F4CB6B', '#F76504');
+    makeCircle('unique', parseInt(unique[1]/60*100), "of videos are unique to " + data[0].name, '#F4CB6B', '#F76504');
     //end unique circle row
 
 
@@ -329,7 +329,7 @@ function ready(error, world) {
         number:     percent,
         text:       '% '+text,
         colors:     [color1, color2], //
-        duration:   700
+        duration:   900
       });
     }
 
@@ -494,28 +494,28 @@ function ready(error, world) {
       .style('cursor', 'pointer')
   });
 
-  // d3.select('#right-rotator')
-  //   .on('click', function () {
-  //     var rotate = projection.rotate();
-  //     var rotation_amount = 40;
-  //     var x_point = d3.event.x;
-  //     var y_point = d3.event.y;
-  //     //console.log(rotate);
-  //     projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
-  //     g.selectAll('path.country').attr('d', path);
-  //   });
+  d3.select('#right-arrow')
+    .on('click', function () {
+      var rotate = projection.rotate();
+      var rotation_amount = 40;
+      var x_point = d3.event.x;
+      var y_point = d3.event.y;
+      //console.log(rotate);
+      projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
+      g.selectAll('path.country').attr('d', path);
+    });
 
 
-  // d3.select('#left-rotator')
-  //   .on('click', function () {
-  //     var rotate = projection.rotate();
-  //     var rotation_amount = 40;
-  //     var x_point = d3.event.x;
-  //     var y_point = d3.event.y;
-  //     //console.log(rotate);
-  //     projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
-  //     g.selectAll('path.country').attr('d', path);
-  //   });
+  d3.select('#left-arrow')
+    .on('click', function () {
+      var rotate = projection.rotate();
+      var rotation_amount = 40;
+      var x_point = d3.event.x;
+      var y_point = d3.event.y;
+      //console.log(rotate);
+      projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
+      g.selectAll('path.country').attr('d', path);
+    });
 
 }
 
@@ -589,9 +589,14 @@ function popUpVideo (height, button) {
 
 d3.select(window).on('resize', resize);
 
+
 function resize() {
  
     width = parseInt(d3.select('body').style('width'));
+
+    var arrows_div_left_margin = parseInt( (width - 800) / 2 );
+
+    $('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
     projection
         .translate([width / 2, height / 2])
@@ -602,6 +607,10 @@ function resize() {
     g.selectAll('.country').attr('d', path);
     g.selectAll('.globewater').attr('d', path);
 }
+
+
+
+
 
 $(function () {
     antiGrav('.moon-man'); 
