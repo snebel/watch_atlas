@@ -342,7 +342,6 @@ function ready(error, world) {
     }
 
 
-
     var vid_list = $('<ul>').addClass('box-videos');
     $contents.append(vid_list);
 
@@ -527,27 +526,23 @@ function ready(error, world) {
 }
 
 
-function addListener ()  {
+function addListener()  {
 
   $('.thumbnail').on("click", function() {
-
-      var height = '-1396px';
-
-      var self = this;
-
-      popUpVideo(height, self);
-
+    var height = '-1396px';
+    var self = this;
+    popUpVideo(height, self);
   })
 
   $('.embed-video-hovertip').on("click", function() {
-
     var self = this;
-
     var height = '-750px';
+    popUpVideo(height, self);
+  })
 
-     popUpVideo(height, self);
-
-})
+  $('.zoom').on("click", function() {
+    console.log('zooming');
+  })
 
 }
 
@@ -625,5 +620,6 @@ function resize() {
 
 $(function () {
     antiGrav('#moon-man'); 
+    addListener();
 });
 
