@@ -68,6 +68,7 @@ function countryHover(d) {
 
   $tooltip = $('.tooltip');
 
+
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
 
   if (valid_map_ids.indexOf(d.id) != -1 && $tooltip.length == 0) {
@@ -83,6 +84,10 @@ function countryHover(d) {
         addListener();
       })
   }
+
+    .fail(function(data){
+
+    });
 
   function makeHovertip(country, data) {
     $('.hovertip').remove();
@@ -146,6 +151,7 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
+
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -210,6 +216,10 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is("hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1395899988aa3f6983219b0914eb66c1aff0e6c6
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
       }else{
          //if you go inside hovertip, it will stay orange. if you don't it will be green. 
