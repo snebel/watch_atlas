@@ -257,7 +257,10 @@ ul.box-videos {
 }
 
 
-
+#hovertip-country-name {
+  display: inline;
+  color: #fff;
+}
 
 
 
