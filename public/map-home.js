@@ -35,21 +35,12 @@ g.append("path")
 
 function countryHover(d) {
 
+  var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+
+  var self = this;
 
   d3.select('path#id_' + d.id)
   .style('fill', '#d35400');
-
-  $tooltip = $('.tooltip');
-
-  
-
-  if ($tooltip.length != 0) {
-    var make_hover_tip = false
-    console.log('tooltip exists');
-  }
-
-  var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
-
   var self = this;
 
   $.ajax({
@@ -61,16 +52,8 @@ function countryHover(d) {
       console.log('hello');
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
-
-      if (make_hover_tip === false) {
-
-      }else{
-
       makeHovertip(country_name, top_three_vids);
       addListener();
-
-    }
-
     })
     .fail(function(data){
       console.log("bad bad bad!")
@@ -78,27 +61,28 @@ function countryHover(d) {
 
   function makeHovertip(country, data) {
     $('.hovertip').remove();
-
     tooltip = d3.select('#map-canvas')
     .append('div')
     .attr('class', 'hovertip')
-    .attr("style", "left:"+(mouse[0])+"px;top:"+mouse[1]+"px")
+    .attr("style", "left:"+(mouse[0]+25)+"px;top:"+mouse[1]+"px")
+    // .style('position', 'absolute')
     .style('z-index', '9999')
     .style('opacity', '0')
+  // .style('visibility', 'visible')
+    // .style('top', '30px')
+    // .style('right', '30px')
     .html(function () {
       return htmlHoverSuccessGen(country, data);
     })
     // .transition().duration(400).style('opacity', '1')
     .style('opacity', '1')
   }  
+
 }
 
 
 
 function countryClick(d) {
-
-  $('.embed_window').remove();
-
   var self = this;
 
   $.ajax({
@@ -107,7 +91,7 @@ function countryClick(d) {
     dataType: 'json'
   })
     .success(function (data) {
-      //console.log(data);
+      // console.log(data)
       zoomIn();
       makeTooltip(data, true);
         $('.flexslider').flexslider({
@@ -137,8 +121,8 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-        //console.log('make Tooltip data: ' + data) 
-        d3.select('#map-canvas')
+        console.log('make Tooltip data: ' + data) 
+        tooltip = d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
         .style('position', 'relative')
@@ -147,15 +131,13 @@ function countryClick(d) {
       // .style('visibility', 'visible')
         .style('top', '-750px')
         .style('left', '0px')
-        .transition().duration(700).style('opacity', '1');
-
-        $('.tooltip').html(function () {
-        if (good) { return htmlSuccessGen(data); 
-        } else { return htmlFailGen(); }
+        .html(function () {
+        if (good) { return htmlSuccessGen(data); }
+        else { return htmlFailGen(); }
       })
-      //.transition().duration(700).style('opacity', '1')
+      .transition().duration(700).style('opacity', '1')
       // .style('display', 'block')
-
+      
   }
 }
 
@@ -180,7 +162,6 @@ function ready(error, world) {
     .enter().insert('path')
     .attr('class', 'country')
     .attr('d', path)
-    .attr('title', 'ptooltip-1')
     .attr('id', function(d){
         return 'id_' + d.id
     })
@@ -191,37 +172,15 @@ function ready(error, world) {
     .on("mouseover", countryHover)
 
     .on('mouseout', function(d){
-
-
-       if (valid_map_ids.indexOf(d.id) != -1) {
-          d3.select('path#id_' + d.id).style('fill', '#16a085')
-        } 
-        else {
-          d3.select('path#id_' + d.id).style('fill', '#95a5a6')
-
-        }
-    
-      var isHoverTipHovered = $('.hovertip').is(":hover");
-
-      if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-        console.log('hovertip');
-        // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
-
-      }else{
-         //if you go inside hovertip, it will stay orange. if you don't it will be green. 
-
-        // d3.select('path#id_' + d.id).style('fill', '#16a085')
-
-    
-          $('.hovertip').remove();
-
-
+      $('.hovertip').remove();
+      if (valid_map_ids.indexOf(d.id) != -1) {
+        d3.select('path#id_' + d.id).style('fill', '#16a085')
+      } 
+      else {
+        d3.select('path#id_' + d.id).style('fill', '#95a5a6')
       }
-
-
-
     })
-      
+        
 
         // tooltip
         //   .classed("hidden", false)
@@ -255,56 +214,20 @@ function ready(error, world) {
       }));
 
 
-  htmlSuccessGen = function(data) {
-    console.log(data);
-    $('.tooltip').empty();
-    //console.log('html success: ' + data);
+  htmlSuccessGen = function (data) {
+    // $('.tooltip').empty();
+    console.log('html success: ' + data);
     var contents = $('.tooltip');
-    var header = $('<h1 class="country-name">');
+    var header = $('<h1>');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
     var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
     header.append(title);
     header.append(flag);
     contents.append(header);
-    
-    //data about overlapping countries
-    var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
-    var circle_one = $('<div>').attr('id', 'circle-1').css('float', 'right')
-    var circle_two = $('<div>').attr('id', 'circle-2').css('float', 'right')
-    var circle_three = $('<div>').attr('id', 'circle-3').css('float', 'right')
-    circles.append(circle_three).append(circle_two).append(circle_one);
-    contents.append(circles);
-
-
-    function makeCircle(id, percent, text, color){
-      Circles.create({
-        id:         id,
-        percentage: percent,
-        radius:     30,
-        width:      6,
-        number:     percent,
-        text:       ' % '+text,
-        colors:     ['#D3B6C6', '#4B253A'],
-        duration:   400
-      });
-    }
-    var country_data = data[data.length - 1];
-    var first = country_data[0];
-    var second = country_data[1];
-    var third = country_data[2];    
-
-    makeCircle('circle-1', parseInt(first[1]/60*100), first[0], 'blue');
-    makeCircle('circle-2', parseInt(second[1]/60*100), second[0], 'blue');
-    makeCircle('circle-3', parseInt(third[1]/60*100), third[0], 'blue');
-
-    
-
+    // contents.append(flag);
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
-    var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
-
-
-    
+    // var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
@@ -334,7 +257,7 @@ function ready(error, world) {
     var $entertainment_div = $('<div>').attr('id', 'entertainment-videos')
     var $animals_div = $('<div>').attr('id', 'animals-videos')
 
-    contents.append(div); // the close me div
+    // contents.append(div);
     contents.append($top_videos_div);
     contents.append($news_div);
     contents.append($music_div);
@@ -388,24 +311,28 @@ function ready(error, world) {
 
     }  
 
-    $top_videos_div.prepend('<h2 class="category-title">Top Videos</h2>');
-    $news_div.prepend('<h2 class="category-title">News</h2>');
-    $music_div.prepend('<h2 class="category-title">Music</h2>');
-    $tech_div.prepend('<h2 class="category-title">Tech</h2>');
-    $entertainment_div.prepend('<h2 class="category-title">Entertainment</h2>');
-    $animals_div.prepend('<h2 class="category-title">Animals</h2>');
+
+  $top_videos_div.prepend('<h2>Top Videos</h2>');
+  $news_div.prepend('<h2>News</h2>');
+  $music_div.prepend('<h2>Music</h2>');
+  $tech_div.prepend('<h2>Tech</h2>');
+  $entertainment_div.prepend('<h2>Entertainment</h2>');
+  $animals_div.prepend('<h2>Animals</h2>');
 
 
-    $('body').on('click', '.close-me', function () {
-      $('.tooltip').animate({'opacity':'0'}, 400)
-      .queue(function () {
+  $('body').on('click', function () {
+    if (!$(event.target).closest('.tooltip').length) { // if the closest place where you clicked is not the tooltip, close the tooltip
+        $('.tooltip').animate({'opacity':'0'}, 400)
+        .queue(function () {
         $(this).remove();
+        reset();
       })
-      reset();
-    });
 
-    $('.tooltip').append(contents.html());
-  
+    }
+    
+  });
+
+    return contents.html();
   }
 
 
@@ -426,20 +353,15 @@ function ready(error, world) {
 
   htmlHoverSuccessGen = function(country, data) {
 
-    var $hovertip_videos_container = $('<div>')
-    $hovertip_videos_container.attr('class', 'hovertip_videos_container')
-    console.log($hovertip_videos_container)
-
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
       var vid_div = $('<div>');
       vid_div.attr('class', 'hovertip-div')
-      vid_div.append('<a class="embed-video-hovertip">' + '<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
-      $hovertip_videos_container.append(vid_div);
+      vid_div.append('<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/>' + data[i].title + '</li>');
+      contents.append(vid_div);
     }
 
-    contents.prepend('<h2 class="country-name">' + country + '</h2>')
-     contents.append($hovertip_videos_container)
+    contents.prepend('<h2>' + country + '</h2>')
 
     return contents.html();
   }
@@ -477,15 +399,12 @@ function ready(error, world) {
 
 }
 
-
-
 function addListener() {
   $('.thumbnail').on("click", function() {
     var self = this;
 
     embed_url = $(this).children('img').attr("data-id");
     var $close_embed_video = $('<div>').addClass('close-embed-video').text('close');
-    var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel.png" />');
 
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
@@ -498,22 +417,18 @@ function addListener() {
     $embed_window.css('display', 'block')
     $embed_window.css('background', 'black')
 
-    $video_container = $('<div>')
-    $video_container.attr('class', 'video-container')
+    // $video_iframe = $('<iframe>');
+    // $video_iframe.attr('src', embed_url);
+    // $video_iframe.attr('class', 'click_page_embed_url');
+    var iframe_test = '<iframe src="' + embed_url + '" style="height:100%;width:100%;" ></iframe>'
 
-    $video_iframe = $('<iframe>');
-    $video_iframe.attr('src', embed_url);
-    $video_iframe.attr('class', 'click_page_embed_url');
-    // $video_iframe.css('width', '642');
-    // $video_iframe.css('height', '470');
-
-    $embed_window.append($video_container)
-    $video_container.append($video_iframe)
-    $embed_window.append($div)
+    $embed_window.append()
 
     $('#map-canvas').append($embed_window)
 
-    $('body').on('click', '.close-me-embed-video', function () {
+    console.log($embed_window.width())
+
+    $('body').on('click', '.close-embed-video', function () {
       $embed_window.fadeOut() 
         $embed_window.remove();
     });
@@ -522,7 +437,6 @@ function addListener() {
 }
 
 d3.select(self.frameElement).style('height', height + 'px');
-
 
 
 
