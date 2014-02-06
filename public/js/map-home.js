@@ -92,9 +92,8 @@ function countryHover(d) {
     .style('opacity', '0')
     .html(function () {
       return htmlHoverSuccessGen(country, data);
-    })
+    }).style('opacity', '1')
      //.transition().duration(300).style('opacity', '1')
-     .style('opacity', '1')
   }  
 }
 
@@ -189,15 +188,12 @@ function ready(error, world) {
     .on("mouseover", countryHover)
 
     .on('mouseout', function(d){
-
-
-       if (valid_map_ids.indexOf(d.id) != -1) {
-          d3.select('path#id_' + d.id).style('fill', '#16a085')
-        } 
-        else {
-          d3.select('path#id_' + d.id).style('fill', '#95a5a6')
-
-        }
+     if (valid_map_ids.indexOf(d.id) != -1) {
+        d3.select('path#id_' + d.id).style('fill', '#16a085')
+      } 
+      else {
+        d3.select('path#id_' + d.id).style('fill', '#95a5a6')
+      }
     
       var isHoverTipHovered = $('.hovertip').is("hover");
 
