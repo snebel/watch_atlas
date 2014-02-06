@@ -537,7 +537,6 @@ function popUpVideo (height, button) {
     // console.log('self')
 
     embed_url = $(button).children('img').attr("data-id");
-    var $close_embed_video = $('<div>').addClass('close-embed-video').text('close');
     var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel-new.png" />');
 
     $embed_window = $('<div>');
@@ -545,7 +544,6 @@ function popUpVideo (height, button) {
     $embed_window.css('position', 'relative');
     $embed_window.css('top', height);
     $embed_window.css('left', '0px');
-    $embed_window.append($close_embed_video)
 
     $embed_window.css('z-index', '99999');
     $embed_window.css('display', 'block')
