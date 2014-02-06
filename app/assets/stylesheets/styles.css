@@ -332,7 +332,7 @@ a.flex-prev {
   color: #fff; 
   background: #000; 
   padding: 10px;
-  border: 2px solid #fff;
+  border: 2px solid black;
   width: 410px;
   height: 150px;
   overflow: auto;
