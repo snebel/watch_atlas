@@ -126,6 +126,7 @@ function countryClick(d) {
       makeTooltip(data, true);
         $('.flexslider').flexslider({
           animation: "slide",
+          slideshow: false,
           animationLoop: false,
           itemWidth: 150,
           itemMargin: 15
@@ -533,8 +534,6 @@ function addListener ()  {
 
 
 function popUpVideo (height, button) {
-
-    // console.log('self')
 
     embed_url = $(button).children('img').attr("data-id");
     var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel-new.png" />');
