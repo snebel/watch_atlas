@@ -8,6 +8,10 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Droid Sans', sans-serif;
 }
 
+.circles-wrp {
+  width: 100%;
+}
+
 
 h1 {
   margin-top: 0;
@@ -18,7 +22,7 @@ h1.country-name {
   color: #fff;
   margin-bottom: 30px;
   border-bottom:1px solid #424242;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 }
 
 h1.country-name a, h2.country-name, h2.category-title {
@@ -31,6 +35,19 @@ h2.category-title {
 
 h3.circles-intro {
   color: #fff;
+}
+
+#circles-holder-unique {
+  color: #fff;
+  position: absolute;
+  top:0;
+  right: 40px;
+  width:35%;
+}
+
+#unique {
+  width: 100%;
+  margin-top:9px;
 }
 
 .video-container {
@@ -410,3 +427,37 @@ rect {
 * html .clearfix { height: 1%; }
 .clearfix { display: block; }
 /* close commented backslash hack */
+
+#arrows-div {left: 0;}
+
+#right-arrow:hover, #left-arrow:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+#right-arrow:active, #left-arrow:active {
+  position:relative;
+  top: 2px;
+}
+
+#arrows-div {
+  overflow:hidden;
+  width: 800px;
+  margin:0 auto;
+  position:absolute;
+  top:325px;
+}
+
+#arrows-div img {
+  width: 80px;
+}
+
+#left-arrow {
+  float:left;
+   opacity:.7;
+}
+
+#right-arrow {
+  float:right;
+   opacity:.7;
+}
