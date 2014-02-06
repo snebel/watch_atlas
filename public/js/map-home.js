@@ -287,8 +287,8 @@ function ready(error, world) {
       Circles.create({
         id:         id,
         percentage: percent,
-        radius:     50,
-        width:      12,
+        radius:     30,
+        width:      6,
         number:     percent,
         text:       ' % '+text,
         colors:     ['#D3B6C6', '#4B253A'],
@@ -439,7 +439,7 @@ function ready(error, world) {
     for (var i=0; i < data.length; i++) {
       var vid_div = $('<div>');
       vid_div.attr('class', 'hovertip-div')
-      vid_div.append('<a class="embed-video-hovertip">' + '<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
+      vid_div.append('<a class="embed-video-hovertip">' + '<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a></li>');
       $hovertip_videos_container.append(vid_div);
     }
 
@@ -482,35 +482,45 @@ function ready(error, world) {
 
 }
 
- //circles
-    var circle = function circle() {
-    header.append(this.circle)
-    Circles.create({
-    id:         'circles-1',
-    percentage: 43,
-    radius:     60,
-    width:      10,
-    number:     7.13,
-    text:       '%',
-    colors:     ['#D3B6C6', '#4B253A'],
-    duration:   400
-    })
-    circle = $('<div>').attr('id', 'circles-1');
-    };  
- 
 
-function addListener() {
+function addListener ()  {
+
   $('.thumbnail').on("click", function() {
+
+      var height = '-1396px';
+
+      var self = this;
+
+      popUpVideo(height, self);
+
+  })
+
+  $('.embed-video-hovertip').on("click", function() {
+
     var self = this;
 
-    embed_url = $(this).children('img').attr("data-id");
+    var height = '-750px';
+
+     popUpVideo(height, self);
+
+})
+
+}
+
+
+
+function popUpVideo (height, button) {
+
+    console.log('self')
+
+    embed_url = $(button).children('img').attr("data-id");
     var $close_embed_video = $('<div>').addClass('close-embed-video').text('close');
     var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel.png" />');
 
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
     $embed_window.css('position', 'relative');
-    $embed_window.css('top', '-1396px');
+    $embed_window.css('top', height);
     $embed_window.css('left', '0px');
     $embed_window.append($close_embed_video)
 
@@ -538,8 +548,9 @@ function addListener() {
         $embed_window.remove();
     });
 
-  })
 }
+
+
 
 d3.select(self.frameElement).style('height', height + 'px');
 
