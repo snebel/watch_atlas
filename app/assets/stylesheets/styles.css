@@ -464,6 +464,54 @@ span.circles-text {
   pointer-events: none;
 }
 
+#white_thingy {
+  position: absolute;
+  left: -40px;
+  top: 20px;
+  background-color: #D92534;
+  height: 50px;
+  width: 400px;
+  transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
+  -webkit-transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
+  -moz-transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
+  -o-transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
+  -ms-transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
+}
+
+#explanatory_text_container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 325px;
+  line-height: 26px;
+}
+
+#explanatory_text{
+  color: white;
+  font-size: 20px;
+}
+
+#atlas {
+  float:right;
+  color: white;
+  padding-right: 60px;
+  padding-top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+#moon-man {
+  overflow:hidden;
+  width: 65px;
+  margin:0 auto;
+  position:absolute;
+  top:325px;
+}
+
+#moon-man img {
+  width: 65px;
+}
+
 #arrows-div img {
   width: 80px;
 }
