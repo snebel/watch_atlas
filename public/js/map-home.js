@@ -98,15 +98,13 @@ function countryHover(d) {
     .html(function () {
       return htmlHoverSuccessGen(country, data);
     }).style('opacity', '1')
-     .transition().duration(3).style('opacity', '1')
+     //.transition().duration(300).style('opacity', '1')
   }  
 }
 
 function countryClick(d) {
   var self = this;
-  
-  $('.embed_window').remove();
-  
+  //$('.embed_window').remove();
   if (valid_map_ids.indexOf(d.id) != -1) {
     $.ajax({
       method: 'get',
@@ -132,7 +130,7 @@ function countryClick(d) {
 
   function zoomIn() {
     if (active === d){ return reset();}
-    d3.select('svg').style('opacity', '.6')
+    d3.select('svg').style('opacity', '.7')
     g.selectAll('.active').classed('active', false);
     d3.select(self).classed('active', active = d);
 
@@ -204,14 +202,10 @@ function ready(error, world) {
     
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
-      if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-
-        // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
-      }else{
-         //if you go inside hovertip, it will stay orange. if you don't it will be green. 
-        // d3.select('path#id_' + d.id).style('fill', '#16a085')
-          $('.hovertip').remove();
+      if ( !isHoverTipHovered ) { //if we are hovering over the hovertip
+        $('.hovertip').remove();
       }
+      // $('.hovertip').remove();
 
     })
       
@@ -257,17 +251,6 @@ function ready(error, world) {
 
   htmlSuccessGen = function(data) {
 
-    console.log(data);
-    $('.tooltip').empty();
-    ////console.log('html success: ' + data);
-    var contents = $('.tooltip');
-    var header = $('<h1 class="country-name">');
-    var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
-    var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
-    header.append(title);
-    header.append(flag);
-    contents.append(header);
-    
     //console.log(data);
     $('.tooltip').empty();
     ////console.log('html success: ' + data);
@@ -288,7 +271,6 @@ function ready(error, world) {
     // header.append(flag);
     // contents.append(header);
 
-
     $('.tooltip').empty();
     var $contents = $('.tooltip');
 
@@ -306,58 +288,28 @@ function ready(error, world) {
     // var similar_container = $('div');
     //make first set of circles
     var $circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('width', '100%');
-    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_four = $('<div>').attr('id', 'circle-4').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_five = $('<div>').attr('id', 'circle-5').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_six = $('<div>').attr('id', 'circle-6').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_seven = $('<div>').attr('id', 'circle-7').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_eight = $('<div>').attr('id', 'circle-8').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_nine = $('<div>').attr('id', 'circle-9').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_ten = $('<div>').attr('id', 'circle-10').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '20%').css('float', 'left');
+    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '20%').css('float', 'left');
+    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '20%').css('float', 'left');
+    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '20%').css('float', 'left');
+    var $circle_four = $('<div>').attr('id', 'circle-4').css('width', '20%').css('float', 'left');
 
     $contents.append($circles);
-    $circles.append($circle_one).append($circle_two).append($circle_three).append($circle_four).append($circle_five).append($circle_six).append($circle_seven).append($circle_eight).append($circle_nine).append($circle_ten);
+    $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three).append($circle_four);
     $contents.append($circles);
-    // $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
+    $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
 
     var country_data = data[data.length - 1];
     var first = country_data[0];
     var second = country_data[1];
     var third = country_data[2];    
     var fourth = country_data[3]; 
-    var fifth = country_data[4];    
-    var sixth = country_data[5];
-    var seventh = country_data[6]
 
-    var last_index = country_data.length - 2; // - 2 because last element is unique_vids data
-    var eighth = country_data[last_index - 2]; 
-    var ninth = country_data[last_index - 1];    
-    var tenth = country_data[last_index]; 
-
-    makeCircle('circle-1', parseInt(first[1]/60*100), 40, '', '#9CB9D9', '#162E76');
-    makeCircle('circle-2', parseInt(second[1]/60*100), 40, '', '#9CB9D9', '#162E76');
-    makeCircle('circle-3', parseInt(third[1]/60*100), 40, '', '#9CB9D9', '#162E76');
-    makeCircle('circle-4', parseInt(fourth[1]/60*100), 40, '', '#9CB9D9', '#162E76');
-    makeCircle('circle-5', parseInt(fifth[1]/60*100), 40, '', '#9CB9D9', '#162E76');
-    makeCircle('circle-6', parseInt(sixth[1]/60*100), 40, '', '#9CB9D9', '#162E76');
-    makeCircle('circle-7', parseInt(seventh[1]/60*100), 40, '', '#9CB9D9', '#162E76');
-    makeCircle('circle-8', parseInt(eighth[1]/60*100), 40, '', '#E5A4B0', '#DC435F');
-    makeCircle('circle-9', parseInt(ninth[1]/60*100), 40, '', '#E5A4B0', '#DC435F');
-    makeCircle('circle-10', parseInt(tenth[1]/60*100), 40, '', '#E5A4B0', '#DC435F');
+    makeCircle('circle-1', parseInt(first[1]/60*100), first[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-2', parseInt(second[1]/60*100), second[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-3', parseInt(third[1]/60*100), third[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-3', parseInt(fourth[1]/60*100), fourth[0], '#9CB9D9', '#162E76');
     //end first row of circles
-
-    $circle_one.append(first[0])
-    $circle_two.append(second[0])
-    $circle_three.append(third[0])
-    $circle_four.append(fourth[0])
-    $circle_five.append(fifth[0])
-    $circle_six.append(sixth[0])
-    $circle_seven.append(seventh[0])
-    $circle_eight.append(eighth[0])
-    $circle_nine.append(ninth[0])
-    $circle_ten.append(tenth[0])
 
     //make unique circle row
     var $unique_circles = $('<div>').attr('id', 'circles-holder-unique').attr('class', 'clearfix');
@@ -372,18 +324,18 @@ function ready(error, world) {
     // $unique_intro.html('<h3 class="circles-intro">Unique Videos:</h3>');
     //console.log(data[0].name);
     var unique = country_data[country_data.length - 1];
-    makeCircle('unique', parseInt(unique[1]/60*100), 30, "of videos are unique", '#F4CB6B', '#F76504');
+    makeCircle('unique', parseInt(unique[1]/60*100), "of videos are unique to " + data[0].name, '#F4CB6B', '#F76504');
     //end unique circle row
 
 
-    function makeCircle(id, percent, radius, text, color1, color2){
+    function makeCircle(id, percent, text, color1, color2){
       Circles.create({
         id:         id,
         percentage: percent,
-        radius:     radius,
-        width:      9,
+        radius:     30,
+        width:      8,
         number:     percent,
-        text:       '% ' + text,
+        text:       '% '+text,
         colors:     [color1, color2], //
         duration:   900
       });
@@ -476,7 +428,6 @@ function ready(error, world) {
 
     }  
 
-    $circles.prepend('<h2 class="category-title">Overlapping Countries</h2>');
     $top_videos_div.prepend('<h2 class="category-title">Top Videos</h2>');
     $news_div.prepend('<h2 class="category-title">News</h2>');
     $music_div.prepend('<h2 class="category-title">Music</h2>');
