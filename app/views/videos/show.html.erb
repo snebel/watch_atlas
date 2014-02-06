@@ -28,7 +28,7 @@
       <% vids = country.videos.where(term: @term) %>
       <% rank = vids.index(@video) %>
       <li>
-        <strong>#<%= rank+1 %> in <%= country.name.downcase.capitalize%></strong>
+        <strong>#<%= rank+1 %> <%=@term.downcase%> video in <%= country.name.downcase.capitalize%></strong>
       </li>
       <% end %>
     </ul>
