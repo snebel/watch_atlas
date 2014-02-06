@@ -294,9 +294,10 @@ function ready(error, world) {
     var $circle_seven = $('<div>').attr('id', 'circle-7').css('width', '80px').css('float', 'left').addClass('circle-thing');
     var $circle_eight = $('<div>').attr('id', 'circle-8').css('width', '80px').css('float', 'left').addClass('circle-thing');
     var $circle_nine = $('<div>').attr('id', 'circle-9').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_ten = $('<div>').attr('id', 'circle-10').css('width', '80px').css('float', 'left').addClass('circle-thing');
 
     $contents.append($circles);
-    $circles.append($circle_one).append($circle_two).append($circle_three).append($circle_four).append($circle_five).append($circle_six).append($circle_seven).append($circle_eight).append($circle_nine);
+    $circles.append($circle_one).append($circle_two).append($circle_three).append($circle_four).append($circle_five).append($circle_six).append($circle_seven).append($circle_eight).append($circle_nine).append($circle_ten);
     $contents.append($circles);
     // $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
 
@@ -306,20 +307,24 @@ function ready(error, world) {
     var third = country_data[2];    
     var fourth = country_data[3]; 
     var fifth = country_data[4];    
-    var sixth = country_data[5]; 
-    var seventh = country_data[6]; 
-    var eighth = country_data[7];    
-    var ninth = country_data[8]; 
+    var sixth = country_data[5];
+    var seventh = country_data[6]
 
-    makeCircle('circle-1', parseInt(first[1]/60*100), 40, first[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-2', parseInt(second[1]/60*100), 40, second[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-3', parseInt(third[1]/60*100), 40, third[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-4', parseInt(fourth[1]/60*100), 40, fourth[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-5', parseInt(fifth[1]/60*100), 40, fifth[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-6', parseInt(sixth[1]/60*100), 40, sixth[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-7', parseInt(seventh[1]/60*100), 40, seventh[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-8', parseInt(eighth[1]/60*100), 40, eighth[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-9', parseInt(ninth[1]/60*100), 40, ninth[0], '#9CB9D9', '#162E76');
+    var last_index = country_data.length - 2; // - 2 because last element is unique_vids data
+    var eighth = country_data[last_index - 2]; 
+    var ninth = country_data[last_index - 1];    
+    var tenth = country_data[last_index]; 
+
+    makeCircle('circle-1', parseInt(first[1]/60*100), 40, '', '#9CB9D9', '#162E76');
+    makeCircle('circle-2', parseInt(second[1]/60*100), 40, '', '#9CB9D9', '#162E76');
+    makeCircle('circle-3', parseInt(third[1]/60*100), 40, '', '#9CB9D9', '#162E76');
+    makeCircle('circle-4', parseInt(fourth[1]/60*100), 40, '', '#9CB9D9', '#162E76');
+    makeCircle('circle-5', parseInt(fifth[1]/60*100), 40, '', '#9CB9D9', '#162E76');
+    makeCircle('circle-6', parseInt(sixth[1]/60*100), 40, '', '#9CB9D9', '#162E76');
+    makeCircle('circle-7', parseInt(seventh[1]/60*100), 40, '', '#9CB9D9', '#162E76');
+    makeCircle('circle-8', parseInt(eighth[1]/60*100), 40, '', '#E5A4B0', '#DC435F');
+    makeCircle('circle-9', parseInt(ninth[1]/60*100), 40, '', '#E5A4B0', '#DC435F');
+    makeCircle('circle-10', parseInt(tenth[1]/60*100), 40, '', '#E5A4B0', '#DC435F');
     //end first row of circles
 
     $circle_one.append(first[0])
@@ -331,6 +336,7 @@ function ready(error, world) {
     $circle_seven.append(seventh[0])
     $circle_eight.append(eighth[0])
     $circle_nine.append(ninth[0])
+    $circle_ten.append(tenth[0])
 
     //make unique circle row
     var $unique_circles = $('<div>').attr('id', 'circles-holder-unique').attr('class', 'clearfix');
@@ -357,7 +363,7 @@ function ready(error, world) {
         width:      9,
         number:     percent,
         // text:       '% ' +text,
-        text:       '%',
+        text:       '% ' + text,
         colors:     [color1, color2], //
         duration:   900
       });
