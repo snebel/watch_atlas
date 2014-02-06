@@ -279,6 +279,20 @@ a.flex-prev {
   border-radius: 4px;
 }
 
+#sorry.tooltip {
+  color: #fff; 
+  background: #000; 
+  font-style: italic;
+  font-size: 26px;
+  padding: 20px;
+  border: 3px solid #fff;
+  width: 50%;
+  height: 150px;
+  overflow: auto;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
 .hovertip {
   color: #fff; 
   background: #000; 

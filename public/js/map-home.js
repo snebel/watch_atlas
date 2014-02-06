@@ -18,9 +18,19 @@ var path = d3.geo.path()
 
 var svg = d3.select('#map-canvas').append('svg')
     .attr('width', width)
-    .attr('height', height);
+    .attr('height', height)
+    // .call(d3.behavior.zoom()
+    // .on("zoom", redraw));
+
 
 var g = svg.append('g');
+
+
+// function redraw() {
+//   console.log('im redrawing')
+//     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+// }
+
 
 // the water
 
@@ -137,14 +147,12 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-        //console.log('make Tooltip data: ' + data) 
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
         .style('position', 'relative')
         .style('z-index', '9999')
         .style('opacity', '0')
-      // .style('visibility', 'visible')
         .style('top', '-750px')
         .style('left', '0px')
         .transition().duration(700).style('opacity', '1');
@@ -153,8 +161,6 @@ function countryClick(d) {
         if (good) { return htmlSuccessGen(data); 
         } else { return htmlFailGen(); }
       })
-      //.transition().duration(700).style('opacity', '1')
-      // .style('display', 'block')
 
   }
 }
@@ -258,7 +264,6 @@ function ready(error, world) {
   htmlSuccessGen = function(data) {
     console.log(data);
     $('.tooltip').empty();
-    //console.log('html success: ' + data);
     var contents = $('.tooltip');
     var header = $('<h1 class="country-name">');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
@@ -303,8 +308,6 @@ function ready(error, world) {
     contents.append(vid_list);
     var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
 
-
-    
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
@@ -410,8 +413,10 @@ function ready(error, world) {
 
 
   htmlFailGen = function () {
-    var contents = 'Sorry, there is no YouTube data <br>for this country';
+    var contents = 'Sorry, there is no YouTube data for this country';
     contents += '<div class="close-me">close</div>'
+
+    $('.tooltip').attr('id', 'sorry')
 
    $('body').on('click', '.close-me', function () {
         $('.tooltip').animate({'opacity':'0'}, 400)
@@ -548,7 +553,6 @@ function popUpVideo (height, button) {
 
 
 d3.select(self.frameElement).style('height', height + 'px');
-
 
 
 
