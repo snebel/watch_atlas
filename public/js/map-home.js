@@ -542,6 +542,7 @@ function addListener()  {
 
   $('.zoom').on("click", function() {
     console.log('zooming');
+    zoomIn();
   })
 
 }
