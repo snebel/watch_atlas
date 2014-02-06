@@ -28,19 +28,23 @@ var g = svg.append('g');
 var arrows_div_left_margin = parseInt( (width - 800) / 2 );
 $('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
+var moonman_left_margin = parseInt( (width - 900) / 2 );
+$('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+
+
 // function redraw() {
 //     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 // }
 
 
 function antiGrav(ele) { 
-  var distance = 8;
+  var distance = 12;
   $(ele).animate({
     'top': "+=" + distance + "px"
-  },1000,"swing",function(){
+  },800,"swing",function(){
     $(ele).animate({        
             'top': "-=" + distance + "px"
-    },900,"swing",function(){
+    },800,"swing",function(){
       antiGrav(ele);
         });
   });
@@ -252,6 +256,15 @@ function ready(error, world) {
   htmlSuccessGen = function(data) {
 
     //console.log(data);
+    $('.tooltip').empty();
+    ////console.log('html success: ' + data);
+    var contents = $('.tooltip');
+    var header = $('<h1 class="country-name">');
+    var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
+    var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
+    header.append(title);
+    header.append(flag);
+    contents.append(header);
     // $('.tooltip').empty();
     // ////console.log('html success: ' + data);
     // var contents = $('.tooltip');
@@ -261,7 +274,6 @@ function ready(error, world) {
     // header.append(title);
     // header.append(flag);
     // contents.append(header);
-
 
     $('.tooltip').empty();
     var $contents = $('.tooltip');
@@ -505,9 +517,8 @@ function ready(error, world) {
       g.selectAll('path.country').attr('d', path);
     });
 
-
   d3.select('#left-arrow')
-    .on('click', function () {
+      .on('click', function () {
       var rotate = projection.rotate();
       var rotation_amount = 40;
       var x_point = d3.event.x;
@@ -592,11 +603,15 @@ d3.select(window).on('resize', resize);
 
 function resize() {
  
-    width = parseInt(d3.select('body').style('width'));
+    width = parseInt(d3.select('body').style('width'));  
 
     var arrows_div_left_margin = parseInt( (width - 800) / 2 );
 
     $('#arrows-div').css('left', arrows_div_left_margin + 'px');
+
+    var moonman_left_margin = parseInt( (width - 900) / 2 );
+
+    $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
 
     projection
         .translate([width / 2, height / 2])
@@ -613,6 +628,6 @@ function resize() {
 
 
 $(function () {
-    antiGrav('.moon-man'); 
+    antiGrav('#moon-man'); 
 });
 
