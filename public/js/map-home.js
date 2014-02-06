@@ -32,9 +32,23 @@ var g = svg.append('g');
 // }
 
 
+function antiGrav(ele) { 
+  var distance = 8;
+  $(ele).animate({
+    'top': "+=" + distance + "px"
+  },1000,"swing",function(){
+    $(ele).animate({        
+            'top': "-=" + distance + "px"
+    },900,"swing",function(){
+      antiGrav(ele);
+        });
+  });
+}
 
-
-
+// $('.moon-man').on('click', function(){
+//     console.log("you clicked me")
+//     antiGrav('.moon-man'); 
+// });
 
 // the water
 
@@ -59,7 +73,10 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
+<<<<<<< HEAD
 
+=======
+>>>>>>> 74483e5638fd6588244c7837e28bad5768a29c74
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -87,7 +104,10 @@ function countryHover(d) {
 
     })
     .fail(function(data){
+<<<<<<< HEAD
 
+=======
+>>>>>>> 74483e5638fd6588244c7837e28bad5768a29c74
     });
 
   function makeHovertip(country, data) {
@@ -152,7 +172,10 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
+<<<<<<< HEAD
 
+=======
+>>>>>>> 74483e5638fd6588244c7837e28bad5768a29c74
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -217,7 +240,11 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
+<<<<<<< HEAD
 
+=======
+        //
+>>>>>>> 74483e5638fd6588244c7837e28bad5768a29c74
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
@@ -302,23 +329,18 @@ function ready(error, world) {
     $contents.append($header);
     $contents.append($close_me_div)
 
-// <<<<<<< HEAD
     //data about overlapping countries
     // var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
     // var similar_container = $('div');
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
     //make first set of circles
-    var $circles = $('<div>').css('color', 'white').attr('id', 'circles-holder').attr('class', 'clearfix');
+    var $circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('width', '100%');
     var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
-    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '18%').css('float', 'left');
-    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '18%').css('float', 'left');
-    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '18%').css('float', 'left');
-    var $circle_four = $('<div>').attr('id', 'circle-4').css('width', '18%').css('float', 'left');
+    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '21%').css('float', 'left');
+    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '21%').css('float', 'left');
+    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '21%').css('float', 'left');
 
     $contents.append($circles);
-    $circles.css('width', '100%');
-    $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three).append($circle_four);
+    $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three)
     $contents.append($circles);
     $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
 
@@ -328,16 +350,15 @@ function ready(error, world) {
     var third = country_data[2];    
     var fourth = country_data[3]; 
 
-    makeCircle('circle-1', parseInt(first[1]/60*100), first[0], 'blue');
-    makeCircle('circle-2', parseInt(second[1]/60*100), second[0], 'blue');
-    makeCircle('circle-3', parseInt(third[1]/60*100), third[0], 'blue');
-    makeCircle('circle-4', parseInt(fourth[1]/60*100), fourth[0], 'blue');
+    makeCircle('circle-1', parseInt(first[1]/60*100), first[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-2', parseInt(second[1]/60*100), second[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-3', parseInt(third[1]/60*100), third[0], '#9CB9D9', '#162E76');
     //end first row of circles
 
     //make unique circle row
     var $unique_circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('margin-top', '20px');
     var $unique_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
-    var $circle_unique = $('<div>').attr('id', 'unique').css('width', '15%').css('float', 'left');
+    var $circle_unique = $('<div>').attr('id', 'unique').css('width', '20%').css('float', 'left');
 
     $contents.append($unique_circles);
     $unique_circles.css('width', '100%');
@@ -346,7 +367,7 @@ function ready(error, world) {
     $unique_intro.html('<h3 class="circles-intro">Unique Videos:</h3>');
     //console.log(data[0].name);
     var unique = country_data[country_data.length - 1];
-    makeCircle('unique', parseInt(unique[1]/60*100), "", 'yellow');
+    makeCircle('unique', parseInt(unique[1]/60*100), "", '#F4CB6B', '#F76504');
     //end unique circle row
 
 
@@ -354,11 +375,11 @@ function ready(error, world) {
       Circles.create({
         id:         id,
         percentage: percent,
-        radius:     25,
-        width:      6,
+        radius:     30,
+        width:      8,
         number:     percent,
         text:       '% '+text,
-        colors:     ['#D3B6C6', '#4B253A'], //[color1, color2]
+        colors:     [color1, color2], //
         duration:   700
       });
     }
@@ -494,14 +515,6 @@ function ready(error, world) {
 
     var $hovertip_videos_container = $('<div>')
     $hovertip_videos_container.attr('class', 'hovertip_videos_container')
-// <<<<<<< HEAD
-//<<<<<<< HEAD
-    //console.log($hovertip_videos_container)
-//=======
-    // console.log($hovertip_videos_container)
-//>>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
@@ -577,6 +590,7 @@ function addListener ()  {
 
 
 
+
 function popUpVideo (height, button) {
 
     embed_url = $(button).children('img').attr("data-id");
@@ -633,4 +647,7 @@ function resize() {
     g.selectAll('.globewater').attr('d', path);
 }
 
+$(function () {
+    antiGrav('.moon-man'); 
+});
 
