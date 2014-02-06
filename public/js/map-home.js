@@ -255,7 +255,7 @@ function ready(error, world) {
 
   htmlSuccessGen = function(data) {
 
-    //console.log(data);
+    console.log(data);
     $('.tooltip').empty();
     ////console.log('html success: ' + data);
     var contents = $('.tooltip');
@@ -285,28 +285,52 @@ function ready(error, world) {
     // var similar_container = $('div');
     //make first set of circles
     var $circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('width', '100%');
-    var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '20%').css('float', 'left');
-    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '20%').css('float', 'left');
-    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '20%').css('float', 'left');
-    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '20%').css('float', 'left');
-    var $circle_four = $('<div>').attr('id', 'circle-4').css('width', '20%').css('float', 'left');
+    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_four = $('<div>').attr('id', 'circle-4').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_five = $('<div>').attr('id', 'circle-5').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_six = $('<div>').attr('id', 'circle-6').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_seven = $('<div>').attr('id', 'circle-7').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_eight = $('<div>').attr('id', 'circle-8').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    var $circle_nine = $('<div>').attr('id', 'circle-9').css('width', '80px').css('float', 'left').addClass('circle-thing');
 
     $contents.append($circles);
-    $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three).append($circle_four);
+    $circles.append($circle_one).append($circle_two).append($circle_three).append($circle_four).append($circle_five).append($circle_six).append($circle_seven).append($circle_eight).append($circle_nine);
     $contents.append($circles);
-    $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
+    // $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
 
     var country_data = data[data.length - 1];
     var first = country_data[0];
     var second = country_data[1];
     var third = country_data[2];    
     var fourth = country_data[3]; 
+    var fifth = country_data[4];    
+    var sixth = country_data[5]; 
+    var seventh = country_data[6]; 
+    var eighth = country_data[7];    
+    var ninth = country_data[8]; 
 
-    makeCircle('circle-1', parseInt(first[1]/60*100), first[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-2', parseInt(second[1]/60*100), second[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-3', parseInt(third[1]/60*100), third[0], '#9CB9D9', '#162E76');
-    makeCircle('circle-3', parseInt(fourth[1]/60*100), fourth[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-1', parseInt(first[1]/60*100), 40, first[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-2', parseInt(second[1]/60*100), 40, second[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-3', parseInt(third[1]/60*100), 40, third[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-4', parseInt(fourth[1]/60*100), 40, fourth[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-5', parseInt(fifth[1]/60*100), 40, fifth[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-6', parseInt(sixth[1]/60*100), 40, sixth[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-7', parseInt(seventh[1]/60*100), 40, seventh[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-8', parseInt(eighth[1]/60*100), 40, eighth[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-9', parseInt(ninth[1]/60*100), 40, ninth[0], '#9CB9D9', '#162E76');
     //end first row of circles
+
+    $circle_one.append(first[0])
+    $circle_two.append(second[0])
+    $circle_three.append(third[0])
+    $circle_four.append(fourth[0])
+    $circle_five.append(fifth[0])
+    $circle_six.append(sixth[0])
+    $circle_seven.append(seventh[0])
+    $circle_eight.append(eighth[0])
+    $circle_nine.append(ninth[0])
 
     //make unique circle row
     var $unique_circles = $('<div>').attr('id', 'circles-holder-unique').attr('class', 'clearfix');
@@ -321,18 +345,19 @@ function ready(error, world) {
     // $unique_intro.html('<h3 class="circles-intro">Unique Videos:</h3>');
     //console.log(data[0].name);
     var unique = country_data[country_data.length - 1];
-    makeCircle('unique', parseInt(unique[1]/60*100), "of videos are unique to " + data[0].name, '#F4CB6B', '#F76504');
+    makeCircle('unique', parseInt(unique[1]/60*100), 30, "of videos are unique", '#F4CB6B', '#F76504');
     //end unique circle row
 
 
-    function makeCircle(id, percent, text, color1, color2){
+    function makeCircle(id, percent, radius, text, color1, color2){
       Circles.create({
         id:         id,
         percentage: percent,
-        radius:     30,
-        width:      8,
+        radius:     radius,
+        width:      9,
         number:     percent,
-        text:       '% '+text,
+        // text:       '% ' +text,
+        text:       '%',
         colors:     [color1, color2], //
         duration:   900
       });
@@ -425,6 +450,7 @@ function ready(error, world) {
 
     }  
 
+    $circles.prepend('<h2 class="category-title">Overlapping Countries</h2>');
     $top_videos_div.prepend('<h2 class="category-title">Top Videos</h2>');
     $news_div.prepend('<h2 class="category-title">News</h2>');
     $music_div.prepend('<h2 class="category-title">Music</h2>');
