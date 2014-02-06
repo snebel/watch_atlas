@@ -155,7 +155,7 @@ function countryClick(d) {
       })
       //.transition().duration(700).style('opacity', '1')
       // .style('display', 'block')
-      
+
   }
 }
 
@@ -268,13 +268,12 @@ function ready(error, world) {
     contents.append(header);
     
     //data about overlapping countries
-    
-    var circle_div = $('<div>').attr('id', 'circle-1').css('float', 'right').css('clear', 'left');
-    contents.append(circle_div);
-    var circle_div = $('<div>').attr('id', 'circle-2').css('float', 'right').css('clear', 'left');
-    contents.append(circle_div);
-    var circle_div = $('<div>').attr('id', 'circle-3').css('float', 'right').css('clear', 'left');
-    contents.append(circle_div);
+    var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
+    var circle_one = $('<div>').attr('id', 'circle-1').css('float', 'right')
+    var circle_two = $('<div>').attr('id', 'circle-2').css('float', 'right')
+    var circle_three = $('<div>').attr('id', 'circle-3').css('float', 'right')
+    circles.append(circle_three).append(circle_two).append(circle_one);
+    contents.append(circles);
 
 
     function makeCircle(id, percent, text, color){
@@ -282,9 +281,9 @@ function ready(error, world) {
         id:         id,
         percentage: percent,
         radius:     50,
-        width:      10,
+        width:      12,
         number:     percent,
-        text:       ' '+text,
+        text:       ' % '+text,
         colors:     ['#D3B6C6', '#4B253A'],
         duration:   400
       });
