@@ -466,7 +466,7 @@ function ready(error, world) {
     $hovertip_videos_container.attr('class', 'hovertip_videos_container');
 
     var $header = $('<div>');
-    var $title = $('<h2 class="country-name">' + country.name + '</h2>');
+    var $title = $('<h2 id="hovertip-country-name">' + country.name + '</h2>');
     var $flag = $('<img>').attr('src', country.flag_url).attr('class', 'country-flag');
     //$hovertip_videos_container.append($flag);
 
