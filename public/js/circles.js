@@ -129,7 +129,7 @@
       return '<div class="circles-wrp" style="position:relative; display:inline-block;">' + content + '</div>';
     },
 
-    _generateText: function() {
+   _generateText: function() {
       var html =  '<div class="' + this._textWrpClass + '" style="position:absolute; top:0; left:0; text-align:center; width:100%;' +
         ' font-size:' + this._radius * .7 + 'px; height:' + this._svgSize + 'px; line-height:' + this._svgSize + 'px;">' + 
         this._calculateNumber(this._canAnimate ? 0 : this._number);
