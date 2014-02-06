@@ -9,12 +9,12 @@ class CountriesController < ApplicationController
 
   def show
     @country = Country.find(params[:id])    
-    @info = @country.get_overlapping_countries_info
+    @num_unique = @country.num_unique_vids
+    @info = @country.get_overlapping_countries_info << ['unique', @num_unique]
     #binding.pry
-
     respond_to do |format|
       format.html
-      
+
       format.json do
         render json: ([@country] + @country.videos + [@info]).to_json
       end

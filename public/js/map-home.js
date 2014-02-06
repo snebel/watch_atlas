@@ -59,7 +59,14 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
+// <<<<<<< HEAD
+//<<<<<<< HEAD
+    //console.log('tooltip exists');
+//=======
     // console.log('tooltip exists');
+// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -72,7 +79,14 @@ function countryHover(d) {
     dataType: 'json'
   })
     .success(function (data) {
+// <<<<<<< HEAD
+// <<<<<<< HEAD
+      //console.log('hello');
+// =======
       // console.log('hello');
+// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
 
@@ -87,7 +101,14 @@ function countryHover(d) {
 
     })
     .fail(function(data){
+// <<<<<<< HEAD
+// <<<<<<< HEAD
+      //console.log("bad bad bad!")
+// =======
       // console.log("bad bad bad!")
+// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
     });
 
   function makeHovertip(country, data) {
@@ -121,11 +142,12 @@ function countryClick(d) {
     dataType: 'json'
   })
     .success(function (data) {
-      //console.log(data);
+      ////console.log(data);
       zoomIn();
       makeTooltip(data, true);
         $('.flexslider').flexslider({
           animation: "slide",
+          slideshow: false,
           animationLoop: false,
           itemWidth: 150,
           itemMargin: 15
@@ -151,6 +173,13 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
+// <<<<<<< HEAD
+// <<<<<<< HEAD
+        ////console.log('make Tooltip data: ' + data) 
+// =======
+// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -215,7 +244,12 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
+// <<<<<<< HEAD
+
+        //console.log('hovertip');
         // console.log('hovertip');
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
@@ -247,26 +281,46 @@ function ready(error, world) {
     g.selectAll('path.globewater')
       .call(d3.behavior.drag()
 
-      .origin(function () {
-        var r = projection.rotate();
-        return {
-          x: r[0] / sens,
-          y: -r[1] / sens
-        };
-      })
+      // .origin(function () {
+      //   var r = projection.rotate();
+      //   return {
+      //     x: r[0] / sens,
+      //     y: -r[1] / sens
+      //   };
+      // })
       .on('drag', function () {
-        // console.log('dragging')
-        var rotation_amount = 500;
-        // console.log(d3.event);
+        var rotation_amount = .2;
+        console.log(d3.event);
+        console.log(d3.event.dx);
+        // if (d3.event.dx < 0) {var x = -1;}
+        // if (d3.event.dx > 0) {var x = 1;}
+        // else {var x = 0;}
+        // if (d3.event.dy < 0) {var y = -1;}
+        // if (d3.event.dy > 0) {var y = 1;}
+        // else {var y = 0;}
         var rotate = projection.rotate();
-        projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
-        g.selectAll('path.country')
-            .attr('d', path);
+        console.log(rotate);
+
+        projection.rotate([rotate[0] + d3.event.dx*rotation_amount, rotate[1] + -1*d3.event.dy*rotation_amount, .5]); //(rotate[0] + rotation_amount), rotate[1] + d3.event.dy*rotation_amount  
+        g.selectAll('path.country').attr('d', path);        
         g.selectAll('.focused').classed('focused', focused = false);
       }));
 
 
   htmlSuccessGen = function(data) {
+
+    //console.log(data);
+    $('.tooltip').empty();
+    ////console.log('html success: ' + data);
+    var contents = $('.tooltip');
+    var header = $('<h1 class="country-name">');
+    var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
+    var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
+    header.append(title);
+    header.append(flag);
+    contents.append(header);
+    
+
 
     $('.tooltip').empty();
     var $contents = $('.tooltip');
@@ -280,9 +334,12 @@ function ready(error, world) {
     $contents.append($header);
     $contents.append($close_me_div)
 
+// <<<<<<< HEAD
     //data about overlapping countries
     // var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
     // var similar_container = $('div');
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
 
     var $circles = $('<div>').css('color', 'white').attr('id', 'circles-holder').attr('class', 'clearfix');
     var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
@@ -295,9 +352,13 @@ function ready(error, world) {
     $circles.css('width', '100%');
     $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three).append($circle_four);
     $contents.append($circles);
-    $circle_intro.html('<h3 class="circles-intro">one line here: </h3>');
+    $circle_intro.html('<h3 class="circles-intro">Most Similar to: </h3>');
 
+    var $unique_circle = $('<div>').css('color', 'white').attr('id', 'unique-vids');
+    $unique_circle.html('<h3 class="circles=intro">Uniqueness: </h3>');
+    $contents.append($unique_circle);
 
+    
 
     function makeCircle(id, percent, text, color){
       Circles.create({
@@ -312,6 +373,7 @@ function ready(error, world) {
       });
     }
     var country_data = data[data.length - 1];
+
     // console.log('country data' + country_data);
     var first = country_data[0];
     var second = country_data[1];
@@ -323,12 +385,12 @@ function ready(error, world) {
     makeCircle('circle-3', parseInt(third[1]/60*100), third[0], 'blue');
     makeCircle('circle-4', parseInt(fourth[1]/60*100), fourth[0], 'blue');
 
-    
+    var unique = country_data[country_data.length - 1];
+    makeCircle('unique-vids', parseInt(unique[1]/60*100), "unique", 'yellow');
+
 
     var vid_list = $('<ul>').addClass('box-videos');
     $contents.append(vid_list);
-   
-
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
@@ -456,7 +518,14 @@ function ready(error, world) {
 
     var $hovertip_videos_container = $('<div>')
     $hovertip_videos_container.attr('class', 'hovertip_videos_container')
+// <<<<<<< HEAD
+//<<<<<<< HEAD
+    //console.log($hovertip_videos_container)
+//=======
     // console.log($hovertip_videos_container)
+//>>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
@@ -486,7 +555,7 @@ function ready(error, world) {
   //     var rotation_amount = 40;
   //     var x_point = d3.event.x;
   //     var y_point = d3.event.y;
-  //     console.log(rotate);
+  //     //console.log(rotate);
   //     projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
   //     g.selectAll('path.country').attr('d', path);
   //   });
@@ -498,7 +567,7 @@ function ready(error, world) {
   //     var rotation_amount = 40;
   //     var x_point = d3.event.x;
   //     var y_point = d3.event.y;
-  //     console.log(rotate);
+  //     //console.log(rotate);
   //     projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
   //     g.selectAll('path.country').attr('d', path);
   //   });
@@ -533,8 +602,6 @@ function addListener ()  {
 
 
 function popUpVideo (height, button) {
-
-    // console.log('self')
 
     embed_url = $(button).children('img').attr("data-id");
     var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel-new.png" />');

@@ -294,7 +294,7 @@ a.flex-prev {
 #sorry.tooltip {
   color: #fff; 
   background: #000; 
-  font-size: 26px;
+  font-size: 22px;
   padding: 20px;
   border: 2px solid #fff;
   width: 50%;
@@ -329,6 +329,54 @@ a.flex-prev {
   padding-left: 12px;
 }
 
+/*.flexslider  {
+     .flex-direction-nav a {
+          display: block;
+     }
+     &:hover {
+          .next {
+               opacity: 1;
+               right: 10px;
+          }
+          .prev {
+               opacity: 1;
+               left: 10px;
+          }
+     }
+     .next {
+          font-size: 1px;
+          &:before {
+               display: inline-block;
+               color: orange;
+               font-size: 30px;
+               padding-left: 10px;
+          }
+     }
+     .prev {
+          font-size: 1px;
+          &:before {
+               display: inline-block;
+               color: orange;
+               font-size: 30px;
+               padding-left: 10px;
+          }
+     }
+     .flex-direction-nav a {
+          width: 30px;
+          height: 30px;
+          overflow: hidden;
+          margin: 0;
+          display: block;
+          background: none;
+          position: absolute;
+          top: 90%;
+          z-index: 10;
+          cursor: pointer;
+          text-indent: inherit;
+          opacity: 1;
+          -webkit-transition: all .3s ease;
+     }
+}*/
 
 #news-videos img {
   float: left;
