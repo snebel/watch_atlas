@@ -252,7 +252,7 @@ function ready(error, world) {
       //   };
       // })
       .on('drag', function () {
-        var rotation_amount = 10;
+        var rotation_amount = .2;
         console.log(d3.event);
         console.log(d3.event.dx);
         // if (d3.event.dx < 0) {var x = -1;}
@@ -264,7 +264,7 @@ function ready(error, world) {
         var rotate = projection.rotate();
         console.log(rotate);
 
-        projection.rotate([rotate[0] + d3.event.dx*rotation_amount, rotate[1] + -1*d3.event.dy*rotation_amount, 0]); //(rotate[0] + rotation_amount), rotate[1] + d3.event.dy*rotation_amount  
+        projection.rotate([rotate[0] + d3.event.dx*rotation_amount, rotate[1] + -1*d3.event.dy*rotation_amount, .5]); //(rotate[0] + rotation_amount), rotate[1] + d3.event.dy*rotation_amount  
         g.selectAll('path.country').attr('d', path);        
         g.selectAll('.focused').classed('focused', focused = false);
       }));
@@ -296,10 +296,6 @@ function ready(error, world) {
     $header.append($title).append($flag);
     $contents.append($header);
     $contents.append($close_me_div)
-
-    //data about overlapping countries
-    // var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
-    // var similar_container = $('div');
 
     var $circles = $('<div>').css('color', 'white').attr('id', 'circles-holder').attr('class', 'clearfix');
     var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
