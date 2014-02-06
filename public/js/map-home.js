@@ -85,6 +85,7 @@ function countryHover(d) {
     dataType: 'json'
   })
     .success(function (data) {
+
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
 
@@ -227,6 +228,7 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
+        //
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
@@ -311,6 +313,10 @@ function ready(error, world) {
     $contents.append($header);
     $contents.append($close_me_div)
 
+    //data about overlapping countries
+    // var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
+    // var similar_container = $('div');
+    //make first set of circles
     var $circles = $('<div>').css('color', 'white').attr('id', 'circles-holder').attr('class', 'clearfix');
     var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
     var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '18%').css('float', 'left');
@@ -322,24 +328,9 @@ function ready(error, world) {
     $circles.css('width', '100%');
     $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three).append($circle_four);
     $contents.append($circles);
-    $circle_intro.html('<h3 class="circles-intro">one line here: </h3>');
+    $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
 
-
-
-    function makeCircle(id, percent, text, color){
-      Circles.create({
-        id:         id,
-        percentage: percent,
-        radius:     25,
-        width:      6,
-        number:     percent,
-        text:       ' % '+text,
-        colors:     ['#D3B6C6', '#4B253A'],
-        duration:   700
-      });
-    }
     var country_data = data[data.length - 1];
-    // console.log('country data' + country_data);
     var first = country_data[0];
     var second = country_data[1];
     var third = country_data[2];    
@@ -349,11 +340,41 @@ function ready(error, world) {
     makeCircle('circle-2', parseInt(second[1]/60*100), second[0], 'blue');
     makeCircle('circle-3', parseInt(third[1]/60*100), third[0], 'blue');
     makeCircle('circle-4', parseInt(fourth[1]/60*100), fourth[0], 'blue');
+    //end first row of circles
+
+    //make unique circle row
+    var $unique_circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('margin-top', '20px');
+    var $unique_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
+    var $circle_unique = $('<div>').attr('id', 'unique').css('width', '15%').css('float', 'left');
+
+    $contents.append($unique_circles);
+    $unique_circles.css('width', '100%');
+    $unique_circles.append($unique_intro).append($circle_unique)
+    $contents.append($unique_circles);
+    $unique_intro.html('<h3 class="circles-intro">Unique Videos:</h3>');
+    //console.log(data[0].name);
+    var unique = country_data[country_data.length - 1];
+    makeCircle('unique', parseInt(unique[1]/60*100), "", 'yellow');
+    //end unique circle row
+
+
+    function makeCircle(id, percent, text, color1, color2){
+      Circles.create({
+        id:         id,
+        percentage: percent,
+        radius:     25,
+        width:      6,
+        number:     percent,
+        text:       '% '+text,
+        colors:     ['#D3B6C6', '#4B253A'], //[color1, color2]
+        duration:   700
+      });
+    }
+
+
 
     var vid_list = $('<ul>').addClass('box-videos');
     $contents.append(vid_list);
-   
-
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');

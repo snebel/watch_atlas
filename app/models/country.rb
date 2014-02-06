@@ -15,4 +15,12 @@ class Country < ActiveRecord::Base
     end
     country_counts.sort_by{ |name, count| count}.reverse
   end
+
+  def num_unique_vids
+    num = 0
+    self.videos.map do |vid| 
+      num += 1 if vid.country_videos.size == 1
+    end
+    num
+  end
 end
