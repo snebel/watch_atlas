@@ -59,11 +59,11 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
-<<<<<<< HEAD
+//<<<<<<< HEAD
     //console.log('tooltip exists');
-=======
+//=======
     // console.log('tooltip exists');
->>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -76,11 +76,11 @@ function countryHover(d) {
     dataType: 'json'
   })
     .success(function (data) {
-<<<<<<< HEAD
+// <<<<<<< HEAD
       //console.log('hello');
-=======
+// =======
       // console.log('hello');
->>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
 
@@ -95,11 +95,11 @@ function countryHover(d) {
 
     })
     .fail(function(data){
-<<<<<<< HEAD
+// <<<<<<< HEAD
       //console.log("bad bad bad!")
-=======
+// =======
       // console.log("bad bad bad!")
->>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
     });
 
   function makeHovertip(country, data) {
@@ -163,10 +163,10 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-<<<<<<< HEAD
+// <<<<<<< HEAD
         ////console.log('make Tooltip data: ' + data) 
-=======
->>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -231,11 +231,9 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-<<<<<<< HEAD
+
         //console.log('hovertip');
-=======
         // console.log('hovertip');
->>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
@@ -320,7 +318,6 @@ function ready(error, world) {
     $contents.append($header);
     $contents.append($close_me_div)
 
->>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
     //data about overlapping countries
     // var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
     // var similar_container = $('div');
@@ -336,9 +333,13 @@ function ready(error, world) {
     $circles.css('width', '100%');
     $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three).append($circle_four);
     $contents.append($circles);
-    $circle_intro.html('<h3 class="circles-intro">one line here: </h3>');
+    $circle_intro.html('<h3 class="circles-intro">Most Similar to: </h3>');
 
+    var $unique_circle = $('<div>').css('color', 'white').attr('id', 'unique-vids');
+    $unique_circle.html('<h3 class="circles=intro">Uniqueness: </h3>');
+    $contents.append($unique_circle);
 
+    
 
     function makeCircle(id, percent, text, color){
       Circles.create({
@@ -353,6 +354,7 @@ function ready(error, world) {
       });
     }
     var country_data = data[data.length - 1];
+
     // console.log('country data' + country_data);
     var first = country_data[0];
     var second = country_data[1];
@@ -364,10 +366,12 @@ function ready(error, world) {
     makeCircle('circle-3', parseInt(third[1]/60*100), third[0], 'blue');
     makeCircle('circle-4', parseInt(fourth[1]/60*100), fourth[0], 'blue');
 
+    var unique = country_data[country_data.length - 1];
+    makeCircle('unique-vids', parseInt(unique[1]/60*100), "unique", 'yellow');
+
+
     var vid_list = $('<ul>').addClass('box-videos');
     $contents.append(vid_list);
-   
-
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
@@ -495,11 +499,11 @@ function ready(error, world) {
 
     var $hovertip_videos_container = $('<div>')
     $hovertip_videos_container.attr('class', 'hovertip_videos_container')
-<<<<<<< HEAD
+//<<<<<<< HEAD
     //console.log($hovertip_videos_container)
-=======
+//=======
     // console.log($hovertip_videos_container)
->>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+//>>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
