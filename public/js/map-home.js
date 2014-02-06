@@ -45,7 +45,7 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
-    console.log('tooltip exists');
+    //console.log('tooltip exists');
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -58,7 +58,7 @@ function countryHover(d) {
     dataType: 'json'
   })
     .success(function (data) {
-      console.log('hello');
+      //console.log('hello');
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
 
@@ -73,7 +73,7 @@ function countryHover(d) {
 
     })
     .fail(function(data){
-      console.log("bad bad bad!")
+      //console.log("bad bad bad!")
     });
 
   function makeHovertip(country, data) {
@@ -107,7 +107,7 @@ function countryClick(d) {
     dataType: 'json'
   })
     .success(function (data) {
-      //console.log(data);
+      ////console.log(data);
       zoomIn();
       makeTooltip(data, true);
         $('.flexslider').flexslider({
@@ -137,7 +137,7 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-        //console.log('make Tooltip data: ' + data) 
+        ////console.log('make Tooltip data: ' + data) 
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -204,7 +204,7 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-        console.log('hovertip');
+        //console.log('hovertip');
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
@@ -236,29 +236,36 @@ function ready(error, world) {
     g.selectAll('path.globewater')
       .call(d3.behavior.drag()
 
-      .origin(function () {
-        var r = projection.rotate();
-        return {
-          x: r[0] / sens,
-          y: -r[1] / sens
-        };
-      })
+      // .origin(function () {
+      //   var r = projection.rotate();
+      //   return {
+      //     x: r[0] / sens,
+      //     y: -r[1] / sens
+      //   };
+      // })
       .on('drag', function () {
-        // console.log('dragging')
-        var rotation_amount = 500;
-        // console.log(d3.event);
+        var rotation_amount = 20;
+        console.log(d3.event);
+        console.log(d3.event.dx);
+        // if (d3.event.dx < 0) {var x = -1;}
+        // if (d3.event.dx > 0) {var x = 1;}
+        // else {var x = 0;}
+        // if (d3.event.dy < 0) {var y = -1;}
+        // if (d3.event.dy > 0) {var y = 1;}
+        // else {var y = 0;}
         var rotate = projection.rotate();
-        projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
-        g.selectAll('path.country')
-            .attr('d', path);
+        console.log(rotate);
+
+        projection.rotate([rotate[0] + d3.event.dx*rotation_amount, 0, 0]); //(rotate[0] + rotation_amount), rotate[1] + d3.event.dy*rotation_amount  
+        g.selectAll('path.country').attr('d', path);        
         g.selectAll('.focused').classed('focused', focused = false);
       }));
 
 
   htmlSuccessGen = function(data) {
-    console.log(data);
+    //console.log(data);
     $('.tooltip').empty();
-    //console.log('html success: ' + data);
+    ////console.log('html success: ' + data);
     var contents = $('.tooltip');
     var header = $('<h1 class="country-name">');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
@@ -296,8 +303,6 @@ function ready(error, world) {
     makeCircle('circle-1', parseInt(first[1]/60*100), first[0], 'blue');
     makeCircle('circle-2', parseInt(second[1]/60*100), second[0], 'blue');
     makeCircle('circle-3', parseInt(third[1]/60*100), third[0], 'blue');
-
-    
 
     var vid_list = $('<ul>').addClass('box-videos');
     contents.append(vid_list);
@@ -428,7 +433,7 @@ function ready(error, world) {
 
     var $hovertip_videos_container = $('<div>')
     $hovertip_videos_container.attr('class', 'hovertip_videos_container')
-    console.log($hovertip_videos_container)
+    //console.log($hovertip_videos_container)
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
@@ -458,7 +463,7 @@ function ready(error, world) {
   //     var rotation_amount = 40;
   //     var x_point = d3.event.x;
   //     var y_point = d3.event.y;
-  //     console.log(rotate);
+  //     //console.log(rotate);
   //     projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
   //     g.selectAll('path.country').attr('d', path);
   //   });
@@ -470,7 +475,7 @@ function ready(error, world) {
   //     var rotation_amount = 40;
   //     var x_point = d3.event.x;
   //     var y_point = d3.event.y;
-  //     console.log(rotate);
+  //     //console.log(rotate);
   //     projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
   //     g.selectAll('path.country').attr('d', path);
   //   });
