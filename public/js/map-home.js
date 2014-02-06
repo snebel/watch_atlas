@@ -59,11 +59,14 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
+// <<<<<<< HEAD
 //<<<<<<< HEAD
     //console.log('tooltip exists');
 //=======
     // console.log('tooltip exists');
 // >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -77,10 +80,13 @@ function countryHover(d) {
   })
     .success(function (data) {
 // <<<<<<< HEAD
+// <<<<<<< HEAD
       //console.log('hello');
 // =======
       // console.log('hello');
 // >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
 
@@ -96,10 +102,13 @@ function countryHover(d) {
     })
     .fail(function(data){
 // <<<<<<< HEAD
+// <<<<<<< HEAD
       //console.log("bad bad bad!")
 // =======
       // console.log("bad bad bad!")
 // >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
     });
 
   function makeHovertip(country, data) {
@@ -138,6 +147,7 @@ function countryClick(d) {
       makeTooltip(data, true);
         $('.flexslider').flexslider({
           animation: "slide",
+          slideshow: false,
           animationLoop: false,
           itemWidth: 150,
           itemMargin: 15
@@ -164,9 +174,12 @@ function countryClick(d) {
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
 // <<<<<<< HEAD
+// <<<<<<< HEAD
         ////console.log('make Tooltip data: ' + data) 
 // =======
 // >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -231,9 +244,12 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
+// <<<<<<< HEAD
 
         //console.log('hovertip');
         // console.log('hovertip');
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
@@ -273,7 +289,7 @@ function ready(error, world) {
       //   };
       // })
       .on('drag', function () {
-        var rotation_amount = 10;
+        var rotation_amount = .2;
         console.log(d3.event);
         console.log(d3.event.dx);
         // if (d3.event.dx < 0) {var x = -1;}
@@ -285,7 +301,7 @@ function ready(error, world) {
         var rotate = projection.rotate();
         console.log(rotate);
 
-        projection.rotate([rotate[0] + d3.event.dx*rotation_amount, rotate[1] + -1*d3.event.dy*rotation_amount, 0]); //(rotate[0] + rotation_amount), rotate[1] + d3.event.dy*rotation_amount  
+        projection.rotate([rotate[0] + d3.event.dx*rotation_amount, rotate[1] + -1*d3.event.dy*rotation_amount, .5]); //(rotate[0] + rotation_amount), rotate[1] + d3.event.dy*rotation_amount  
         g.selectAll('path.country').attr('d', path);        
         g.selectAll('.focused').classed('focused', focused = false);
       }));
@@ -318,9 +334,12 @@ function ready(error, world) {
     $contents.append($header);
     $contents.append($close_me_div)
 
+// <<<<<<< HEAD
     //data about overlapping countries
     // var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
     // var similar_container = $('div');
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
 
     var $circles = $('<div>').css('color', 'white').attr('id', 'circles-holder').attr('class', 'clearfix');
     var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
@@ -499,11 +518,14 @@ function ready(error, world) {
 
     var $hovertip_videos_container = $('<div>')
     $hovertip_videos_container.attr('class', 'hovertip_videos_container')
+// <<<<<<< HEAD
 //<<<<<<< HEAD
     //console.log($hovertip_videos_container)
 //=======
     // console.log($hovertip_videos_container)
 //>>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
+// =======
+// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
@@ -580,8 +602,6 @@ function addListener ()  {
 
 
 function popUpVideo (height, button) {
-
-    // console.log('self')
 
     embed_url = $(button).children('img').attr("data-id");
     var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel-new.png" />');
