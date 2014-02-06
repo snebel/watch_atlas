@@ -25,7 +25,8 @@ var svg = d3.select('#map-canvas').append('svg')
 
 var g = svg.append('g');
 
-
+var arrows_div_left_margin = parseInt( (width - 800) / 2 );
+$('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
 // function redraw() {
 //     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -62,47 +63,24 @@ g.append("path")
     .attr("d", path);
 
 function countryHover(d) {
-
-
-  d3.select('path#id_' + d.id)
-  .style('fill', '#d35400');
+  d3.select('path#id_' + d.id).style('fill', '#d35400');
 
   $tooltip = $('.tooltip');
-
-  
-
-  if ($tooltip.length != 0) {
-    var make_hover_tip = false
-
-  }
-
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
 
-  var self = this;
-
-  $.ajax({
-    method: 'get',
-    url: '/countries/maps/' + d.id,
-    dataType: 'json'
-  })
-    .success(function (data) {
-
-      var top_three_vids = (([data[1], data[2], data[3]]) );
-      var country_name = data[0].name;
-
-      if (make_hover_tip === false) {
-
-      }else{
-
-      makeHovertip(country_name, top_three_vids);
-      addListener();
-
-    }
-
+  if (valid_map_ids.indexOf(d.id) != -1 && $tooltip.length == 0) {
+    $.ajax({
+      method: 'get',
+      url: '/countries/maps/' + d.id,
+      dataType: 'json'
     })
-    .fail(function(data){
-
-    });
+      .success(function (data) {
+        var top_three_vids = (([data[1], data[2], data[3]]) );
+        var country_name = data[0].name;
+        makeHovertip(country_name, top_three_vids);
+        addListener();
+      })
+  }
 
   function makeHovertip(country, data) {
     $('.hovertip').remove();
@@ -116,52 +94,46 @@ function countryHover(d) {
     .html(function () {
       return htmlHoverSuccessGen(country, data);
     })
-    // .transition().duration(400).style('opacity', '1')
-    .style('opacity', '1')
+     //.transition().duration(300).style('opacity', '1')
+     .style('opacity', '1')
   }  
 }
 
-
-
 function countryClick(d) {
-
-  $('.embed_window').remove();
-
   var self = this;
-
-  $.ajax({
-    method: 'get',
-    url: '/countries/maps/' + d.id,
-    dataType: 'json'
-  })
-    .success(function (data) {
-      ////console.log(data);
-      zoomIn();
-      makeTooltip(data, true);
+  //$('.embed_window').remove();
+  if (valid_map_ids.indexOf(d.id) != -1) {
+    $.ajax({
+      method: 'get',
+      url: '/countries/maps/' + d.id,
+      dataType: 'json'
+    })
+      .success(function (data) {
+        zoomIn();
+        makeTooltip(data, true);
         $('.flexslider').flexslider({
           animation: "slide",
           slideshow: false,
           animationLoop: false,
           itemWidth: 150,
           itemMargin: 15
-          });
+        });
         addListener();
-    })
-    .fail(function(data){
-      makeTooltip(data, false);  
-    });
+      })
+  }
+  else {
+    makeTooltip('', false);
+  }
 
   function zoomIn() {
-    d3.select('svg')
-      .style('opacity', '.7')
     if (active === d){ return reset();}
+    d3.select('svg').style('opacity', '.7')
     g.selectAll('.active').classed('active', false);
     d3.select(self).classed('active', active = d);
 
     var b = path.bounds(d);
     g.transition().duration(750).attr('transform',
-        'translate(' + projection.translate() + ')' + 'scale(' + .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height) + ')' + 'translate(' + -(b[1][0] + b[0][0]) / 2 + ',' + -(b[1][1] + b[0][1]) / 2 + ')');
-    //end zoom stuff
+      'translate(' + projection.translate() + ')' + 'scale(' + 0.4 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height) + ')' + 'translate(' + -(b[1][0] + b[0][0]) / 2 + ',' + -(b[1][1] + b[0][1]) / 2 + ')');
   }
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
@@ -228,24 +200,16 @@ function ready(error, world) {
 
         }
     
-      var isHoverTipHovered = $('.hovertip').is(":hover");
+      var isHoverTipHovered = $('.hovertip').is("hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
 
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
-
       }else{
          //if you go inside hovertip, it will stay orange. if you don't it will be green. 
-
         // d3.select('path#id_' + d.id).style('fill', '#16a085')
-
-    
           $('.hovertip').remove();
-
-
       }
-
-
 
     })
       
@@ -302,8 +266,6 @@ function ready(error, world) {
     header.append(flag);
     contents.append(header);
     
-
-
     $('.tooltip').empty();
     var $contents = $('.tooltip');
 
@@ -321,13 +283,14 @@ function ready(error, world) {
     // var similar_container = $('div');
     //make first set of circles
     var $circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('width', '100%');
-    var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
-    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '21%').css('float', 'left');
-    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '21%').css('float', 'left');
-    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '21%').css('float', 'left');
+    var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '20%').css('float', 'left');
+    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '20%').css('float', 'left');
+    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '20%').css('float', 'left');
+    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '20%').css('float', 'left');
+    var $circle_four = $('<div>').attr('id', 'circle-4').css('width', '20%').css('float', 'left');
 
     $contents.append($circles);
-    $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three)
+    $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three).append($circle_four);
     $contents.append($circles);
     $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
 
@@ -340,21 +303,23 @@ function ready(error, world) {
     makeCircle('circle-1', parseInt(first[1]/60*100), first[0], '#9CB9D9', '#162E76');
     makeCircle('circle-2', parseInt(second[1]/60*100), second[0], '#9CB9D9', '#162E76');
     makeCircle('circle-3', parseInt(third[1]/60*100), third[0], '#9CB9D9', '#162E76');
+    makeCircle('circle-3', parseInt(fourth[1]/60*100), fourth[0], '#9CB9D9', '#162E76');
     //end first row of circles
 
     //make unique circle row
-    var $unique_circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('margin-top', '20px');
-    var $unique_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
-    var $circle_unique = $('<div>').attr('id', 'unique').css('width', '20%').css('float', 'left');
+    var $unique_circles = $('<div>').attr('id', 'circles-holder-unique').attr('class', 'clearfix');
+
+    // var $unique_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
+    var $circle_unique = $('<div>').attr('id', 'unique');
 
     $contents.append($unique_circles);
-    $unique_circles.css('width', '100%');
-    $unique_circles.append($unique_intro).append($circle_unique)
+    // $unique_circles.css('width', '100%');
+    $unique_circles.append($circle_unique)
     $contents.append($unique_circles);
-    $unique_intro.html('<h3 class="circles-intro">Unique Videos:</h3>');
+    // $unique_intro.html('<h3 class="circles-intro">Unique Videos:</h3>');
     //console.log(data[0].name);
     var unique = country_data[country_data.length - 1];
-    makeCircle('unique', parseInt(unique[1]/60*100), "", '#F4CB6B', '#F76504');
+    makeCircle('unique', parseInt(unique[1]/60*100), "of videos are unique to " + data[0].name, '#F4CB6B', '#F76504');
     //end unique circle row
 
 
@@ -367,7 +332,7 @@ function ready(error, world) {
         number:     percent,
         text:       '% '+text,
         colors:     [color1, color2], //
-        duration:   700
+        duration:   900
       });
     }
 
@@ -525,7 +490,7 @@ function ready(error, world) {
       .style('cursor', 'pointer')
   });
 
-  d3.select('#right-rotator')
+  d3.select('#right-arrow')
     .on('click', function () {
       var rotate = projection.rotate();
       var rotation_amount = 40;
@@ -536,9 +501,8 @@ function ready(error, world) {
       g.selectAll('path.country').attr('d', path);
     });
 
-
-  d3.select('#left-rotator')
-    .on('click', function () {
+  d3.select('#left-arrow')
+      .on('click', function () {
       var rotate = projection.rotate();
       var rotation_amount = 40;
       var x_point = d3.event.x;
@@ -621,17 +585,13 @@ function popUpVideo (height, button) {
 d3.select(window).on('resize', resize);
 
 
-
 function resize() {
  
-    width = parseInt(d3.select('body').style('width'));
-    console.log(width)
-    (width - 900) / 2    
+    width = parseInt(d3.select('body').style('width'));  
 
-    var left_rotator = $('#left-rotator');
-    left_rotator.style.position = 'absolute';
-    var left_rotator_location = parseInt(width / 2 - 310);
-    left_rotator.style.left = left_rotator_location + 'px';
+    var arrows_div_left_margin = parseInt( (width - 800) / 2 );
+
+    $('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
     projection
         .translate([width / 2, height / 2])
@@ -642,6 +602,10 @@ function resize() {
     g.selectAll('.country').attr('d', path);
     g.selectAll('.globewater').attr('d', path);
 }
+
+
+
+
 
 $(function () {
     antiGrav('.moon-man'); 
