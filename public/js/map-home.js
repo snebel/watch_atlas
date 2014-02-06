@@ -80,7 +80,7 @@ function countryHover(d) {
     })
       .success(function (data) {
         var top_three_vids = (([data[1], data[2], data[3]]) );
-        var country_name = data[0].name;
+        var country_name = data[0];
         makeHovertip(country_name, top_three_vids);
         addListener();
       })
@@ -265,7 +265,16 @@ function ready(error, world) {
     header.append(title);
     header.append(flag);
     contents.append(header);
-    
+    // $('.tooltip').empty();
+    // ////console.log('html success: ' + data);
+    // var contents = $('.tooltip');
+    // var header = $('<h1 class="country-name">');
+    // var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
+    // var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
+    // header.append(title);
+    // header.append(flag);
+    // contents.append(header);
+
     $('.tooltip').empty();
     var $contents = $('.tooltip');
 
@@ -464,9 +473,14 @@ function ready(error, world) {
   }
 
   htmlHoverSuccessGen = function(country, data) {
+    console.log(country);
+    var $hovertip_videos_container = $('<div>');
+    $hovertip_videos_container.attr('class', 'hovertip_videos_container');
 
-    var $hovertip_videos_container = $('<div>')
-    $hovertip_videos_container.attr('class', 'hovertip_videos_container')
+    var $header = $('<div>');
+    var $title = $('<h2 id="hovertip-country-name">' + country.name + '</h2>');
+    var $flag = $('<img>').attr('src', country.flag_url).attr('class', 'country-flag');
+    //$hovertip_videos_container.append($flag);
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
@@ -475,13 +489,15 @@ function ready(error, world) {
       vid_div.append('<a class="embed-video-hovertip">' + '<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a></li>');
       $hovertip_videos_container.append(vid_div);
     }
-
-    contents.prepend('<h2 class="country-name">' + country + '</h2>')
-     contents.append($hovertip_videos_container)
-
+    
+      $header.append($flag).append($title);
+      contents.append($header);
+      contents.append($hovertip_videos_container);
     return contents.html();
   }
 
+  // $header.append($title).append($flag);
+  //   $contents.append($header);
   //populate active countries with different color
 
   valid_map_ids.forEach(function (x) {
