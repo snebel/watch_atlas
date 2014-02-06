@@ -1,7 +1,8 @@
 // all of the countries in the database
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
-var width = 1200,
+
+var width = parseInt(d3.select('body').style('width')),
     height = 800,
     sens = 0.9,
     focused,
@@ -9,7 +10,7 @@ var width = 1200,
 
 var projection = d3.geo.orthographic()
     .translate([width / 2, height / 2])
-    .scale(310)
+    .scale(300)
     .precision(.1)
     .clipAngle(90)
 
@@ -22,14 +23,17 @@ var svg = d3.select('#map-canvas').append('svg')
     // .call(d3.behavior.zoom()
     // .on("zoom", redraw));
 
-
 var g = svg.append('g');
 
 
+
 // function redraw() {
-//   console.log('im redrawing')
 //     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 // }
+
+
+
+
 
 
 // the water
@@ -55,7 +59,7 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
-    console.log('tooltip exists');
+    // console.log('tooltip exists');
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -68,7 +72,7 @@ function countryHover(d) {
     dataType: 'json'
   })
     .success(function (data) {
-      console.log('hello');
+      // console.log('hello');
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
 
@@ -83,7 +87,7 @@ function countryHover(d) {
 
     })
     .fail(function(data){
-      console.log("bad bad bad!")
+      // console.log("bad bad bad!")
     });
 
   function makeHovertip(country, data) {
@@ -210,7 +214,7 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-        console.log('hovertip');
+        // console.log('hovertip');
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
@@ -262,7 +266,7 @@ function ready(error, world) {
 
 
   htmlSuccessGen = function(data) {
-    console.log(data);
+    // console.log(data);
     $('.tooltip').empty();
     var contents = $('.tooltip');
     var header = $('<h1 class="country-name">');
@@ -433,7 +437,7 @@ function ready(error, world) {
 
     var $hovertip_videos_container = $('<div>')
     $hovertip_videos_container.attr('class', 'hovertip_videos_container')
-    console.log($hovertip_videos_container)
+    // console.log($hovertip_videos_container)
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
@@ -511,7 +515,7 @@ function addListener ()  {
 
 function popUpVideo (height, button) {
 
-    console.log('self')
+    // console.log('self')
 
     embed_url = $(button).children('img').attr("data-id");
     var $close_embed_video = $('<div>').addClass('close-embed-video').text('close');
@@ -551,10 +555,22 @@ function popUpVideo (height, button) {
 }
 
 
+// d3.select(self.frameElement).style('height', height + 'px');
 
-d3.select(self.frameElement).style('height', height + 'px');
+d3.select(window).on('resize', resize);
 
+function resize() {
+ 
+    width = parseInt(d3.select('body').style('width'));
 
+    projection
+        .translate([width / 2, height / 2])
+        .scale(300);
 
+    svg.style('width', width + 'px').style('height', height + 'px');
+
+    g.selectAll('.country').attr('d', path);
+    g.selectAll('.globewater').attr('d', path);
+}
 
 
