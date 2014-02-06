@@ -162,7 +162,8 @@ function countryClick(d) {
         .transition().duration(700).style('opacity', '1');
 
         $('.tooltip').html(function () {
-        if (good) { return htmlSuccessGen(data); 
+        // if (good) { return htmlSuccessGen(data); //removed the return. i think this is fixing the duplication issue in the tooltip
+          if (good) { htmlSuccessGen(data); 
         } else { return htmlFailGen(); }
       })
 
@@ -311,7 +312,7 @@ function ready(error, world) {
       });
     }
     var country_data = data[data.length - 1];
-    console.log('country data' + country_data);
+    // console.log('country data' + country_data);
     var first = country_data[0];
     var second = country_data[1];
     var third = country_data[2];    
@@ -427,7 +428,9 @@ function ready(error, world) {
       reset();
     });
 
-    $('.tooltip').append($contents.html());
+    // $('.tooltip').append($contents.html());
+
+    return $contents.html();
   
   }
 
