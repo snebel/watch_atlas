@@ -1,7 +1,8 @@
 // all of the countries in the database
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
-var width = 1200,
+
+var width = parseInt(d3.select('body').style('width')),
     height = 800,
     sens = 0.9,
     focused,
@@ -9,7 +10,7 @@ var width = 1200,
 
 var projection = d3.geo.orthographic()
     .translate([width / 2, height / 2])
-    .scale(310)
+    .scale(300)
     .precision(.1)
     .clipAngle(90)
 
@@ -18,9 +19,22 @@ var path = d3.geo.path()
 
 var svg = d3.select('#map-canvas').append('svg')
     .attr('width', width)
-    .attr('height', height);
+    .attr('height', height)
+    // .call(d3.behavior.zoom()
+    // .on("zoom", redraw));
 
 var g = svg.append('g');
+
+
+
+// function redraw() {
+//     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+// }
+
+
+
+
+
 
 // the water
 
@@ -45,7 +59,7 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
-    console.log('tooltip exists');
+    // console.log('tooltip exists');
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -58,7 +72,7 @@ function countryHover(d) {
     dataType: 'json'
   })
     .success(function (data) {
-      console.log('hello');
+      // console.log('hello');
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
 
@@ -73,7 +87,7 @@ function countryHover(d) {
 
     })
     .fail(function(data){
-      console.log("bad bad bad!")
+      // console.log("bad bad bad!")
     });
 
   function makeHovertip(country, data) {
@@ -124,7 +138,7 @@ function countryClick(d) {
 
   function zoomIn() {
     d3.select('svg')
-      .style('opacity', '.5')
+      .style('opacity', '.7')
     if (active === d){ return reset();}
     g.selectAll('.active').classed('active', false);
     d3.select(self).classed('active', active = d);
@@ -137,24 +151,21 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-        //console.log('make Tooltip data: ' + data) 
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
         .style('position', 'relative')
         .style('z-index', '9999')
         .style('opacity', '0')
-      // .style('visibility', 'visible')
         .style('top', '-750px')
         .style('left', '0px')
         .transition().duration(700).style('opacity', '1');
 
         $('.tooltip').html(function () {
-        if (good) { return htmlSuccessGen(data); 
+        // if (good) { return htmlSuccessGen(data); //removed the return. i think this is fixing the duplication issue in the tooltip
+          if (good) { htmlSuccessGen(data); 
         } else { return htmlFailGen(); }
       })
-      //.transition().duration(700).style('opacity', '1')
-      // .style('display', 'block')
 
   }
 }
@@ -204,7 +215,7 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-        console.log('hovertip');
+        // console.log('hovertip');
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
@@ -256,55 +267,68 @@ function ready(error, world) {
 
 
   htmlSuccessGen = function(data) {
-    console.log(data);
+
     $('.tooltip').empty();
-    //console.log('html success: ' + data);
-    var contents = $('.tooltip');
-    var header = $('<h1 class="country-name">');
-    var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
-    var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
-    header.append(title);
-    header.append(flag);
-    contents.append(header);
-    
+    var $contents = $('.tooltip');
+
+    var $header = $('<h1 class="country-name">');
+    var $close_me_div = $('<div>').addClass('close-me').html('<img src="/cancel-new.png" />');
+    var $title = data[0].name;
+    var $flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
+
+    $header.append($title).append($flag);
+    $contents.append($header);
+    $contents.append($close_me_div)
+
     //data about overlapping countries
-    var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
-    var circle_one = $('<div>').attr('id', 'circle-1').css('float', 'right')
-    var circle_two = $('<div>').attr('id', 'circle-2').css('float', 'right')
-    var circle_three = $('<div>').attr('id', 'circle-3').css('float', 'right')
-    circles.append(circle_three).append(circle_two).append(circle_one);
-    contents.append(circles);
+    // var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
+    // var similar_container = $('div');
+
+    var $circles = $('<div>').css('color', 'white').attr('id', 'circles-holder').attr('class', 'clearfix');
+    var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
+    var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '18%').css('float', 'left');
+    var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '18%').css('float', 'left');
+    var $circle_three = $('<div>').attr('id', 'circle-3').css('width', '18%').css('float', 'left');
+    var $circle_four = $('<div>').attr('id', 'circle-4').css('width', '18%').css('float', 'left');
+
+    $contents.append($circles);
+    $circles.css('width', '100%');
+    $circles.append($circle_intro).append($circle_one).append($circle_two).append($circle_three).append($circle_four);
+    $contents.append($circles);
+    $circle_intro.html('<h3 class="circles-intro">one line here: </h3>');
+
 
 
     function makeCircle(id, percent, text, color){
       Circles.create({
         id:         id,
         percentage: percent,
-        radius:     30,
+        radius:     25,
         width:      6,
         number:     percent,
         text:       ' % '+text,
         colors:     ['#D3B6C6', '#4B253A'],
-        duration:   400
+        duration:   700
       });
     }
     var country_data = data[data.length - 1];
+    // console.log('country data' + country_data);
     var first = country_data[0];
     var second = country_data[1];
     var third = country_data[2];    
+    var fourth = country_data[3]; 
 
     makeCircle('circle-1', parseInt(first[1]/60*100), first[0], 'blue');
     makeCircle('circle-2', parseInt(second[1]/60*100), second[0], 'blue');
     makeCircle('circle-3', parseInt(third[1]/60*100), third[0], 'blue');
+    makeCircle('circle-4', parseInt(fourth[1]/60*100), fourth[0], 'blue');
 
     
 
     var vid_list = $('<ul>').addClass('box-videos');
-    contents.append(vid_list);
-    var div = $('<div>').addClass('close-me').html('<img src="/cancel.png" />');
+    $contents.append(vid_list);
+   
 
-
-    
 
     //individual flexsliders and their ul's
     var $flexslider_top_videos = $('<div>').addClass('flexslider');
@@ -334,13 +358,13 @@ function ready(error, world) {
     var $entertainment_div = $('<div>').attr('id', 'entertainment-videos')
     var $animals_div = $('<div>').attr('id', 'animals-videos')
 
-    contents.append(div); // the close me div
-    contents.append($top_videos_div);
-    contents.append($news_div);
-    contents.append($music_div);
-    contents.append($tech_div);
-    contents.append($entertainment_div);
-    contents.append($animals_div);
+    // $contents.prepend($close_me_div); // the close me div
+    $contents.append($top_videos_div);
+    $contents.append($news_div);
+    $contents.append($music_div);
+    $contents.append($tech_div);
+    $contents.append($entertainment_div);
+    $contents.append($animals_div);
 
     // appending individual flexsliders and their uls
     $top_videos_div.append($flexslider_top_videos);
@@ -404,14 +428,18 @@ function ready(error, world) {
       reset();
     });
 
-    $('.tooltip').append(contents.html());
+    // $('.tooltip').append($contents.html());
+
+    return $contents.html();
   
   }
 
 
   htmlFailGen = function () {
-    var contents = 'Sorry, there is no YouTube data <br>for this country';
-    contents += '<div class="close-me">close</div>'
+    var contents = 'Sorry, there is no YouTube data for this country';
+    contents += '<div class="close-me"><img src="/cancel-new.png" /></div>'
+
+    $('.tooltip').attr('id', 'sorry')
 
    $('body').on('click', '.close-me', function () {
         $('.tooltip').animate({'opacity':'0'}, 400)
@@ -428,7 +456,7 @@ function ready(error, world) {
 
     var $hovertip_videos_container = $('<div>')
     $hovertip_videos_container.attr('class', 'hovertip_videos_container')
-    console.log($hovertip_videos_container)
+    // console.log($hovertip_videos_container)
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
@@ -506,11 +534,11 @@ function addListener ()  {
 
 function popUpVideo (height, button) {
 
-    console.log('self')
+    // console.log('self')
 
     embed_url = $(button).children('img').attr("data-id");
     var $close_embed_video = $('<div>').addClass('close-embed-video').text('close');
-    var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel.png" />');
+    var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel-new.png" />');
 
     $embed_window = $('<div>');
     $embed_window.attr('class', 'embed_window');
@@ -546,11 +574,22 @@ function popUpVideo (height, button) {
 }
 
 
+// d3.select(self.frameElement).style('height', height + 'px');
 
-d3.select(self.frameElement).style('height', height + 'px');
+d3.select(window).on('resize', resize);
 
+function resize() {
+ 
+    width = parseInt(d3.select('body').style('width'));
 
+    projection
+        .translate([width / 2, height / 2])
+        .scale(300);
 
+    svg.style('width', width + 'px').style('height', height + 'px');
 
+    g.selectAll('.country').attr('d', path);
+    g.selectAll('.globewater').attr('d', path);
+}
 
 
