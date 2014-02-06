@@ -8,7 +8,11 @@ class Country < ActiveRecord::Base
     # [  [russia, algeria], [kenya, algeria] ]
     info.flatten!
 
-    country_counts = Hash.new(0) # { }
+
+    country_counts = Hash.new(0)
+    (Country.all - [self]).each do |country|
+      country_counts[country.name] = 0
+    end
 
     info.each do |country_name|
       country_counts[country_name] += 1
@@ -18,7 +22,7 @@ class Country < ActiveRecord::Base
 
   def num_unique_vids
     num = 0
-    self.videos.map do |vid| 
+    self.videos.map do |vid|
       num += 1 if vid.country_videos.size == 1
     end
     num
