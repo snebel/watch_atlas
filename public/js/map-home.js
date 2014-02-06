@@ -525,28 +525,28 @@ function ready(error, world) {
       .style('cursor', 'pointer')
   });
 
-  // d3.select('#right-rotator')
-  //   .on('click', function () {
-  //     var rotate = projection.rotate();
-  //     var rotation_amount = 40;
-  //     var x_point = d3.event.x;
-  //     var y_point = d3.event.y;
-  //     //console.log(rotate);
-  //     projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
-  //     g.selectAll('path.country').attr('d', path);
-  //   });
+  d3.select('#right-rotator')
+    .on('click', function () {
+      var rotate = projection.rotate();
+      var rotation_amount = 40;
+      var x_point = d3.event.x;
+      var y_point = d3.event.y;
+      //console.log(rotate);
+      projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
+      g.selectAll('path.country').attr('d', path);
+    });
 
 
-  // d3.select('#left-rotator')
-  //   .on('click', function () {
-  //     var rotate = projection.rotate();
-  //     var rotation_amount = 40;
-  //     var x_point = d3.event.x;
-  //     var y_point = d3.event.y;
-  //     //console.log(rotate);
-  //     projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
-  //     g.selectAll('path.country').attr('d', path);
-  //   });
+  d3.select('#left-rotator')
+    .on('click', function () {
+      var rotate = projection.rotate();
+      var rotation_amount = 40;
+      var x_point = d3.event.x;
+      var y_point = d3.event.y;
+      //console.log(rotate);
+      projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
+      g.selectAll('path.country').attr('d', path);
+    });
 
 }
 
@@ -620,9 +620,18 @@ function popUpVideo (height, button) {
 
 d3.select(window).on('resize', resize);
 
+
+
 function resize() {
  
     width = parseInt(d3.select('body').style('width'));
+    console.log(width)
+    (width - 900) / 2    
+
+    var left_rotator = $('#left-rotator');
+    left_rotator.style.position = 'absolute';
+    var left_rotator_location = parseInt(width / 2 - 310);
+    left_rotator.style.left = left_rotator_location + 'px';
 
     projection
         .translate([width / 2, height / 2])
