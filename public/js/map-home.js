@@ -79,7 +79,7 @@ function countryHover(d) {
       dataType: 'json'
     })
       .success(function (data) {
-        var top_three_vids = data[1];
+        var top_three_vids = (([data[1], data[2], data[3]]) );
         var country_name = data[0];
         makeHovertip(country_name, top_three_vids);
         addListener();
@@ -201,7 +201,6 @@ function ready(error, world) {
       }
     
       var isHoverTipHovered = $('.hovertip').is(":hover");
-      console.log(isHoverTipHovered);
 
       if ( !isHoverTipHovered ) { //if we are hovering over the hovertip
         $('.hovertip').remove();
