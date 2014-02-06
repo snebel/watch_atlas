@@ -32,9 +32,23 @@ var g = svg.append('g');
 // }
 
 
+function antiGrav(ele) { 
+  var distance = 8;
+  $(ele).animate({
+    'top': "+=" + distance + "px"
+  },1000,"swing",function(){
+    $(ele).animate({        
+            'top': "-=" + distance + "px"
+    },900,"swing",function(){
+      antiGrav(ele);
+        });
+  });
+}
 
-
-
+// $('.moon-man').on('click', function(){
+//     console.log("you clicked me")
+//     antiGrav('.moon-man'); 
+// });
 
 // the water
 
@@ -59,14 +73,6 @@ function countryHover(d) {
 
   if ($tooltip.length != 0) {
     var make_hover_tip = false
-// <<<<<<< HEAD
-//<<<<<<< HEAD
-    //console.log('tooltip exists');
-//=======
-    // console.log('tooltip exists');
-// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
   }
 
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
@@ -79,14 +85,7 @@ function countryHover(d) {
     dataType: 'json'
   })
     .success(function (data) {
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-      //console.log('hello');
-// =======
-      // console.log('hello');
-// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
+
       var top_three_vids = (([data[1], data[2], data[3]]) );
       var country_name = data[0].name;
 
@@ -101,14 +100,6 @@ function countryHover(d) {
 
     })
     .fail(function(data){
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-      //console.log("bad bad bad!")
-// =======
-      // console.log("bad bad bad!")
-// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
     });
 
   function makeHovertip(country, data) {
@@ -173,13 +164,6 @@ function countryClick(d) {
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
         $('.tooltip').remove(); //remove the last tooltip from the dom
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-        ////console.log('make Tooltip data: ' + data) 
-// =======
-// >>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
         d3.select('#map-canvas')
         .append('div')
         .attr('class', 'tooltip')
@@ -244,12 +228,7 @@ function ready(error, world) {
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
       if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-// <<<<<<< HEAD
-
-        //console.log('hovertip');
-        // console.log('hovertip');
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
+        //
         // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
 
       }else{
@@ -334,12 +313,9 @@ function ready(error, world) {
     $contents.append($header);
     $contents.append($close_me_div)
 
-// <<<<<<< HEAD
     //data about overlapping countries
     // var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
     // var similar_container = $('div');
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
     //make first set of circles
     var $circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('width', '100%');
     var $circle_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
@@ -523,14 +499,6 @@ function ready(error, world) {
 
     var $hovertip_videos_container = $('<div>')
     $hovertip_videos_container.attr('class', 'hovertip_videos_container')
-// <<<<<<< HEAD
-//<<<<<<< HEAD
-    //console.log($hovertip_videos_container)
-//=======
-    // console.log($hovertip_videos_container)
-//>>>>>>> 29516d34f544ac5758ea41cc28e848382840e897
-// =======
-// >>>>>>> 9fb6777df5979a2d49cb13f50d0a11c5705c4393
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
@@ -606,6 +574,7 @@ function addListener ()  {
 
 
 
+
 function popUpVideo (height, button) {
 
     embed_url = $(button).children('img').attr("data-id");
@@ -662,4 +631,7 @@ function resize() {
     g.selectAll('.globewater').attr('d', path);
 }
 
+$(function () {
+    antiGrav('.moon-man'); 
+});
 
