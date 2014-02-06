@@ -98,6 +98,12 @@ a:hover {
   margin-top: 0px;
 }
 
+.moon-man {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+}
+
 #left-rotator {
   float: left;
   width: 30px;

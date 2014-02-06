@@ -32,9 +32,23 @@ var g = svg.append('g');
 // }
 
 
+function antiGrav(ele) { 
+  var distance = 8;
+  $(ele).animate({
+    'top': "+=" + distance + "px"
+  },1000,"swing",function(){
+    $(ele).animate({        
+            'top': "-=" + distance + "px"
+    },900,"swing",function(){
+      antiGrav(ele);
+        });
+  });
+}
 
-
-
+// $('.moon-man').on('click', function(){
+//     console.log("you clicked me")
+//     antiGrav('.moon-man'); 
+// });
 
 // the water
 
@@ -542,6 +556,7 @@ function addListener ()  {
 
 
 
+
 function popUpVideo (height, button) {
 
     embed_url = $(button).children('img').attr("data-id");
@@ -598,4 +613,7 @@ function resize() {
     g.selectAll('.globewater').attr('d', path);
 }
 
+$(function () {
+    antiGrav('.moon-man'); 
+});
 
