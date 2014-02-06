@@ -189,7 +189,7 @@ function ready(error, world) {
         return 'id_' + d.id
     })
     .style('fill', '#95a5a6')
-    // .on('mouseover', countryHover)
+     .on('mouseover', countryHover)
       
 
     .on("mouseover", countryHover)
@@ -383,7 +383,6 @@ function ready(error, world) {
         radius:     radius,
         width:      9,
         number:     percent,
-        // text:       '% ' +text,
         text:       '% ' + text,
         colors:     [color1, color2], //
         duration:   900
