@@ -429,7 +429,7 @@ function ready(error, world) {
 
     var $header = $('<div>');
     var $title = $('<h2 id="hovertip-country-name">' + country.name + '</h2>');
-    var $flag = $('<img>').attr('src', country.flag_url).attr('class', 'country-flag');
+    var $flag = $('<img>').attr('src', country.flag_url).attr('class', 'hovertip-country-flag');
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {

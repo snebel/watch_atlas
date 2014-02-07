@@ -257,12 +257,20 @@ ul.box-videos {
   line-height: 13px;
 }
 
+.hovertip-country-flag {
+  margin-bottom: -5px;
+  height: 36px;
+  margin-left: 20px;
+  margin-top: -5px;
+}
+
 
 #hovertip-country-name {
   display: inline;
   color: #fff;
+  font-size: 30px;
+  margin-left: 10px;
 }
-
 
 
 .feature.active {
