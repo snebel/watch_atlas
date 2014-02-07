@@ -19,8 +19,8 @@ var path = d3.geo.path().projection(projection);
 var arrows_div_left_margin = parseInt( (width - 800) / 2 );
 $('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
-var moonman_left_margin = parseInt( (width - 900) / 2 );
-$('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+// var moonman_left_margin = parseInt( (width - 900) / 2 );
+// $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
 
 var svg = d3.select('#map-canvas').append('svg')
   .attr('width', width)
@@ -36,6 +36,7 @@ g.append("path")
   .style('fill', '#BEE9F5')
   .style('cursor', 'move')
   .attr("d", path);
+
 
 
 function getAllCountryTopVids() {
@@ -55,6 +56,10 @@ function getAllCountryTopVids() {
 queue()
   .defer(d3.json, '/map.json')
   .await(ready);
+
+// var moonman_left_margin = parseInt( (width - 900) / 2 );
+// $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '40px');
+
 
 
 // function redraw() {
@@ -497,7 +502,7 @@ function ready(error, world) {
 function addListener ()  {
   $('.thumbnail').on("click", function() {
 
-    var height = '-1396px';
+    var height = '-1420px';
     var self = this;
     popUpVideo(height, self);
   });
@@ -551,16 +556,38 @@ function popUpVideo (height, button) {
 }
 
 function resize() {
+
   width = parseInt(d3.select('body').style('width'));  
   var arrows_div_left_margin = parseInt( (width - 800) / 2 );
   $('#arrows-div').css('left', arrows_div_left_margin + 'px');
-  var moonman_left_margin = parseInt( (width - 900) / 2 );
-  $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+  // var moonman_left_margin = parseInt( (width - 900) / 2 );
+  // $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
 
   projection.translate([width / 2, height / 2]).scale(300);
   svg.style('width', width + 'px').style('height', height + 'px');
   g.selectAll('.country').attr('d', path);
   g.selectAll('.globewater').attr('d', path);
+
+ 
+    width = parseInt(d3.select('body').style('width'));  
+
+    var arrows_div_left_margin = parseInt( (width - 800) / 2 );
+
+    $('#arrows-div').css('left', arrows_div_left_margin + 'px');
+
+    // var moonman_left_margin = parseInt( (width - 900) / 2 );
+
+    // $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+
+    projection
+        .translate([width / 2, height / 2])
+        .scale(300);
+
+    svg.style('width', width + 'px').style('height', height + 'px');
+
+    g.selectAll('.country').attr('d', path);
+    g.selectAll('.globewater').attr('d', path);
+
 }
 
 $(function () {

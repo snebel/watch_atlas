@@ -475,16 +475,20 @@ span.circles-text {
 
 #white_thingy {
   position: absolute;
-  left: -40px;
+  left: 0px;
   top: 20px;
-  background-color: #D92534;
-  height: 50px;
-  width: 400px;
-  transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
-  -webkit-transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
-  -moz-transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
-  -o-transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
-  -ms-transform: rotate(0deg) scale(1) skew(-40deg) translate(-6px);
+  height: 60px;
+  width: 300px;
+  background:url('/assets/tag.png');
+  color: #fff;
+  font-size: 42px;
+  font-weight: bold;
+  text-align: right;
+}
+
+#white-thingy-inside {
+  padding-right: 80px;
+  padding-top: 15px;
 }
 
 #explanatory_text_container {
@@ -514,7 +518,8 @@ span.circles-text {
   width: 65px;
   margin:0 auto;
   position:absolute;
-  top:325px;
+  top: 20px;
+  left:25px;
 }
 
 #moon-man img {
