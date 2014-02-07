@@ -28,8 +28,8 @@ var g = svg.append('g');
 var arrows_div_left_margin = parseInt( (width - 800) / 2 );
 $('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
-var moonman_left_margin = parseInt( (width - 900) / 2 );
-$('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+// var moonman_left_margin = parseInt( (width - 900) / 2 );
+// $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '40px');
 
 
 // function redraw() {
@@ -655,9 +655,9 @@ function resize() {
 
     $('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
-    var moonman_left_margin = parseInt( (width - 900) / 2 );
+    // var moonman_left_margin = parseInt( (width - 900) / 2 );
 
-    $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+    // $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
 
     projection
         .translate([width / 2, height / 2])
