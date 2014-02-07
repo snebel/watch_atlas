@@ -228,24 +228,9 @@ function ready(error, world) {
 
     g.selectAll('path.globewater')
       .call(d3.behavior.drag()
-
-      // .origin(function () {
-      //   var r = projection.rotate();
-      //   return {
-      //     x: r[0] / sens,
-      //     y: -r[1] / sens
-      //   };
-      // })
       .on('drag', function () {
         var rotation_amount = .2;
-        console.log(d3.event);
-        console.log(d3.event.dx);
-        // if (d3.event.dx < 0) {var x = -1;}
-        // if (d3.event.dx > 0) {var x = 1;}
-        // else {var x = 0;}
-        // if (d3.event.dy < 0) {var y = -1;}
-        // if (d3.event.dy > 0) {var y = 1;}
-        // else {var y = 0;}
+
         var rotate = projection.rotate();
         console.log(rotate);
 
@@ -268,9 +253,8 @@ function ready(error, world) {
     header.append(flag);
     contents.append(header);
     
-    //console.log(data);
     $('.tooltip').empty();
-    ////console.log('html success: ' + data);
+
     var contents = $('.tooltip');
     var header = $('<h1 class="country-name">');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
@@ -278,16 +262,6 @@ function ready(error, world) {
     header.append(title);
     header.append(flag);
     contents.append(header);
-    // $('.tooltip').empty();
-    // ////console.log('html success: ' + data);
-    // var contents = $('.tooltip');
-    // var header = $('<h1 class="country-name">');
-    // var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
-    // var flag = $('<img>').attr('src', data[0].flag_url).attr('class', 'country-flag');
-    // header.append(title);
-    // header.append(flag);
-    // contents.append(header);
-
 
     $('.tooltip').empty();
     var $contents = $('.tooltip');
@@ -301,10 +275,6 @@ function ready(error, world) {
     $contents.append($header);
     $contents.append($close_me_div)
 
-    //data about overlapping countries
-    // var circles = $('<div>').append($('<h2>Similar Countries</h2>').css('color', 'white'));
-    // var similar_container = $('div');
-    //make first set of circles
     var $circles = $('<div>').attr('id', 'circles-holder').attr('class', 'clearfix').css('color', 'white').css('width', '100%');
     var $circle_one = $('<div>').attr('id', 'circle-1').css('width', '80px').css('float', 'left').addClass('circle-thing');
     var $circle_two = $('<div>').attr('id', 'circle-2').css('width', '80px').css('float', 'left').addClass('circle-thing');
@@ -320,7 +290,7 @@ function ready(error, world) {
     $contents.append($circles);
     $circles.append($circle_one).append($circle_two).append($circle_three).append($circle_four).append($circle_five).append($circle_six).append($circle_seven).append($circle_eight).append($circle_nine).append($circle_ten);
     $contents.append($circles);
-    // $circle_intro.html('<h3 class="circles-intro">Similar Countries: </h3>');
+
 
     var country_data = data[data.length - 1];
     var first = country_data[0];
@@ -361,16 +331,12 @@ function ready(error, world) {
 
     //make unique circle row
     var $unique_circles = $('<div>').attr('id', 'circles-holder-unique').attr('class', 'clearfix');
-
-    // var $unique_intro = $('<div>').attr('id', 'circle-intro').css('width', '28%').css('float', 'left');
     var $circle_unique = $('<div>').attr('id', 'unique');
-
     $contents.append($unique_circles);
-    // $unique_circles.css('width', '100%');
+
     $unique_circles.append($circle_unique)
     $contents.append($unique_circles);
-    // $unique_intro.html('<h3 class="circles-intro">Unique Videos:</h3>');
-    //console.log(data[0].name);
+
     var unique = country_data[country_data.length - 1];
     makeCircle('unique', parseInt(unique[1]/60*100), 30, "of videos are unique", '#F4CB6B', '#F76504');
     //end unique circle row
@@ -383,7 +349,6 @@ function ready(error, world) {
         radius:     radius,
         width:      9,
         number:     percent,
-        // text:       '% ' +text,
         text:       '% ' + text,
         colors:     [color1, color2], //
         duration:   900
@@ -594,15 +559,13 @@ function addListener ()  {
     var self = this;
 
     var height = '-750px';
-
+    popUpVideo(height, self);
+  });
 
   $('.zoom').on("click", function() {
     console.log('zooming');
-    zoomIn();
-  })
-     popUpVideo(height, self);
-
-})
+    generalZoom();
+  });
 
 
 }
@@ -681,4 +644,5 @@ function resize() {
 
 $(function () {
     antiGrav('#moon-man'); 
+    addListener();
 });
