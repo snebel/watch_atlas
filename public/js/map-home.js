@@ -2,7 +2,6 @@
 var countries_object; 
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
-
 var width = parseInt(d3.select('body').style('width')),
     height = 800,
     sens = 0.9,
@@ -10,27 +9,34 @@ var width = parseInt(d3.select('body').style('width')),
     active;
 
 var projection = d3.geo.orthographic()
-    .translate([width / 2, height / 2])
-    .scale(300)
-    .precision(.1)
-    .clipAngle(90)
+  .translate([width / 2, height / 2])
+  .scale(300)
+  .precision(.1)
+  .clipAngle(90)
 
-var path = d3.geo.path()
-    .projection(projection);
-
-var svg = d3.select('#map-canvas').append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    // .call(d3.behavior.zoom()
-    // .on("zoom", redraw));
-
-var g = svg.append('g');
+var path = d3.geo.path().projection(projection);
 
 var arrows_div_left_margin = parseInt( (width - 800) / 2 );
 $('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
 var moonman_left_margin = parseInt( (width - 900) / 2 );
 $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+
+var svg = d3.select('#map-canvas').append('svg')
+  .attr('width', width)
+  .attr('height', height)
+    // .call(d3.behavior.zoom()
+    // .on("zoom", redraw));
+
+var g = svg.append('g');
+
+g.append("path")
+  .datum({ type: "Sphere" })
+  .attr("class", "globewater")
+  .style('fill', '#BEE9F5')
+  .style('cursor', 'move')
+  .attr("d", path);
+
 
 function getAllCountryTopVids() {
 
@@ -46,10 +52,14 @@ function getAllCountryTopVids() {
     });
 }
 
+queue()
+  .defer(d3.json, '/map.json')
+  .await(ready);
+
+
 // function redraw() {
 //     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 // }
-
 
 function antiGrav(ele) { 
   var distance = 12;
@@ -64,21 +74,6 @@ function antiGrav(ele) {
   });
 }
 
-// $('.moon-man').on('click', function(){
-//     console.log("you clicked me")
-//     antiGrav('.moon-man'); 
-// });
-
-// the water
-
-g.append("path")
-    .datum({
-        type: "Sphere"
-    })
-    .attr("class", "globewater")
-    .style('fill', '#BEE9F5')
-    .style('cursor', 'move')
-    .attr("d", path);
 
 function countryHover(d) {
   //console.log(d);
@@ -145,27 +140,25 @@ function countryClick(d) {
   }
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
-        $('.tooltip').remove(); //remove the last tooltip from the dom
+    $('.tooltip').remove(); //remove the last tooltip from the dom
 
-        d3.select('#map-canvas')
-        .append('div')
-        .attr('class', 'tooltip')
-        .style('position', 'relative')
-        .style('z-index', '9999')
-        .style('opacity', '0')
-        .style('top', '-750px')
-        .style('left', '0px')
-        .transition().duration(700).style('opacity', '1');
+    d3.select('#map-canvas')
+    .append('div')
+    .attr('class', 'tooltip')
+    .style('position', 'relative')
+    .style('z-index', '9999')
+    .style('opacity', '0')
+    .style('top', '-750px')
+    .style('left', '0px')
+    .transition().duration(700).style('opacity', '1');
 
-        $('.tooltip').html(function () {
-        // if (good) { return htmlSuccessGen(data); //removed the return. i think this is fixing the duplication issue in the tooltip
-          if (good) { htmlSuccessGen(data); 
-        } else { return htmlFailGen(); }
-      })
+    $('.tooltip').html(function () {
+      if (good) { htmlSuccessGen(data);}
+      else { return htmlFailGen(); }
+    })
 
   }
 }
-
 
 function reset() {
   d3.select('svg').style('opacity', '1');
@@ -173,13 +166,7 @@ function reset() {
   g.transition().duration(750).attr('transform', '');
 }
 
-
-queue()
-  .defer(d3.json, '/map.json')
-  .await(ready);
-
 function ready(error, world) {
-
   var countries = topojson.feature(world, world.objects.countries).features
 
   g.selectAll('.country')
@@ -192,13 +179,11 @@ function ready(error, world) {
         return 'id_' + d.id
     })
     .style('fill', '#95a5a6')
-    // .on('mouseover', countryHover)
       
-
     .on("mouseover", countryHover)
 
     .on('mouseout', function(d){
-     if (valid_map_ids.indexOf(d.id) != -1) {
+      if (valid_map_ids.indexOf(d.id) != -1) {
         d3.select('path#id_' + d.id).style('fill', '#16a085')
       } 
       else {
@@ -207,25 +192,11 @@ function ready(error, world) {
     
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
-      if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-
-        // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
-      }else{
-         //if you go inside hovertip, it will stay orange. if you don't it will be green. 
-        // d3.select('path#id_' + d.id).style('fill', '#16a085')
-          $('.hovertip').remove();
+      if ( !isHoverTipHovered ) { //if we are hovering over the hovertip
+        $('.hovertip').remove();          
       }
 
     })
-      
-
-        // tooltip
-        //   .classed("hidden", false)
-        //   .attr("style", "left:"+(mouse[0]+25)+"px;top:"+mouse[1]+"px")
-        //   .html(d.name)
-      // .on("mouseout",  function(d) {
-      //   tooltip.classed("hidden", true)
-      // })
 
     .on('click', countryClick);
 
@@ -293,7 +264,6 @@ function ready(error, world) {
     $contents.append($circles);
     $circles.append($circle_one).append($circle_two).append($circle_three).append($circle_four).append($circle_five).append($circle_six).append($circle_seven).append($circle_eight).append($circle_nine).append($circle_ten);
     $contents.append($circles);
-
 
     var country_data = data[data.length - 1];
     var first = country_data[0];
@@ -472,8 +442,10 @@ function ready(error, world) {
     $hovertip_videos_container.attr('class', 'hovertip_videos_container');
 
     var $header = $('<div>');
+
     var $title = $('<h2 id="hovertip-country-name">' + data[0] + '</h2>');
-    var $flag = $('<img>').attr('src', data[1]).attr('class', 'country-flag');
+    var $flag = $('<img>').attr('src', data[1]).attr('class', 'hovertip-country-flag');
+
 
     var contents = $('<div>');
     for (var i=2; i < data.length; i++) {
@@ -590,7 +562,6 @@ function resize() {
   g.selectAll('.country').attr('d', path);
   g.selectAll('.globewater').attr('d', path);
 }
-
 
 $(function () {
 

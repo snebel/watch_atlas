@@ -257,12 +257,20 @@ ul.box-videos {
   line-height: 13px;
 }
 
+.hovertip-country-flag {
+  margin-bottom: -5px;
+  height: 36px;
+  margin-left: 20px;
+  margin-top: -5px;
+}
+
 
 #hovertip-country-name {
   display: inline;
   color: #fff;
+  font-size: 30px;
+  margin-left: 10px;
 }
-
 
 
 .feature.active {
@@ -316,7 +324,7 @@ a.flex-prev {
   background: #000; 
   padding: 20px;
   width: 80%;
-  height: 600px;
+  height: 630px;
   overflow: auto;
   margin: 0 auto;
   box-shadow: 0 0 5px #888;
