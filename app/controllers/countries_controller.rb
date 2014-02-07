@@ -2,6 +2,24 @@ class CountriesController < ApplicationController
 
   def index
     @countries = Country.all
+    h = {}
+    @countries.each do |country|
+      vids = country.videos
+      h[country.map_id] = [
+        country.name,
+        country.flag_url,
+        [vids[0].thumbnail_url, vids[0].embed_url],
+        [vids[1].thumbnail_url, vids[1].embed_url],
+        [vids[2].thumbnail_url, vids[2].embed_url]
+      ]
+    end
+
+    respond_to do |format|
+      format.html
+      format.json do 
+        render json: h.to_json
+      end
+    end
   end
 
   def create

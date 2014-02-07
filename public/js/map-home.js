@@ -1,4 +1,5 @@
 // all of the countries in the database
+var countries_object; 
 var valid_map_ids = [12, 887, 40, 36, 32, 48, 56, 76, 124, 152, 170, 203, 208, 818, 246, 250, 276, 288, 300, 344, 348, 356, 360, 372, 376, 380, 392, 400, 404, 410, 414, 458, 484, 504, 528, 578, 512, 604, 608, 616, 620, 634, 642, 643, 682, 686, 702, 703, 710, 724, 752, 756, 158, 788, 792, 800, 804, 784, 826, 840];
 
 
@@ -31,6 +32,19 @@ $('#arrows-div').css('left', arrows_div_left_margin + 'px');
 var moonman_left_margin = parseInt( (width - 900) / 2 );
 $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
 
+function getAllCountryTopVids() {
+
+    $.ajax({
+      method: 'get',
+      url: '/countries',
+      dataType: 'json',
+      success: function (data) {
+        console.log(data);
+        console.log('ajax working');
+        countries_object = data;
+      }
+    });
+}
 
 // function redraw() {
 //     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -67,27 +81,13 @@ g.append("path")
     .attr("d", path);
 
 function countryHover(d) {
+  //console.log(d);
   d3.select('path#id_' + d.id).style('fill', '#d35400');
 
   $tooltip = $('.tooltip');
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
 
-  if (valid_map_ids.indexOf(d.id) != -1 && $tooltip.length == 0) {
-    $.ajax({
-      method: 'get',
-      url: '/countries/maps/' + d.id,
-      dataType: 'json'
-    })
-      .success(function (data) {
-        var top_three_vids = (([data[1], data[2], data[3]]) );
-        var country_name = data[0];
-        makeHovertip(country_name, top_three_vids);
-        addListener();
-      })
-  }
-
-  function makeHovertip(country, data) {
-    $('.hovertip').remove();
+  $('.hovertip').remove();
 
     tooltip = d3.select('#map-canvas')
     .append('div')
@@ -96,11 +96,14 @@ function countryHover(d) {
     .style('z-index', '9999')
     .style('opacity', '0')
     .html(function () {
-      return htmlHoverSuccessGen(country, data);
+      console.log(d);
+      return htmlHoverSuccessGen(d);
     }).style('opacity', '1')
      .transition().duration(3).style('opacity', '1')
-  }  
-}
+
+     addListener();
+}   
+
 
 function countryClick(d) {
   var self = this;
@@ -459,21 +462,29 @@ function ready(error, world) {
     return contents;
   }
 
-  htmlHoverSuccessGen = function(country, data) {
-    console.log(country);
+  htmlHoverSuccessGen = function(d) {
+    // console.log(country);
+    console.log(d);
+    var map_id = d.id;
+    var data = countries_object[map_id];
+    console.log(data)
     var $hovertip_videos_container = $('<div>');
     $hovertip_videos_container.attr('class', 'hovertip_videos_container');
 
     var $header = $('<div>');
-    var $title = $('<h2 id="hovertip-country-name">' + country.name + '</h2>');
-    var $flag = $('<img>').attr('src', country.flag_url).attr('class', 'country-flag');
+    var $title = $('<h2 id="hovertip-country-name">' + data[0] + '</h2>');
+    var $flag = $('<img>').attr('src', data[1]).attr('class', 'country-flag');
 
     var contents = $('<div>');
-    for (var i=0; i < data.length; i++) {
+    for (var i=2; i < data.length; i++) {
       var vid_div = $('<div>');
       vid_div.attr('class', 'hovertip-div')
-      vid_div.append('<a class="embed-video-hovertip">' + '<img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a></li>');
+      vid_div.append('<a class="embed-video-hovertip">' + '<img data-id="' + data[i][1] + '" src="' + data[i][0] + '"/></a></li>');
       $hovertip_videos_container.append(vid_div);
+
+      console.log(data[i][0])
+      console.log(data[i][1])
+
     }
     
     $header.append($flag).append($title);
@@ -513,12 +524,14 @@ function ready(error, world) {
 
 function addListener ()  {
   $('.thumbnail').on("click", function() {
+
     var height = '-1396px';
     var self = this;
     popUpVideo(height, self);
   });
 
   $('.embed-video-hovertip').on("click", function() {
+    $('.tooltip').remove();
     var self = this;
     var height = '-750px';
     popUpVideo(height, self);
@@ -580,6 +593,10 @@ function resize() {
 
 
 $(function () {
+
+    getAllCountryTopVids();
+    var countries_object = "country";
     antiGrav('#moon-man'); 
     addListener();
+     
 });
