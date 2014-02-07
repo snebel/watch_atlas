@@ -528,62 +528,55 @@ function addListener ()  {
     console.log('zooming');
     generalZoom();
   });
+
+  d3.select(window).on('resize', resize);
 }
 
 
 function popUpVideo (height, button) {
+  embed_url = $(button).children('img').attr("data-id");
+  var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel-new.png" />');
+  $embed_window = $('<div>');
+  $embed_window.attr('class', 'embed_window');
+  $embed_window.css('position', 'relative');
+  $embed_window.css('top', height);
+  $embed_window.css('left', '0px');
 
-    embed_url = $(button).children('img').attr("data-id");
-    var $div = $('<div>').addClass('close-me-embed-video').html('<img src="/cancel-new.png" />');
+  $embed_window.css('z-index', '99999');
+  $embed_window.css('display', 'block')
+  $embed_window.css('background', 'black')
 
-    $embed_window = $('<div>');
-    $embed_window.attr('class', 'embed_window');
-    $embed_window.css('position', 'relative');
-    $embed_window.css('top', height);
-    $embed_window.css('left', '0px');
+  $video_container = $('<div>')
+  $video_container.attr('class', 'video-container')
 
-    $embed_window.css('z-index', '99999');
-    $embed_window.css('display', 'block')
-    $embed_window.css('background', 'black')
+  $video_iframe = $('<iframe>');
+  $video_iframe.attr('src', embed_url);
+  $video_iframe.attr('class', 'click_page_embed_url');
 
-    $video_container = $('<div>')
-    $video_container.attr('class', 'video-container')
+  $embed_window.append($video_container)
+  $video_container.append($video_iframe)
+  $embed_window.append($div)
 
-    $video_iframe = $('<iframe>');
-    $video_iframe.attr('src', embed_url);
-    $video_iframe.attr('class', 'click_page_embed_url');
+  $('#map-canvas').append($embed_window)
 
-    $embed_window.append($video_container)
-    $video_container.append($video_iframe)
-    $embed_window.append($div)
-
-    $('#map-canvas').append($embed_window)
-
-    $('body').on('click', '.close-me-embed-video', function () {
-      $embed_window.fadeOut() 
-        $embed_window.remove();
-    });
-
+  $('body').on('click', '.close-me-embed-video', function () {
+    $embed_window.fadeOut();
+    $embed_window.remove();
+  });
 }
-
-
-d3.select(window).on('resize', resize);
 
 function resize() {
-    width = parseInt(d3.select('body').style('width'));  
-    var arrows_div_left_margin = parseInt( (width - 800) / 2 );
-    $('#arrows-div').css('left', arrows_div_left_margin + 'px');
-    var moonman_left_margin = parseInt( (width - 900) / 2 );
-    $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+  width = parseInt(d3.select('body').style('width'));  
+  var arrows_div_left_margin = parseInt( (width - 800) / 2 );
+  $('#arrows-div').css('left', arrows_div_left_margin + 'px');
+  var moonman_left_margin = parseInt( (width - 900) / 2 );
+  $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
 
-    projection.translate([width / 2, height / 2]).scale(300);
-    svg.style('width', width + 'px').style('height', height + 'px');
-    g.selectAll('.country').attr('d', path);
-    g.selectAll('.globewater').attr('d', path);
+  projection.translate([width / 2, height / 2]).scale(300);
+  svg.style('width', width + 'px').style('height', height + 'px');
+  g.selectAll('.country').attr('d', path);
+  g.selectAll('.globewater').attr('d', path);
 }
-
-
-
 
 
 $(function () {
