@@ -130,23 +130,22 @@ function countryClick(d) {
   }
 
   function makeTooltip(data, good) { //data => [country, vid1, vid2,...] 
-        $('.tooltip').remove(); //remove the last tooltip from the dom
+    $('.tooltip').remove(); //remove the last tooltip from the dom
 
-        d3.select('#map-canvas')
-        .append('div')
-        .attr('class', 'tooltip')
-        .style('position', 'relative')
-        .style('z-index', '9999')
-        .style('opacity', '0')
-        .style('top', '-750px')
-        .style('left', '0px')
-        .transition().duration(700).style('opacity', '1');
+    d3.select('#map-canvas')
+    .append('div')
+    .attr('class', 'tooltip')
+    .style('position', 'relative')
+    .style('z-index', '9999')
+    .style('opacity', '0')
+    .style('top', '-750px')
+    .style('left', '0px')
+    .transition().duration(700).style('opacity', '1');
 
-        $('.tooltip').html(function () {
-        // if (good) { return htmlSuccessGen(data); //removed the return. i think this is fixing the duplication issue in the tooltip
-          if (good) { htmlSuccessGen(data); 
-        } else { return htmlFailGen(); }
-      })
+    $('.tooltip').html(function () {
+      if (good) { htmlSuccessGen(data);}
+      else { return htmlFailGen(); }
+    })
 
   }
 }
@@ -183,25 +182,11 @@ function ready(error, world) {
     
       var isHoverTipHovered = $('.hovertip').is(":hover");
 
-      if ( isHoverTipHovered ) { //if we are hovering over the hovertip
-
-        // d3.select('path#id_' + d.id).style('fill', '#d35400') //make country orange 
-      }else{
-         //if you go inside hovertip, it will stay orange. if you don't it will be green. 
-        // d3.select('path#id_' + d.id).style('fill', '#16a085')
-          $('.hovertip').remove();
+      if ( !isHoverTipHovered ) { //if we are hovering over the hovertip
+        $('.hovertip').remove();          
       }
 
     })
-      
-
-        // tooltip
-        //   .classed("hidden", false)
-        //   .attr("style", "left:"+(mouse[0]+25)+"px;top:"+mouse[1]+"px")
-        //   .html(d.name)
-      // .on("mouseout",  function(d) {
-      //   tooltip.classed("hidden", true)
-      // })
 
     .on('click', countryClick);
 
@@ -269,7 +254,6 @@ function ready(error, world) {
     $contents.append($circles);
     $circles.append($circle_one).append($circle_two).append($circle_three).append($circle_four).append($circle_five).append($circle_six).append($circle_seven).append($circle_eight).append($circle_nine).append($circle_ten);
     $contents.append($circles);
-
 
     var country_data = data[data.length - 1];
     var first = country_data[0];
