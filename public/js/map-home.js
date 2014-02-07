@@ -52,7 +52,7 @@ function getAllCountryTopVids() {
 }
 
 queue()
-  .defer(d3.json, '/map.json')
+  .defer(d3.json, '/world-countries.json')
   .await(ready);
 
 // var moonman_left_margin = parseInt( (width - 900) / 2 );
@@ -167,11 +167,12 @@ function reset() {
   g.transition().duration(750).attr('transform', '');
 }
 
-function ready(error, world) {
-  var countries = topojson.feature(world, world.objects.countries).features
+function ready(error, collection) {
+
+  // var countries = topojson.feature(world, world.objects.countries).features
 
   g.selectAll('.country')
-    .data(countries)
+    .data(collection.features)
     .enter().insert('path')
     .attr('class', 'country')
     .attr('d', path)
