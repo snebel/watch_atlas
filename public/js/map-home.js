@@ -15,6 +15,12 @@ var projection = d3.geo.orthographic()
 
 var path = d3.geo.path().projection(projection);
 
+var arrows_div_left_margin = parseInt( (width - 800) / 2 );
+$('#arrows-div').css('left', arrows_div_left_margin + 'px');
+
+var moonman_left_margin = parseInt( (width - 900) / 2 );
+$('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+
 var svg = d3.select('#map-canvas').append('svg')
   .attr('width', width)
   .attr('height', height)
@@ -30,11 +36,10 @@ g.append("path")
   .style('cursor', 'move')
   .attr("d", path);
 
-var arrows_div_left_margin = parseInt( (width - 800) / 2 );
-$('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
-var moonman_left_margin = parseInt( (width - 900) / 2 );
-$('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
+queue()
+  .defer(d3.json, '/map.json')
+  .await(ready);
 
 // function redraw() {
 //     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -540,11 +545,6 @@ function resize() {
   g.selectAll('.country').attr('d', path);
   g.selectAll('.globewater').attr('d', path);
 }
-
-queue()
-  .defer(d3.json, '/map.json')
-  .await(ready);
-
 
 $(function () {
     antiGrav('#moon-man'); 
