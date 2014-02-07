@@ -341,7 +341,6 @@ function ready(error, world) {
     makeCircle('unique', parseInt(unique[1]/60*100), 30, "of videos are unique", '#F4CB6B', '#F76504');
     //end unique circle row
 
-
     function makeCircle(id, percent, radius, text, color1, color2){
       Circles.create({
         id:         id,
@@ -354,8 +353,6 @@ function ready(error, world) {
         duration:   900
       });
     }
-
-
 
     var vid_list = $('<ul>').addClass('box-videos');
     $contents.append(vid_list);
@@ -380,7 +377,6 @@ function ready(error, world) {
     var $flexslider_ul_animals = $('<ul>').addClass('slides');
 
 
-
     var $top_videos_div = $('<div>').attr('id', 'top-videos')
     var $news_div = $('<div>').attr('id', 'news-videos')
     var $music_div = $('<div>').attr('id', 'music-videos')
@@ -388,7 +384,6 @@ function ready(error, world) {
     var $entertainment_div = $('<div>').attr('id', 'entertainment-videos')
     var $animals_div = $('<div>').attr('id', 'animals-videos')
 
-    // $contents.prepend($close_me_div); // the close me div
     $contents.append($top_videos_div);
     $contents.append($news_div);
     $contents.append($music_div);
@@ -413,33 +408,19 @@ function ready(error, world) {
 
 
     for (var i=1; i < data.length; i++) {
-
       if (data[i].top) {
-
         $flexslider_ul_top_videos.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
-
       } else if (data[i].term === "News") {
-
         $flexslider_ul_news.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
-
       }else if (data[i].term === "Music"){
-
         $flexslider_ul_music.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
-
       }else if (data[i].term === "Tech"){
-
         $flexslider_ul_tech.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
-
       }else if (data[i].term === "Entertainment"){
-
         $flexslider_ul_entertainment.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
-
       }else if (data[i].term === "Animals"){
-
         $flexslider_ul_animals.append('<li><a class="thumbnail"><img data-id="' + data[i].embed_url + '" src="' + data[i].thumbnail_url + '"/></a>' + data[i].title + '</li>');
       }
-
-
     }  
 
     $circles.prepend('<h2 class="category-title">Overlapping Countries</h2>');
@@ -459,17 +440,12 @@ function ready(error, world) {
       reset();
     });
 
-    // $('.tooltip').append($contents.html());
-
     return $contents.html();
-  
   }
-
 
   htmlFailGen = function () {
     var contents = 'Sorry, there is no YouTube data for this country';
     contents += '<div class="close-me"><img src="/cancel-new.png" /></div>'
-
     $('.tooltip').attr('id', 'sorry')
 
    $('body').on('click', '.close-me', function () {
@@ -491,7 +467,6 @@ function ready(error, world) {
     var $header = $('<div>');
     var $title = $('<h2 id="hovertip-country-name">' + country.name + '</h2>');
     var $flag = $('<img>').attr('src', country.flag_url).attr('class', 'country-flag');
-    //$hovertip_videos_container.append($flag);
 
     var contents = $('<div>');
     for (var i=0; i < data.length; i++) {
@@ -501,15 +476,11 @@ function ready(error, world) {
       $hovertip_videos_container.append(vid_div);
     }
     
-      $header.append($flag).append($title);
-      contents.append($header);
-      contents.append($hovertip_videos_container);
+    $header.append($flag).append($title);
+    contents.append($header);
+    contents.append($hovertip_videos_container);
     return contents.html();
   }
-
-  // $header.append($title).append($flag);
-  //   $contents.append($header);
-  //populate active countries with different color
 
   valid_map_ids.forEach(function (x) {
     d3.select('path#id_' + x)
@@ -518,46 +489,37 @@ function ready(error, world) {
   });
 
   d3.select('#right-arrow')
-    .on('click', function () {
-      var rotate = projection.rotate();
-      var rotation_amount = 40;
-      var x_point = d3.event.x;
-      var y_point = d3.event.y;
-      //console.log(rotate);
-      projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
-      g.selectAll('path.country').attr('d', path);
-    });
+  .on('click', function () {
+    var rotate = projection.rotate();
+    var rotation_amount = 40;
+    var x_point = d3.event.x;
+    var y_point = d3.event.y;
+    projection.rotate([(rotate[0] - rotation_amount), 0, 0]);
+    g.selectAll('path.country').attr('d', path);
+  });
 
   d3.select('#left-arrow')
-      .on('click', function () {
-      var rotate = projection.rotate();
-      var rotation_amount = 40;
-      var x_point = d3.event.x;
-      var y_point = d3.event.y;
-      //console.log(rotate);
-      projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
-      g.selectAll('path.country').attr('d', path);
-    });
-
+    .on('click', function () {
+    var rotate = projection.rotate();
+    var rotation_amount = 40;
+    var x_point = d3.event.x;
+    var y_point = d3.event.y;
+    //console.log(rotate);
+    projection.rotate([(rotate[0] + rotation_amount), 0, 0]);
+    g.selectAll('path.country').attr('d', path);
+  });
 }
 
 
 function addListener ()  {
-
   $('.thumbnail').on("click", function() {
-
-      var height = '-1396px';
-
-      var self = this;
-
-      popUpVideo(height, self);
-
-  })
+    var height = '-1396px';
+    var self = this;
+    popUpVideo(height, self);
+  });
 
   $('.embed-video-hovertip').on("click", function() {
-
     var self = this;
-
     var height = '-750px';
     popUpVideo(height, self);
   });
@@ -566,11 +528,7 @@ function addListener ()  {
     console.log('zooming');
     generalZoom();
   });
-
-
 }
-
-
 
 
 function popUpVideo (height, button) {
@@ -594,8 +552,6 @@ function popUpVideo (height, button) {
     $video_iframe = $('<iframe>');
     $video_iframe.attr('src', embed_url);
     $video_iframe.attr('class', 'click_page_embed_url');
-    // $video_iframe.css('width', '642');
-    // $video_iframe.css('height', '470');
 
     $embed_window.append($video_container)
     $video_container.append($video_iframe)
@@ -611,29 +567,17 @@ function popUpVideo (height, button) {
 }
 
 
-// d3.select(self.frameElement).style('height', height + 'px');
-
 d3.select(window).on('resize', resize);
 
-
 function resize() {
- 
     width = parseInt(d3.select('body').style('width'));  
-
     var arrows_div_left_margin = parseInt( (width - 800) / 2 );
-
     $('#arrows-div').css('left', arrows_div_left_margin + 'px');
-
     var moonman_left_margin = parseInt( (width - 900) / 2 );
-
     $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
 
-    projection
-        .translate([width / 2, height / 2])
-        .scale(300);
-
+    projection.translate([width / 2, height / 2]).scale(300);
     svg.style('width', width + 'px').style('height', height + 'px');
-
     g.selectAll('.country').attr('d', path);
     g.selectAll('.globewater').attr('d', path);
 }
