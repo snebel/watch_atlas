@@ -46,8 +46,6 @@ function getAllCountryTopVids() {
       url: '/countries',
       dataType: 'json',
       success: function (data) {
-        console.log(data);
-        console.log('ajax working');
         countries_object = data;
       }
     });
@@ -81,27 +79,25 @@ function antiGrav(ele) {
 
 
 function countryHover(d) {
-  //console.log(d);
   d3.select('path#id_' + d.id).style('fill', '#d35400');
-
+  if (valid_map_ids.indexOf(d.id) != -1) {
   $tooltip = $('.tooltip');
-  var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+    var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
 
-  $('.hovertip').remove();
+    $('.hovertip').remove();
 
-    tooltip = d3.select('#map-canvas')
-    .append('div')
-    .attr('class', 'hovertip')
-    .attr("style", "left:"+(mouse[0])+"px;top:"+mouse[1]+"px")
-    .style('z-index', '9999')
-    .style('opacity', '0')
-    .html(function () {
-      console.log(d);
-      return htmlHoverSuccessGen(d);
-    }).style('opacity', '1')
-     .transition().duration(3).style('opacity', '1')
-
-     addListener();
+      tooltip = d3.select('#map-canvas')
+      .append('div')
+      .attr('class', 'hovertip')
+      .attr("style", "left:"+(mouse[0])+"px;top:"+mouse[1]+"px")
+      .style('z-index', '9999')
+      .style('opacity', '0')
+      .html(function () {
+        return htmlHoverSuccessGen(d);
+      }).style('opacity', '1')
+       .transition().duration(3).style('opacity', '1')
+  }
+  addListener();
 }   
 
 
@@ -211,7 +207,6 @@ function ready(error, world) {
         var rotation_amount = .2;
 
         var rotate = projection.rotate();
-        console.log(rotate);
 
         projection.rotate([rotate[0] + d3.event.dx*rotation_amount, rotate[1] + -1*d3.event.dy*rotation_amount, .5]); //(rotate[0] + rotation_amount), rotate[1] + d3.event.dy*rotation_amount  
         g.selectAll('path.country').attr('d', path);        
@@ -223,7 +218,6 @@ function ready(error, world) {
 
     console.log(data);
     $('.tooltip').empty();
-    ////console.log('html success: ' + data);
     var contents = $('.tooltip');
     var header = $('<h1 class="country-name">');
     var title = $('<a>').text(data[0].name).attr('href', '/countries/'+data[0].id);
@@ -439,35 +433,32 @@ function ready(error, world) {
 
   htmlHoverSuccessGen = function(d) {
     // console.log(country);
-    console.log(d);
-    var map_id = d.id;
-    var data = countries_object[map_id];
-    console.log(data)
-    var $hovertip_videos_container = $('<div>');
-    $hovertip_videos_container.attr('class', 'hovertip_videos_container');
-
-    var $header = $('<div>');
-
-    var $title = $('<h2 id="hovertip-country-name">' + data[0] + '</h2>');
-    var $flag = $('<img>').attr('src', data[1]).attr('class', 'hovertip-country-flag');
-
-
-    var contents = $('<div>');
-    for (var i=2; i < data.length; i++) {
-      var vid_div = $('<div>');
-      vid_div.attr('class', 'hovertip-div')
-      vid_div.append('<a class="embed-video-hovertip">' + '<img data-id="' + data[i][1] + '" src="' + data[i][0] + '"/></a></li>');
-      $hovertip_videos_container.append(vid_div);
-
-      console.log(data[i][0])
-      console.log(data[i][1])
-
-    }
     
-    $header.append($flag).append($title);
-    contents.append($header);
-    contents.append($hovertip_videos_container);
-    return contents.html();
+    var map_id = d.id;
+    if (valid_map_ids.indexOf(map_id) != -1) {
+      var data = countries_object[map_id];
+      var $hovertip_videos_container = $('<div>');
+      $hovertip_videos_container.attr('class', 'hovertip_videos_container');
+
+      var $header = $('<div>');
+
+      var $title = $('<h2 id="hovertip-country-name">' + data[0] + '</h2>');
+      var $flag = $('<img>').attr('src', data[1]).attr('class', 'hovertip-country-flag');
+
+
+      var contents = $('<div>');
+      for (var i=2; i < data.length; i++) {
+        var vid_div = $('<div>');
+        vid_div.attr('class', 'hovertip-div')
+        vid_div.append('<a class="embed-video-hovertip">' + '<img data-id="' + data[i][1] + '" src="' + data[i][0] + '"/></a></li>');
+        $hovertip_videos_container.append(vid_div);
+      }
+      
+      $header.append($flag).append($title);
+      contents.append($header);
+      contents.append($hovertip_videos_container);
+      return contents.html();
+    }
   }
 
   valid_map_ids.forEach(function (x) {
@@ -515,7 +506,6 @@ function addListener ()  {
   });
 
   $('.zoom').on("click", function() {
-    console.log('zooming');
     generalZoom();
   });
 
