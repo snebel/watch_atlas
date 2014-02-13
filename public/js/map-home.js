@@ -396,7 +396,7 @@ function ready(error, collection) {
       }
     }  
 
-    $circles.prepend('<h2 class="category-title">Overlapping Countries</h2>');
+    $circles.prepend('<h2 class="category-title">Countries With Similar Viewing Patterns</h2>');
     $top_videos_div.prepend('<h2 class="category-title">Top Videos</h2>');
     $news_div.prepend('<h2 class="category-title">News</h2>');
     $music_div.prepend('<h2 class="category-title">Music</h2>');
