@@ -207,6 +207,8 @@ rect {
 .circle-thing {
   text-align: center;
   margin: 0 10px;
+  height: 140px;
+  overflow: hidden;
 }
 .land {
   fill: #f7f7f7;
@@ -540,4 +542,9 @@ span.circles-text {
   float:right;
    opacity:.7;
    pointer-events:all;
+}
+
+.red-home {
+  color:#D92534;
+  font-weight: bold;
 }

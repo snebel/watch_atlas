@@ -19,14 +19,9 @@ var path = d3.geo.path().projection(projection);
 var arrows_div_left_margin = parseInt( (width - 800) / 2 );
 $('#arrows-div').css('left', arrows_div_left_margin + 'px');
 
-// var moonman_left_margin = parseInt( (width - 900) / 2 );
-// $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '150px');
-
 var svg = d3.select('#map-canvas').append('svg')
   .attr('width', width)
   .attr('height', height)
-    // .call(d3.behavior.zoom()
-    // .on("zoom", redraw));
 
 var g = svg.append('g');
 
@@ -36,8 +31,6 @@ g.append("path")
   .style('fill', '#BEE9F5')
   .style('cursor', 'move')
   .attr("d", path);
-
-
 
 function getAllCountryTopVids() {
 
@@ -55,14 +48,6 @@ queue()
   .defer(d3.json, '/world-countries.json')
   .await(ready);
 
-// var moonman_left_margin = parseInt( (width - 900) / 2 );
-// $('#moon-man').css('left', moonman_left_margin + 'px').css('top', '40px');
-
-
-
-// function redraw() {
-//     g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-// }
 
 function antiGrav(ele) { 
   var distance = 12;
@@ -256,13 +241,13 @@ function ready(error, collection) {
     var $circle_four = $('<div>').attr('id', 'circle-4').css('width', '80px').css('float', 'left').addClass('circle-thing');
     var $circle_five = $('<div>').attr('id', 'circle-5').css('width', '80px').css('float', 'left').addClass('circle-thing');
     var $circle_six = $('<div>').attr('id', 'circle-6').css('width', '80px').css('float', 'left').addClass('circle-thing');
-    var $circle_seven = $('<div>').attr('id', 'circle-7').css('width', '80px').css('float', 'left').addClass('circle-thing');
+    // var $circle_seven = $('<div>').attr('id', 'circle-7').css('width', '80px').css('float', 'left').addClass('circle-thing');
     var $circle_eight = $('<div>').attr('id', 'circle-8').css('width', '80px').css('float', 'left').addClass('circle-thing');
     var $circle_nine = $('<div>').attr('id', 'circle-9').css('width', '80px').css('float', 'left').addClass('circle-thing');
     var $circle_ten = $('<div>').attr('id', 'circle-10').css('width', '80px').css('float', 'left').addClass('circle-thing');
 
     $contents.append($circles);
-    $circles.append($circle_one).append($circle_two).append($circle_three).append($circle_four).append($circle_five).append($circle_six).append($circle_seven).append($circle_eight).append($circle_nine).append($circle_ten);
+    $circles.append($circle_one).append($circle_two).append($circle_three).append($circle_four).append($circle_five).append($circle_six).append($circle_eight).append($circle_nine).append($circle_ten);
     $contents.append($circles);
 
     var country_data = data[data.length - 1];
@@ -272,7 +257,7 @@ function ready(error, collection) {
     var fourth = country_data[3]; 
     var fifth = country_data[4];    
     var sixth = country_data[5];
-    var seventh = country_data[6]
+    // var seventh = country_data[6];
 
     var last_index = country_data.length - 2; // - 2 because last element is unique_vids data
     var eighth = country_data[last_index - 2]; 
@@ -285,7 +270,7 @@ function ready(error, collection) {
     makeCircle('circle-4', parseInt(fourth[1]/60*100), 40, '', '#9CB9D9', '#162E76');
     makeCircle('circle-5', parseInt(fifth[1]/60*100), 40, '', '#9CB9D9', '#162E76');
     makeCircle('circle-6', parseInt(sixth[1]/60*100), 40, '', '#9CB9D9', '#162E76');
-    makeCircle('circle-7', parseInt(seventh[1]/60*100), 40, '', '#9CB9D9', '#162E76');
+    // makeCircle('circle-7', parseInt(seventh[1]/60*100), 40, '', '#9CB9D9', '#162E76');
     makeCircle('circle-8', parseInt(eighth[1]/60*100), 40, '', '#E5A4B0', '#DC435F');
     makeCircle('circle-9', parseInt(ninth[1]/60*100), 40, '', '#E5A4B0', '#DC435F');
     makeCircle('circle-10', parseInt(tenth[1]/60*100), 40, '', '#E5A4B0', '#DC435F');
@@ -297,7 +282,7 @@ function ready(error, collection) {
     $circle_four.append(fourth[0])
     $circle_five.append(fifth[0])
     $circle_six.append(sixth[0])
-    $circle_seven.append(seventh[0])
+    // $circle_seven.append(seventh[0])
     $circle_eight.append(eighth[0])
     $circle_nine.append(ninth[0])
     $circle_ten.append(tenth[0])
