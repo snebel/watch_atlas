@@ -1,71 +1,30 @@
-#ATLAS APP
-www.watch-atlas.herokuapp.com
+#Watch Atlas
 
+###Developers: Sam Nebel, Patrick Morgan, Nate Hindman, Brendan Soffientini, Ann Kim
 
+###<http://watch-atlas.herokuapp.com>
 
-##Overview
-To provide a space online that organizes and visualizes YouTube's popular activity by country and its culture.
+####What does it do?  
 
+*Watch Atlas is a D3.js visualization of global Youtube trends.*
 
+####Why this idea?
 
-###Features and App Functions
+As part of its Trends Dashboard, Youtube now includes a Trends Map (<https://www.youtube.com/trendsmap>). However, the map is limited to US trends and is currently displayed against a pretty bland 2D map backdrop. So while it is a cool, useful feature, it definitely still has room for improvement. 
 
-* Global Visualization of trending videos by country. 
+Considering the sheer amount of data Youtube collects about global video trends, my group for this project at General Assembly's Web Development Immersive decided we could do them one better. **By tapping into the Youtube API and the powerful D3 Javascript library, we created a simple, yet engaging way to browse Youtube trends across the globe (in the 62 countries that Youtube provides data on, that is).**
 
-* Ability to click through to country's page to view top trending videos by category.
+####How do I use it?
+* Drag the globe or click the side arrows to navigate around the world.
+* Hover over a country to immediately see its top three videos.
+* Click on a country to view a detailed breakdown of top videos (overall, and from a variety of categories) as well as statistics that compare that country's viewing patterns with others around the globe.
 
-* User can see which countries share similar video views across all other countries.
+###Screenshots
+**These screenshots represent the three main views of the app as they coincide with the above 'How do I use it?' description.** 
 
-
-###Important Learnings:
-
-######D3 Visualization
-* Our D3 globe is by far the most impressive tool implemented in this app. Its feature was a unique and exciting way to visualize youtube views around the world.  The execution involved taking coordinates of the globe and matching them up to our country models as well as our video data models. 
-
-######Javascript/jQuery:
-* With the exception of models and our rake task being written in Ruby, more or less 90% of our code utilizes javascript and jquery from start to finish.
-With more time, we would have refactored the code to split up concerns into multiple js files (instead of one really long one).
-
-######AJAX: 
-* In the final steps of the project, the team was trying to figure out ways to get the site to run faster.  Initially the code was written so that each hover on a country loaded data with an ajax call.  Luckily we were recommended that we simply have an ajax call once on initial load of page.  That way each hover and click function would call data already loaded within our database.  This sped up all our hover and rotate functionalities perfectly.
-
-
-###Code Snippets:
-	As mentioned, the most gratifying moment in the project came at the end when we were able to speed up our site's functionality by a substantial amount. 
-
-	Here is a piece of the code that utilizes ajax to grab all seeded data for a user to access quickly at any point in their session.
-
-	D3 provided us with the "d.id" which is the coordinate point of a country's location on the globe map.
-
-```
-function countryClick(d) {
-  var self = this;
-  
-  $('.embed_window').remove();
-  
-  if (valid_map_ids.indexOf(d.id) != -1) {
-    $.ajax({
-      method: 'get',
-      url: '/countries/maps/' + d.id,
-      dataType: 'json'
-    })
-      .success(function (data) {
-        zoomIn();
-        makeTooltip(data, true);
-        $('.flexslider').flexslider({
-          animation: "slide",
-          slideshow: false,
-          animationLoop: false,
-          itemWidth: 150,
-          itemMargin: 15
-        });
-        addListener();
-      })
-  }
-  else {
-    makeTooltip('', false);
-  }
- ```
-
-**©Watch-Atlas a creation of Team Umber 2014.**
-
+####Main Navigation
+![atlas_main](https://www.evernote.com/shard/s82/sh/752f9248-2bf0-47df-9298-852faab01f3c/30fd46fabe827ab2e1f29bdc528fa81b/deep/0/Atlas_main.png "Atlas Main")
+####On Country Hover
+![atlas_hover](https://www.evernote.com/shard/s82/sh/0192c4fe-02c2-45d5-bea4-f9011527dd5d/85e763259486a74e7bd1ac2f7f683b47/deep/0/Atlas_hover.png "Atlas Hover")
+####On Country Click
+![atlas_click](https://www.evernote.com/shard/s82/sh/ec970ac7-561e-4466-829a-2d62ffe2e39b/23279c613981583bb5c229674bfc3b99/deep/0/Atlas_click.png "Atlas Click")
